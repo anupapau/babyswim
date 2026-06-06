@@ -537,7 +537,8 @@ function buildDobPicker(dKey,mKey,yKey,onChange){
 }
 
 // ── Badge helpers ──────────────────────────────────────────────
-function attC(att){if(att==="confirmed")return{b:"#166534",bg:"#052e16",c:"#4ade80",label:"✓ Coming"};if(att==="cancelled")return{b:"#7f1d1d",bg:"#450a0a",c:"#f87171",label:"✗ Cancelled"};return{b:"#92400e",bg:"#1c1100",c:"#fbbf24",label:"○ Pending"};}
+function attC(att){if(att==="confirmed")return{b:"#166534",bg:"#052e16",c:"#4ade80",label:"✓ Coming"};if(att==="cancelled")return{b:"#7f1d1d",bg:"#450a0a",c:"#f87171",label:"✗ Not Coming"};return{b:"#92400e",bg:"#1c1100",c:"#fbbf24",label:"○ Pending"};}
+function isClassCancelled(c){return c.students.length>0&&c.students.filter(s=>!s.transferTo).length>0&&c.students.filter(s=>!s.transferTo).every(s=>s.attendance==="cancelled");}
 function pkgBadge(pkg){const p=PKG[pkg]||PKG.group;return el("span",{style:{fontSize:"9px",background:p.bg,color:p.color,borderRadius:"4px",padding:"1px 6px",border:`1px solid ${p.border}`,fontWeight:700,flexShrink:0,marginLeft:"4px"}},p.icon+" "+p.label);}
 function pkgTypeBadge(type){const p=PKG_TYPES[type]||PKG_TYPES.group;return el("span",{style:{fontSize:"9px",background:p.bg,color:p.color,borderRadius:"4px",padding:"1px 6px",border:`1px solid ${p.border}`,fontWeight:700,flexShrink:0}},p.label);}
 function xferBadge(s,showFrom=true){if(!s.transferredFrom)return null;const label=showFrom?"🔀 "+s.transferredFrom.day.slice(0,3):"🔀";return el("span",{title:"Moved from "+s.transferredFrom.day+" "+s.transferredFrom.time,style:{fontSize:"9px",background:"#1c0a00",color:"#fb923c",borderRadius:"4px",padding:"1px 6px",border:"1px solid #92400e",fontWeight:700,flexShrink:0,marginLeft:"4px"}},label);}
@@ -1476,13 +1477,14 @@ function buildAdminRow(c,searchQ=""){
   const autoOpen=q&&c.students.some(s=>s.name.toLowerCase().includes(q)||s.parentName?.toLowerCase().includes(q));
   const isOpen=autoOpen||state.adminOpen===c.id;
 
-  const row=el("div",{style:{background:isEmpty?"#0e0920":"#0d1f33",border:`1px solid ${lc.border}`,borderRadius:"10px",overflow:"hidden",marginBottom:"7px",borderLeft:`4px solid ${lc.color}`}},
+  const classCancelled2=isClassCancelled(c);
+  const row=el("div",{style:{background:isEmpty?"#0e0920":classCancelled2?"#2a0a0a":"#0d1f33",border:`1px solid ${classCancelled2?"#7f1d1d":lc.border}`,borderRadius:"10px",overflow:"hidden",marginBottom:"7px",borderLeft:`4px solid ${classCancelled2?"#ef4444":lc.color}`}},
     el("div",{style:{padding:"9px 14px",display:"flex",alignItems:"center",gap:"8px",cursor:"pointer"},onClick:()=>{
       if(state.bulkEditMode){state.selectedClasses={...state.selectedClasses,[c.id]:!state.selectedClasses[c.id]};render();return;}
       state.adminOpen=isOpen?null:c.id;state.adminAdding=false;state.adminSearch="";state.adminSel=null;render();}},
       state.bulkEditMode?el("div",{style:{width:"16px",height:"16px",borderRadius:"3px",border:"2px solid "+(state.selectedClasses[c.id]?"#2563eb":"#64748b"),background:state.selectedClasses[c.id]?"#2563eb":"transparent",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"9px",color:"#fff"}},state.selectedClasses[c.id]?"✓":""):null,
-      el("span",null,lc.emoji),
-      el("div",{style:{flex:1}},el("span",{style:{fontSize:"12px",fontWeight:700,color:"var(--text)"}},c.day+" · "+c.time),el("span",{style:{fontSize:"10px",color:lc.color,marginLeft:"8px",fontStyle:isEmpty?"italic":"normal"}},isEmpty?"Open Class":lv)),
+      el("span",null,classCancelled2?"🚫":lc.emoji),
+      el("div",{style:{flex:1}},el("span",{style:{fontSize:"12px",fontWeight:700,color:classCancelled2?"#f87171":"var(--text)"}},c.day+" · "+c.time),el("span",{style:{fontSize:"10px",color:classCancelled2?"#f87171":lc.color,marginLeft:"8px",fontStyle:isEmpty?"italic":"normal"}},classCancelled2?"⛔ Class Cancelled":isEmpty?"Open Class":lv)),
       el("span",{style:{fontSize:"10px",color:isEmpty?lc.color:"var(--text3)"}},c.students.length+"/"+c.capacity),
       (c.waitingList||[]).length>0?el("span",{style:{fontSize:"9px",background:"#1c0a00",color:"#fb923c",borderRadius:"4px",padding:"1px 6px",border:"1px solid #92400e"}},"🔶"+(c.waitingList||[]).length):null,
       staples.length>0?el("span",{style:{fontSize:"9px",background:"#1c1100",color:"#fbbf24",borderRadius:"4px",padding:"1px 6px",border:"1px solid #92400e"}},"📌"+staples.length):null,
@@ -1950,85 +1952,106 @@ function openSharePanel(day,coachFilter){
 
   // Build the share content as real DOM inside a hidden div
   const overlay=document.createElement("div");
-  overlay.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:99999;display:flex;flex-direction:column;align-items:center;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;";
+  const isMobileShare=window.innerWidth<=768;
+  overlay.style.cssText=isMobileShare
+    ?"position:fixed;inset:0;background:#f1f5f9;z-index:99999;display:flex;flex-direction:column;align-items:stretch;overflow-y:auto;-webkit-overflow-scrolling:touch;"
+    :"position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;flex-direction:column;align-items:center;overflow-y:auto;padding:20px 16px;";
 
   // Action bar (not captured in image)
   const actionBar=document.createElement("div");
-  actionBar.style.cssText="display:flex;gap:10px;margin-bottom:16px;flex-shrink:0;flex-wrap:wrap;justify-content:center;";
+  actionBar.style.cssText=isMobileShare
+    ?"display:flex;gap:8px;padding:10px 12px;background:#1e40af;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;align-items:center;position:sticky;top:0;z-index:10;"
+    :"display:flex;gap:8px;padding:10px 12px;background:#1e40af;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;align-items:center;width:100%;max-width:440px;border-radius:12px 12px 0 0;";
 
-  const mkBtn=(label,bg,color,fn)=>{const b=document.createElement("button");b.textContent=label;b.style.cssText=`background:${bg};color:${color};border:none;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:system-ui;`;b.onclick=fn;return b;};
+  const mkBtn=(label,bg,color,fn)=>{const b=document.createElement("button");b.textContent=label;b.style.cssText=`background:${bg};color:${color};border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:system-ui;`;b.onclick=fn;return b;};
 
-  actionBar.appendChild(mkBtn("✕ Close","#334155","#fff",()=>overlay.remove()));
+  actionBar.appendChild(mkBtn("✕ Close","rgba(255,255,255,0.2)","#fff",()=>overlay.remove()));
 
-  const imgBtn=mkBtn("📸 Save Image","#1e40af","#fff",async()=>{
-    imgBtn.textContent="⏳ Generating…";imgBtn.disabled=true;
-    copyImgBtn.disabled=true;
-    actionBar.style.display="none";
-    try{
-      const h2c=window.html2canvas||await new Promise((res,rej)=>{
-        const s=document.createElement("script");
-        s.src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
-        s.onload=()=>res(window.html2canvas);s.onerror=rej;
-        document.head.appendChild(s);
-      });
-      const canvas=await h2c(captureDiv,{
-        scale:2,backgroundColor:"#f1f5f9",useCORS:true,logging:false,
-        width:captureDiv.scrollWidth,height:captureDiv.scrollHeight,
-        windowWidth:captureDiv.scrollWidth,windowHeight:captureDiv.scrollHeight,
-      });
-      actionBar.style.display="";imgBtn.textContent="📸 Save Image";imgBtn.disabled=false;copyImgBtn.disabled=false;
-      const dataUrl=canvas.toDataURL("image/jpeg",0.95);
-      const blob=await(await fetch(dataUrl)).blob();
-      const file=new File([blob],"RBSC-schedule.jpg",{type:"image/jpeg"});
-      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-        await navigator.share({files:[file],title:"RBSC Schedule"}).catch(()=>{});
-      } else {
-        const a=document.createElement("a");a.href=dataUrl;
-        a.download="RBSC-schedule-"+day+".jpg";
-        document.body.appendChild(a);a.click();document.body.removeChild(a);
-      }
-    }catch(e){
-      actionBar.style.display="";imgBtn.textContent="📸 Save Image";imgBtn.disabled=false;copyImgBtn.disabled=false;
-      alert("Image generation failed.");
-    }
-  });
-  actionBar.appendChild(imgBtn);
-
-  const copyImgBtn=mkBtn("📋 Copy Image","#0f2744","#60a5fa",async()=>{
-    copyImgBtn.textContent="⏳ Copying…";copyImgBtn.disabled=true;
-    imgBtn.disabled=true;
-    actionBar.style.display="none";
-    try{
-      const h2c=window.html2canvas||await new Promise((res,rej)=>{
-        const s=document.createElement("script");
-        s.src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
-        s.onload=()=>res(window.html2canvas);s.onerror=rej;
-        document.head.appendChild(s);
-      });
-      const canvas=await h2c(captureDiv,{
-        scale:2,backgroundColor:"#f1f5f9",useCORS:true,logging:false,
-        width:captureDiv.scrollWidth,height:captureDiv.scrollHeight,
-        windowWidth:captureDiv.scrollWidth,windowHeight:captureDiv.scrollHeight,
-      });
-      actionBar.style.display="";copyImgBtn.textContent="📋 Copy Image";copyImgBtn.disabled=false;imgBtn.disabled=false;
-      canvas.toBlob(async blob=>{
-        try{
-          await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
-          copyImgBtn.textContent="✓ Copied!";
-          setTimeout(()=>copyImgBtn.textContent="📋 Copy Image",2000);
-        }catch(e){
-          // Fallback: open image so user can right-click copy
-          const url=URL.createObjectURL(blob);
-          const w=window.open(url,"_blank");
-          if(!w)alert("Right-click the image and choose Copy Image");
-        }
-      },"image/png");
-    }catch(e){
-      actionBar.style.display="";copyImgBtn.textContent="📋 Copy Image";copyImgBtn.disabled=false;imgBtn.disabled=false;
-      alert("Could not copy image.");
-    }
-  });
-  actionBar.appendChild(copyImgBtn);
+  // On mobile: save/share as image. On desktop: open clean page to screenshot manually.
+  if(isMobileShare){
+    const imgBtn=mkBtn("📸 Save / Share","#fff","#1e40af",async()=>{
+      imgBtn.textContent="⏳ Generating…";imgBtn.disabled=true;
+      actionBar.style.display="none";
+      try{
+        const h2c=window.html2canvas||await new Promise((res,rej)=>{const s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";s.onload=()=>res(window.html2canvas);s.onerror=rej;document.head.appendChild(s);});
+        const w=captureDiv.offsetWidth;
+        const wrapper=document.createElement("div");
+        wrapper.style.cssText=`position:fixed;left:-${w+10}px;top:0;width:${w}px;overflow:hidden;background:#f1f5f9;`;
+        document.body.appendChild(wrapper);
+        wrapper.appendChild(captureDiv);
+        captureDiv.style.width=w+"px";captureDiv.style.maxWidth=w+"px";captureDiv.style.boxShadow="none";captureDiv.style.borderRadius="0";
+        await new Promise(r=>setTimeout(r,50));
+        const canvas=await h2c(captureDiv,{scale:2,backgroundColor:"#f1f5f9",useCORS:true,allowTaint:true,logging:false,width:w,height:captureDiv.scrollHeight,windowWidth:w,windowHeight:captureDiv.scrollHeight});
+        overlay.appendChild(captureDiv);
+        captureDiv.style.width="";captureDiv.style.maxWidth="";
+        document.body.removeChild(wrapper);
+        actionBar.style.display="";imgBtn.textContent="📸 Save / Share";imgBtn.disabled=false;
+        const dataUrl=canvas.toDataURL("image/jpeg",0.95);
+        const blob=await(await fetch(dataUrl)).blob();
+        const file=new File([blob],"RBSC-schedule.jpg",{type:"image/jpeg"});
+        if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:"RBSC Schedule"}).catch(()=>{});}
+        else{const a=document.createElement("a");a.href=dataUrl;a.download="RBSC-schedule.jpg";document.body.appendChild(a);a.click();document.body.removeChild(a);}
+      }catch(e){actionBar.style.display="";imgBtn.textContent="📸 Save / Share";imgBtn.disabled=false;alert("Failed: "+e.message);}
+    });
+    actionBar.appendChild(imgBtn);
+    // Copy image on mobile (works on most modern mobile browsers)
+    const copyMobBtn=mkBtn("📋 Copy Image","rgba(255,255,255,0.15)","#fff",async()=>{
+      copyMobBtn.textContent="⏳…";copyMobBtn.disabled=true;
+      actionBar.style.display="none";
+      try{
+        const h2c=window.html2canvas||await new Promise((res,rej)=>{const s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";s.onload=()=>res(window.html2canvas);s.onerror=rej;document.head.appendChild(s);});
+        const w=captureDiv.offsetWidth;
+        const wrapper=document.createElement("div");
+        wrapper.style.cssText=`position:fixed;left:-${w+10}px;top:0;width:${w}px;overflow:hidden;background:#f1f5f9;`;
+        document.body.appendChild(wrapper);
+        wrapper.appendChild(captureDiv);
+        captureDiv.style.width=w+"px";captureDiv.style.maxWidth=w+"px";captureDiv.style.boxShadow="none";captureDiv.style.borderRadius="0";
+        await new Promise(r=>setTimeout(r,50));
+        const canvas=await h2c(captureDiv,{scale:2,backgroundColor:"#f1f5f9",useCORS:true,allowTaint:true,logging:false,width:w,height:captureDiv.scrollHeight,windowWidth:w,windowHeight:captureDiv.scrollHeight});
+        overlay.appendChild(captureDiv);captureDiv.style.width="";captureDiv.style.maxWidth="";
+        document.body.removeChild(wrapper);
+        actionBar.style.display="";copyMobBtn.textContent="📋 Copy Image";copyMobBtn.disabled=false;
+        canvas.toBlob(async blob=>{
+          try{
+            await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
+            copyMobBtn.textContent="✓ Copied!";setTimeout(()=>copyMobBtn.textContent="📋 Copy Image",2000);
+          }catch(e){alert("Copy not supported on this browser. Use Save / Share instead.");}
+        },"image/png");
+      }catch(e){actionBar.style.display="";copyMobBtn.textContent="📋 Copy Image";copyMobBtn.disabled=false;alert("Failed: "+e.message);}
+    });
+    actionBar.appendChild(copyMobBtn);
+  } else {
+    const doCapture=async()=>{
+      const h2c=window.html2canvas||await new Promise((res,rej)=>{const s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";s.onload=()=>res(window.html2canvas);s.onerror=rej;document.head.appendChild(s);});
+      // Snapshot exact dimensions before moving
+      const w=captureDiv.offsetWidth;
+      const h=captureDiv.scrollHeight;
+      // Move offscreen in isolation - same width, no parent affecting it
+      const wrapper=document.createElement("div");
+      wrapper.style.cssText=`position:fixed;left:-${w+10}px;top:0;width:${w}px;overflow:hidden;background:#f1f5f9;`;
+      document.body.appendChild(wrapper);
+      wrapper.appendChild(captureDiv);
+      captureDiv.style.width=w+"px";captureDiv.style.maxWidth=w+"px";captureDiv.style.boxShadow="none";captureDiv.style.borderRadius="0";
+      await new Promise(r=>setTimeout(r,50));// let layout settle
+      const canvas=await h2c(captureDiv,{scale:2,backgroundColor:"#f1f5f9",useCORS:true,allowTaint:true,logging:false,width:w,height:captureDiv.scrollHeight,windowWidth:w,windowHeight:captureDiv.scrollHeight});
+      overlay.appendChild(captureDiv);
+      captureDiv.style.width="";captureDiv.style.maxWidth="";
+      document.body.removeChild(wrapper);
+      return canvas;
+    };
+    const copyBtn=mkBtn("📋 Copy Image","rgba(255,255,255,0.2)","#fff",async()=>{
+      copyBtn.textContent="⏳…";copyBtn.disabled=true;actionBar.style.display="none";
+      try{
+        const canvas=await doCapture();
+        actionBar.style.display="";copyBtn.textContent="📋 Copy Image";copyBtn.disabled=false;
+        canvas.toBlob(async blob=>{
+          try{await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);copyBtn.textContent="✓ Copied!";setTimeout(()=>copyBtn.textContent="📋 Copy Image",2000);}
+          catch(e){const url=URL.createObjectURL(blob);const w=window.open(url,"_blank");if(!w)alert("Allow popups to open the image.");}
+        },"image/png");
+      }catch(e){actionBar.style.display="";copyBtn.textContent="📋 Copy Image";copyBtn.disabled=false;alert("Failed.");}
+    });
+    actionBar.appendChild(copyBtn);
+  }
 
   const shareText=generateShareText(day,coachFilter);
   actionBar.appendChild(mkBtn("📋 Copy Text","#0f172a","#94a3b8",()=>{
@@ -2039,12 +2062,15 @@ function openSharePanel(day,coachFilter){
 
   // The capture target — white card, no fixed positioning
   const captureDiv=document.createElement("div");
-  captureDiv.style.cssText="background:#f1f5f9;width:100%;max-width:480px;border-radius:12px;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;";
+  captureDiv.style.cssText=isMobileShare
+    ?"background:#f1f5f9;width:100%;border-radius:0;overflow:hidden;font-family:Arial,Helvetica,sans-serif;letter-spacing:0;word-spacing:0;word-break:normal;"
+    :"background:#f1f5f9;width:100%;max-width:440px;border-radius:0 0 12px 12px;overflow:hidden;font-family:Arial,Helvetica,sans-serif;letter-spacing:0;word-spacing:0;word-break:normal;box-shadow:0 8px 40px rgba(0,0,0,0.4);";
 
   // Header
   const hdr=document.createElement("div");
-  hdr.style.cssText="background:#1e40af;padding:16px 20px;color:#fff;";
-  hdr.innerHTML=`<div style="font-size:18px;font-weight:800;margin-bottom:4px;">🏊 RBSC Baby Swimming</div><div style="font-size:13px;opacity:0.85;">${dateStr}${coachName?" · "+coachName:""}</div>`;
+  hdr.style.cssText="background:#1e40af;padding:16px 20px;color:#fff;font-family:Arial,Helvetica,sans-serif;";
+  const hTitle=document.createElement("div");hTitle.style.cssText="font-size:18px;font-weight:800;margin-bottom:4px;";hTitle.textContent="🏊 RBSC Baby Swimming";hdr.appendChild(hTitle);
+  const hSub=document.createElement("div");hSub.style.cssText="font-size:13px;opacity:0.85;";hSub.textContent=dateStr+(coachName?" · "+coachName:"");hdr.appendChild(hSub);
   captureDiv.appendChild(hdr);
 
   const body=document.createElement("div");
@@ -2067,8 +2093,13 @@ function openSharePanel(day,coachFilter){
 
       // Card header
       const ch=document.createElement("div");
-      ch.style.cssText="padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f1f5f9;";
-      ch.innerHTML=`<div style="font-size:20px;font-weight:800;color:#1e293b;min-width:55px;">${c.time}</div><div style="flex:1;"><div style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;background:${lvColor}22;color:${lvColor};margin-bottom:2px;">${lvEmoji} ${topLevel}</div><div style="font-size:12px;color:#475569;">👤 ${coach?coach.name:"No coach"}</div></div><div style="font-size:13px;font-weight:700;color:#475569;">${c.students.length}/${c.capacity}</div>`;
+      ch.style.cssText="padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f1f5f9;font-family:Arial,Helvetica,sans-serif;";
+      const timeEl=document.createElement("div");timeEl.style.cssText="font-size:20px;font-weight:800;color:#1e293b;min-width:55px;";timeEl.textContent=c.time;ch.appendChild(timeEl);
+      const meta=document.createElement("div");meta.style.cssText="flex:1;";
+      const lvBadge=document.createElement("div");lvBadge.style.cssText=`font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;background:${lvColor}22;color:${lvColor};margin-bottom:2px;`;lvBadge.textContent=lvEmoji+" "+topLevel;meta.appendChild(lvBadge);
+      const coachEl=document.createElement("div");coachEl.style.cssText="font-size:12px;color:#475569;";coachEl.textContent="👤 "+(coach?coach.name:"No coach");meta.appendChild(coachEl);
+      ch.appendChild(meta);
+      const countEl=document.createElement("div");countEl.style.cssText="font-size:13px;font-weight:700;color:#475569;";countEl.textContent=c.students.length+"/"+c.capacity;ch.appendChild(countEl);
       card.appendChild(ch);
 
       if(!c.students.length){
@@ -2080,8 +2111,18 @@ function openSharePanel(day,coachFilter){
           const lbl=document.createElement("div");lbl.style.cssText=`font-size:10px;font-weight:700;text-transform:uppercase;color:${labelColor};margin-bottom:5px;`;lbl.textContent=label+" ("+students.length+")";sb.appendChild(lbl);
           students.forEach(s=>{
             const lc=LEVEL_COLORS[a2l(s.dob||s.age)]||"#64748b";const age=ageStr(s);
-            const r=document.createElement("div");r.style.cssText="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f8fafc;";
-            r.innerHTML=`<div style="width:28px;height:28px;border-radius:50%;background:${lc}22;color:${lc};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">${s.name.charAt(0)}</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#1e293b;">${s.name}</div>${s.parentName?`<div style="font-size:10px;color:#94a3b8;">${s.parentName}</div>`:""}</div>${age?`<div style="font-size:11px;color:#475569;font-weight:600;">${age}</div>`:""}<div style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:${badgeBg};color:${badgeColor};">${label.split(" ")[0]}</div>`;
+            const r=document.createElement("div");r.style.cssText="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f8fafc;font-family:Arial,Helvetica,sans-serif;";
+            // Avatar
+            const av=document.createElement("div");av.style.cssText=`width:28px;height:28px;border-radius:50%;background:${lc}22;color:${lc};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;`;av.textContent=s.name.charAt(0);r.appendChild(av);
+            // Name + parent
+            const info=document.createElement("div");info.style.cssText="flex:1;";
+            const nm=document.createElement("div");nm.style.cssText="font-size:12px;font-weight:600;color:#1e293b;";nm.textContent=s.name;info.appendChild(nm);
+            if(s.parentName){const pn=document.createElement("div");pn.style.cssText="font-size:10px;color:#94a3b8;";pn.textContent=s.parentName;info.appendChild(pn);}
+            r.appendChild(info);
+            // Age
+            if(age){const ag=document.createElement("div");ag.style.cssText="font-size:11px;color:#475569;font-weight:600;";ag.textContent=age;r.appendChild(ag);}
+            // Badge
+            const bd=document.createElement("div");bd.style.cssText=`font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:${badgeBg};color:${badgeColor};`;bd.textContent=label.split(" ")[0];r.appendChild(bd);
             sb.appendChild(r);
           });
         };
@@ -2098,7 +2139,7 @@ function openSharePanel(day,coachFilter){
   captureDiv.appendChild(body);
   overlay.appendChild(captureDiv);
   const zoom=parseFloat(getComputedStyle(document.getElementById('app')||document.body).zoom)||1;
-  overlay.style.zoom=1/zoom;
+  if(zoom!==1)overlay.style.zoom=1/zoom;
   document.body.appendChild(overlay);
 }
 
@@ -2168,12 +2209,13 @@ function buildScheduleView(){
         const cardCoach=state.coaches.find(ch=>ch.id===c.coachId);
         const cardDateStr=isoDate(dayDate);
         const coachOnLeave=cardCoach&&coachOnLeaveDate(cardCoach,cardDateStr);
-        const card=el("div",{style:{background:isEmpty?"#130d1f":"#0d1f33",borderRadius:"10px",border:`1px solid ${lc.border}`,overflow:"hidden",marginBottom:"10px",borderLeft:`4px solid ${lc.color}`,cursor:state.currentUser?.role==='guest'?"default":"pointer"}});
+        const cc=isClassCancelled(c);
+        const card=el("div",{style:{background:isEmpty?"#130d1f":cc?"#2a0a0a":"#0d1f33",borderRadius:"10px",border:`1px solid ${cc?"#7f1d1d":lc.border}`,overflow:"hidden",marginBottom:"10px",borderLeft:`4px solid ${cc?"#ef4444":lc.color}`,cursor:state.currentUser?.role==='guest'?"default":"pointer"}});
         card.addEventListener("click",()=>{if(state.currentUser?.role==='guest')return;state.expanded[c.id]=!state.expanded[c.id];render();});
         const cHdr=el("div",{style:{padding:"10px 14px",background:"var(--bg2)",display:"flex",alignItems:"center",gap:"10px"}});
-        cHdr.appendChild(el("span",{style:{fontSize:"18px",fontWeight:800,color:"var(--text)",minWidth:"52px"}},c.time));
+        cHdr.appendChild(el("span",{style:{fontSize:"18px",fontWeight:800,color:cc?"#f87171":"var(--text)",minWidth:"52px"}},c.time));
         cHdr.appendChild(el("div",{style:{flex:1}},
-          el("div",{style:{fontSize:"12px",fontWeight:700,color:lc.color}},lc.emoji+" "+(isEmpty?"Open Class":lv)),
+          el("div",{style:{fontSize:"12px",fontWeight:700,color:cc?"#f87171":lc.color}},cc?"🚫 Cancelled":(lc.emoji+" "+(isEmpty?"Open Class":lv))),
           el("div",{style:{fontSize:"11px",color:coachOnLeave?"#fb923c":"var(--text3)"}},cardCoach?(coachOnLeave?"🏖 ":"👤 ")+cardCoach.name:"Unassigned")));
         cHdr.appendChild(el("div",{style:{textAlign:"right"}},
           el("div",{style:{fontSize:"13px",fontWeight:700,color:"var(--text)"}},c.students.length+"/"+c.capacity),
@@ -2181,7 +2223,7 @@ function buildScheduleView(){
         card.appendChild(cHdr);
         // Fill bar
         const fb=el("div",{style:{height:"3px",background:"var(--bg3)"}});
-        fb.appendChild(el("div",{style:{height:"100%",width:fillPct+"%",background:fillPct>=100?"#f87171":fillPct>75?"#fbbf24":"#4ade80"}}));
+        fb.appendChild(el("div",{style:{height:"100%",width:fillPct+"%",background:cc?"#ef4444":fillPct>=100?"#f87171":fillPct>75?"#fbbf24":"#4ade80"}}));
         card.appendChild(fb);
         if(isExp){
           const sl=el("div",{style:{borderTop:`1px solid ${lc.border}`,background:"var(--bg2)",padding:"8px 14px",maxHeight:"260px",overflowY:"auto"}});
@@ -2231,15 +2273,16 @@ function buildScheduleView(){
       const cancelled=c.students.filter(s=>s.attendance==="cancelled"||s.transferTo).length;
       const fillPct=c.capacity>0?Math.min(100,Math.round(c.students.length/c.capacity*100)):0;
       const isExp=state.currentUser?.role!=='guest'&&!!state.expanded[c.id];
-      const card=el("div",{style:{background:isEmpty?"#130d1f":"#0d1f33",borderRadius:"8px",border:`1px solid ${lc.border}`,overflow:"hidden",cursor:state.currentUser?.role==='guest'?"default":"pointer"}});
+      const classCancelled=isClassCancelled(c);
+      const card=el("div",{style:{background:isEmpty?"#130d1f":classCancelled?"#2a0a0a":"#0d1f33",borderRadius:"8px",border:`1px solid ${classCancelled?"#7f1d1d":lc.border}`,overflow:"hidden",cursor:state.currentUser?.role==='guest'?"default":"pointer"}});
       card.addEventListener("click",()=>{if(state.currentUser?.role==='guest')return;state.expanded[c.id]=!state.expanded[c.id];render();});
-      card.appendChild(el("div",{style:{height:"3px",background:lc.color}}));
+      card.appendChild(el("div",{style:{height:"3px",background:classCancelled?"#ef4444":lc.color}}));
       const cbody=el("div",{style:{padding:"7px 8px"}});
-      cbody.appendChild(el("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"4px"}},el("span",{style:{fontSize:"11px",fontWeight:700,color:"var(--text)"}},c.time),el("span",{style:{fontSize:"9px"}},lc.emoji)));
+      cbody.appendChild(el("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"4px"}},el("span",{style:{fontSize:"11px",fontWeight:700,color:classCancelled?"#f87171":"var(--text)"}},c.time),el("span",{style:{fontSize:"9px"}},classCancelled?"🚫":lc.emoji)));
       const cardCoach=state.coaches.find(ch=>ch.id===c.coachId);
       const cardDateStr=isoDate(addDays(weekDate,dayOffsets[day]));
       const coachOnLeave=cardCoach&&coachOnLeaveDate(cardCoach,cardDateStr);
-      cbody.appendChild(el("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"5px"}},el("span",{style:{fontSize:"9px",color:lc.color,fontStyle:isEmpty?"italic":"normal"}},isEmpty?"Open Class":lv),cardCoach?el("span",{style:{fontSize:"8px",color:coachOnLeave?"#fb923c":"#7dd3fc",background:coachOnLeave?"#1c0a00":"#0c1a2e",borderRadius:"3px",padding:"1px 5px",border:"1px solid "+(coachOnLeave?"#92400e":"#0369a1")}},(coachOnLeave?"🏖 ":"👤 ")+cardCoach.name+(coachOnLeave?" · Off":"")):el("span",{style:{fontSize:"8px",color:"#1e3a5f"}},"Unassigned")));
+      cbody.appendChild(el("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"5px"}},el("span",{style:{fontSize:"9px",color:classCancelled?"#f87171":lc.color,fontStyle:isEmpty?"italic":"normal"}},classCancelled?"⛔ Cancelled":isEmpty?"Open Class":lv),cardCoach?el("span",{style:{fontSize:"8px",color:coachOnLeave?"#fb923c":"#7dd3fc",background:coachOnLeave?"#1c0a00":"#0c1a2e",borderRadius:"3px",padding:"1px 5px",border:"1px solid "+(coachOnLeave?"#92400e":"#0369a1")}},(coachOnLeave?"🏖 ":"👤 ")+cardCoach.name+(coachOnLeave?" · Off":"")):el("span",{style:{fontSize:"8px",color:"#1e3a5f"}},"Unassigned")));
       const fb=el("div",{style:{height:"3px",background:"var(--bg3)",borderRadius:"2px",overflow:"hidden",marginBottom:"5px"}});
       fb.appendChild(el("div",{style:{height:"100%",width:fillPct+"%",background:fillPct>=100?"#f87171":fillPct>75?"#fbbf24":"#4ade80",borderRadius:"2px"}}));
       cbody.appendChild(fb);
@@ -2392,14 +2435,17 @@ function buildCoachView(){
         const lv=isEmpty?"Open":dlvl(c),lc=isEmpty?OPEN_CLASS:LC[lv];
         const conf=c.students.filter(s=>s.attendance==="confirmed");
         const pend=c.students.filter(s=>s.attendance==="pending");
-        const card=el("div",{style:{background:isEmpty?"#0e0920":"#0d1f33",border:`1px solid ${lc.border}`,borderRadius:"9px",overflow:"hidden",borderLeft:`3px solid ${lc.color}`}});
+        const cc=isClassCancelled(c);
+        const card=el("div",{style:{background:isEmpty?"#0e0920":cc?"#2a0a0a":"#0d1f33",border:`1px solid ${cc?"#7f1d1d":lc.border}`,borderRadius:"9px",overflow:"hidden",borderLeft:`3px solid ${cc?"#ef4444":lc.color}`}});
         card.appendChild(el("div",{style:{padding:"8px 11px",background:"var(--bg2)",display:"flex",justifyContent:"space-between",alignItems:"center"}},
           el("div",null,
-            el("span",{style:{fontSize:"11px",fontWeight:700,color:"var(--text)"}},c.time),
-            el("span",{style:{fontSize:"9px",color:lc.color,marginLeft:"6px",fontStyle:isEmpty?"italic":"normal"}},lc.emoji+" "+(isEmpty?"Open Class":lv))),
+            el("span",{style:{fontSize:"11px",fontWeight:700,color:cc?"#f87171":"var(--text)"}},c.time),
+            el("span",{style:{fontSize:"9px",color:cc?"#f87171":lc.color,marginLeft:"6px",fontStyle:isEmpty?"italic":"normal"}},cc?"🚫 Cancelled":(lc.emoji+" "+(isEmpty?"Open Class":lv)))),
           el("span",{style:{fontSize:"9px",color:isEmpty?lc.color:"var(--text3)"}},c.students.length+"/"+c.capacity)));
         const cbody=el("div",{style:{padding:"8px 11px"}});
-        if(isEmpty){cbody.appendChild(el("div",{style:{fontSize:"10px",color:lc.color,fontStyle:"italic",textAlign:"center",padding:"4px 0"}},"✨ Open — no swimmers enrolled"));}
+        if(cc){
+          cbody.appendChild(el("div",{style:{fontSize:"10px",color:"#f87171",fontStyle:"italic",textAlign:"center",padding:"4px 0"}},"⛔ All students not coming"));
+        } else if(isEmpty){cbody.appendChild(el("div",{style:{fontSize:"10px",color:lc.color,fontStyle:"italic",textAlign:"center",padding:"4px 0"}},"✨ Open — no swimmers enrolled"));}
         else{
           if(conf.length>0){const s=el("div",{style:{marginBottom:"5px"}});s.appendChild(el("div",{style:{fontSize:"8px",color:"#4ade80",fontWeight:700,textTransform:"uppercase",marginBottom:"2px"}},"✓ Coming ("+conf.length+")"));const pills=el("div",{style:{display:"flex",flexWrap:"wrap",gap:"2px"}});conf.forEach(st=>pills.appendChild(el("span",{style:{fontSize:"9px",background:"#052e16",color:"#4ade80",borderRadius:"3px",padding:"1px 4px",border:"1px solid #166534"}},st.name.split(" ")[0])));s.appendChild(pills);cbody.appendChild(s);}
           if(pend.length>0){const s=el("div",null);s.appendChild(el("div",{style:{fontSize:"8px",color:"#fbbf24",fontWeight:700,textTransform:"uppercase",marginBottom:"2px"}},"○ Pending ("+pend.length+")"));const pills=el("div",{style:{display:"flex",flexWrap:"wrap",gap:"2px"}});pend.forEach(st=>pills.appendChild(el("span",{style:{fontSize:"9px",background:"#1c1100",color:"#fbbf24",borderRadius:"3px",padding:"1px 4px",border:"1px solid #92400e"}},st.name.split(" ")[0])));s.appendChild(pills);cbody.appendChild(s);}
