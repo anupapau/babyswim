@@ -236,10 +236,12 @@ select,input,textarea{font-family:var(--font);}
 
 /* Mobile user info — hidden on desktop (sidebar handles it) */
 .mobile-user-info{ display:none; }
+.mobile-bell{ display:none; }
 .topbar-title{ display:block; }
 
 @media(max-width:768px){
   .mobile-user-info{ display:flex !important; }
+  .mobile-bell{ display:flex !important; }
   .topbar-title{ display:none !important; }
   .topbar-inner{ padding:8px 12px !important; }
 }
@@ -1605,7 +1607,7 @@ function buildSidebar(){
     strip.appendChild(btn);return strip;
   }
 
-  const sidebar=el("div",{className:"vh100",style:{width:"180px",minWidth:"180px",background:"var(--bg2)",borderRight:"1px solid var(--border)",display:"flex",flexDirection:"column",overflow:"hidden"}});
+  const sidebar=el("div",{className:"vh100",style:{width:"210px",minWidth:"210px",background:"var(--bg2)",borderRight:"1px solid var(--border)",display:"flex",flexDirection:"column",overflow:"hidden"}});
 
   // Logo + collapse
   const logoRow=el("div",{style:{padding:"18px 16px 14px",borderBottom:"1px solid var(--border)",display:"flex",alignItems:"center",justifyContent:"space-between"}});
@@ -1628,7 +1630,7 @@ function buildSidebar(){
   sidebar.appendChild(userBar);
 
   // Nav
-  const navWrap=el("div",{style:{padding:"10px 8px",flex:"1 1 0",overflowY:"auto",minHeight:0}});
+  const navWrap=el("div",{style:{padding:"10px 8px",flex:"1 1 0",overflowY:"auto",overflowX:"hidden",minHeight:0}});
   const NAV=isGuest?[{v:"schedule",icon:"📅",label:"Schedule"}]:isCoach?[
     {v:"schedule",icon:"📅",label:"Schedule"},
     {v:"coach",icon:"👁",label:"Coach"},
@@ -1645,8 +1647,9 @@ function buildSidebar(){
   ];
   NAV.forEach(({v,icon,label})=>{
     const active=state.view===v;
-    const btn=el("button",{onClick:()=>{state.view=v;render();},style:{display:"flex",alignItems:"center",gap:"10px",width:"100%",padding:"10px 12px",borderRadius:"var(--radius-sm)",border:"none",fontSize:"13px",fontWeight:500,cursor:"pointer",marginBottom:"2px",textAlign:"left",background:active?"#2563eb":"transparent",color:active?"#fff":"#64748b"}});
-    btn.appendChild(el("span",{style:{fontSize:"14px",lineHeight:1}},icon));btn.appendChild(el("span",null,label));
+    const btn=el("button",{onClick:()=>{state.view=v;render();},style:{display:"flex",alignItems:"center",gap:"10px",width:"100%",padding:"10px 12px",borderRadius:"var(--radius-sm)",border:"none",fontSize:"13px",fontWeight:500,cursor:"pointer",marginBottom:"2px",textAlign:"left",background:active?"#2563eb":"transparent",color:active?"#fff":"#64748b",overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}});
+    btn.appendChild(el("span",{style:{fontSize:"14px",lineHeight:1,flexShrink:0}},icon));
+    btn.appendChild(el("span",{style:{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",flex:1}},label));
     if(!active){btn.addEventListener("mouseover",()=>btn.style.background="#0d1f33");btn.addEventListener("mouseout",()=>btn.style.background="transparent");}
     navWrap.appendChild(btn);
   });
@@ -1743,7 +1746,7 @@ function buildTopBar(){
   // User avatar + name (visible on mobile, hidden on desktop via sidebar)
   const cu=state.currentUser;
   const isGuest2=cu?.role==="guest";
-  const mobileUser=el("div",{className:"mobile-user-info",style:{display:"flex",alignItems:"center",gap:"6px",flexShrink:0}});
+  const mobileUser=el("div",{className:"mobile-user-info",style:{alignItems:"center",gap:"6px",flexShrink:0}});
   const avatarBg=cu?.role==="admin"?"#2e0a3a":cu?.role==="coach"?"#0c1a2e":"#171717";
   const avatarBorder=cu?.role==="admin"?"#7e22ce":cu?.role==="coach"?"#0369a1":"#404040";
   mobileUser.appendChild(el("div",{style:{width:"28px",height:"28px",borderRadius:"50%",background:avatarBg,border:`1.5px solid ${avatarBorder}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"13px",flexShrink:0}},isGuest2?"👁":cu?.role==="admin"?"⚙":"👤"));
@@ -1770,7 +1773,7 @@ function buildTopBar(){
     if(state.swimmers.filter(s=>s.active!==false&&!s.assignedClassId&&state.registrations.some(r=>r.swimmerName===s.name&&r.active!==false)).length>0)count++;
 
     if(count>0){
-      const bell=el("button",{onClick:()=>{state.showRemindersPanel=!state.showRemindersPanel;render();},style:{position:"relative",background:"none",border:"none",padding:"4px",cursor:"pointer",flexShrink:0,lineHeight:1}});
+      const bell=el("button",{className:"mobile-bell",onClick:()=>{state.showRemindersPanel=!state.showRemindersPanel;render();},style:{position:"relative",background:"none",border:"none",padding:"4px",cursor:"pointer",flexShrink:0,lineHeight:1}});
       bell.appendChild(el("span",{style:{fontSize:"18px"}},"🔔"));
       bell.appendChild(el("span",{style:{position:"absolute",top:"0",right:"0",background:"#ef4444",color:"#fff",borderRadius:"50%",width:"16px",height:"16px",fontSize:"9px",fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",lineHeight:1}},count));
       bar.appendChild(bell);
