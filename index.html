@@ -1790,8 +1790,17 @@ function buildShareModal(){
   // Buttons — declared before updatePreview so it can reference confirmBtn
   const confirmBtn=el("button",{onClick:()=>{
     const coachFilter=coachSel.value==="all"?null:parseInt(coachSel.value);
-    openSharePanel(daySel.value,coachFilter);dismiss();
-  },style:{flex:1,padding:"10px 0",borderRadius:"var(--radius-sm)",border:"none",fontSize:"13px",fontWeight:700,cursor:"pointer",background:"#2563eb",color:"#fff"}},"📤 Open & Share");
+    const isMobile=window.innerWidth<=768||/iphone|ipad|ipod|android/i.test(navigator.userAgent);
+    if(isMobile&&navigator.share){
+      // Mobile: generate text and share directly without popup
+      const shareText=generateShareText(daySel.value,coachFilter);
+      navigator.share({title:"RBSC Schedule",text:shareText}).catch(()=>{});
+      dismiss();
+    } else {
+      // Desktop: open in new window
+      openSharePanel(daySel.value,coachFilter);dismiss();
+    }
+  },style:{flex:1,padding:"10px 0",borderRadius:"var(--radius-sm)",border:"none",fontSize:"13px",fontWeight:700,cursor:"pointer",background:"#2563eb",color:"#fff"}},"📤 Share");
 
   // Preview label
   const previewLabel=el("div",{style:{background:"var(--bg2)",borderRadius:"var(--radius-sm)",padding:"10px 14px",marginBottom:"16px",fontSize:"12px",color:"var(--text3)",border:"1px solid var(--border)"}});
@@ -1820,6 +1829,33 @@ function buildShareModal(){
   updatePreview();
   overlay.appendChild(box);
   return overlay;
+}
+
+// ── Share text generator ───────────────────────────────────────
+function generateShareText(day, coachFilter){
+  const today=new Date();const todayIdx=today.getDay()===0?6:today.getDay()-1;
+  const dayIdx=DAYS.indexOf(day);let diff=dayIdx-todayIdx;if(diff<=0)diff+=7;
+  const targetDate=new Date(today);targetDate.setDate(today.getDate()+diff);
+  const dateStr=targetDate.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  const tmrCls=adminCls().filter(c=>c.day===day&&(coachFilter===null||c.coachId===coachFilter)).sort((a,b)=>a.time.localeCompare(b.time));
+  const coachName=coachFilter?state.coaches.find(ch=>ch.id===coachFilter)?.name:null;
+  function ageStr(s){if(s.dob&&/^\d{4}-\d{2}-\d{2}$/.test(s.dob)){const m=Math.round((new Date()-new Date(s.dob+"T00:00:00"))/(1000*60*60*24*30.44));const yr=Math.floor(m/12),mo=m%12;return yr===0?mo+"mo":mo===0?yr+"yr":yr+"yr "+mo+"mo";}return s.age||"";}
+  const lvEmoji={Guppy:"🐟",Turtle:"🐢",Dolphin:"🐬",Shark:"🦈",Orca:"🐋",Open:"✨"};
+  let text=`🏊 RBSC Baby Swimming\n${dateStr}${coachName?" · "+coachName:""}\n\n`;
+  if(!tmrCls.length){text+="No classes found.";return text;}
+  tmrCls.forEach(c=>{
+    const coach=state.coaches.find(ch=>ch.id===c.coachId);
+    const lvCounts={};c.students.forEach(s=>{const l=a2l(s.dob||s.age);lvCounts[l]=(lvCounts[l]||0)+1;});
+    const topLevel=c.students.length===0?"Open":(Object.entries(lvCounts).sort((a,b)=>b[1]-a[1])[0]?.[0]||"Open");
+    const confirmed=c.students.filter(s=>s.attendance==="confirmed");
+    const pending=c.students.filter(s=>s.attendance==="pending");
+    text+=`⏰ ${c.time} — ${lvEmoji[topLevel]||"🏊"} ${topLevel} | 👤 ${coach?coach.name:"No coach"}\n`;
+    if(confirmed.length)text+=`  ✅ ${confirmed.map(s=>s.name+(ageStr(s)?" ("+ageStr(s)+")":"")).join(", ")}\n`;
+    if(pending.length)text+=`  ⏳ ${pending.map(s=>s.name+(ageStr(s)?" ("+ageStr(s)+")":"")).join(", ")}\n`;
+    if(!c.students.length)text+=`  (No students)\n`;
+    text+="\n";
+  });
+  return text.trim();
 }
 
 // ── Share panel generator ───────────────────────────────────────
