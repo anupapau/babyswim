@@ -144,7 +144,9 @@ body{
   border-top: 1px solid var(--border2);
   z-index: 100;
   padding: 6px 0 max(6px, env(safe-area-inset-bottom));
-  justify-content: space-around;
+  overflow-x: auto;
+  justify-content: flex-start;
+  -webkit-overflow-scrolling: touch;
 }
 .mobile-nav button{
   display: flex;
@@ -156,17 +158,18 @@ body{
   color: var(--text3);
   font-size: 10px;
   font-weight: 600;
-  padding: 4px 8px;
+  padding: 4px 12px;
   min-height: unset;
   border-radius: 8px;
-  flex: 1;
+  flex-shrink: 0;
+  min-width: 56px;
 }
 .mobile-nav button.active{
   color: var(--accent2);
   background: rgba(59,130,246,0.12);
 }
 .mobile-nav button span.icon{ font-size: 20px; line-height:1; }
-.mobile-nav button span.label{ font-size: 9px; }
+.mobile-nav button span.label{ font-size: 9px; white-space:nowrap; }
 
 
 button{font-family:var(--font);cursor:pointer;transition:opacity 0.15s,background 0.15s,border-color 0.15s;}
@@ -229,6 +232,16 @@ select,input,textarea{font-family:var(--font);}
   font-weight: 600;
   display: block;
   margin-bottom: 5px;
+}
+
+/* Mobile user info — hidden on desktop (sidebar handles it) */
+.mobile-user-info{ display:none; }
+.topbar-title{ display:block; }
+
+@media(max-width:768px){
+  .mobile-user-info{ display:flex !important; }
+  .topbar-title{ display:none !important; }
+  .topbar-inner{ padding:8px 12px !important; }
 }
 
 /* Admin-add-list stays scrollable */
@@ -316,7 +329,7 @@ const state={
   newUser:{username:"",password:"",role:"admin",coachId:null},manageUsersErr:"",
   // App
   weeklyClasses:{},
-  view:"schedule",filterDay:"All",filterLvl:"All",expanded:{},schedFilterDay:null,
+  view:"schedule",filterDay:"All",filterLvl:"All",expanded:{},schedFilterDay:null,showRemindersPanel:false,
   schedWeekStart:isoDate(getMonday(new Date())),schedYear:new Date().getFullYear(),schedMonth:new Date().getMonth(),
   adminOpen:null,adminAdding:false,adminSearch:"",adminSel:[],adminPkgType:"group",adminConfirmAdd:false,overCapAlert:[],deleteConfirm:null,clsStudentSearch:"",
   adminWeekStart:isoDate(getMonday(new Date())),adminYear:new Date().getFullYear(),adminMonth:new Date().getMonth(),
@@ -1619,16 +1632,16 @@ function buildSidebar(){
   const NAV=isGuest?[{v:"schedule",icon:"📅",label:"Schedule"}]:isCoach?[
     {v:"schedule",icon:"📅",label:"Schedule"},
     {v:"coach",icon:"👁",label:"Coach"},
-    {v:"swimmers",icon:"📋",label:state.swimmersLabel},
+    {v:"swimmers",icon:"🏊",label:state.swimmersLabel},
     {v:"register",icon:"📝",label:"Register"},
   ]:[
     {v:"schedule",icon:"📅",label:"Schedule"},
     {v:"coach",icon:"👁",label:"Coach"},
-    {v:"admin",icon:"⚙",label:"Classes"},
-    {v:"swimmers",icon:"📋",label:state.swimmersLabel},
+    {v:"admin",icon:"📋",label:"Classes"},
+    {v:"swimmers",icon:"🏊",label:state.swimmersLabel},
     {v:"register",icon:"📝",label:"Register"},
     {v:"sales",icon:"📊",label:"Sales"+(()=>{const t=state.registrations.filter(r=>r.packages.some((p,i)=>p.type==="tryout"&&!r.packages.slice(i+1).some(q=>q.type!=="tryout")));return t.length?" · "+t.length+" tryout":"";})()},
-    ...(isAdmin?[{v:"manageusers",icon:"👥",label:"Control Centre"+(state.leaveRequests.filter(r=>r.status==="pending").length?" ·"+state.leaveRequests.filter(r=>r.status==="pending").length:""),badge:state.leaveRequests.filter(r=>r.status==="pending").length}]:[]),
+    ...(isAdmin?[{v:"manageusers",icon:"⚙️",label:"Control Centre"+(state.leaveRequests.filter(r=>r.status==="pending").length?" ·"+state.leaveRequests.filter(r=>r.status==="pending").length:""),badge:state.leaveRequests.filter(r=>r.status==="pending").length}]:[]),
   ];
   NAV.forEach(({v,icon,label})=>{
     const active=state.view===v;
@@ -1725,8 +1738,45 @@ function buildSidebar(){
 function buildTopBar(){
   const allSt=adminCls().flatMap(c=>c.students);
   const PAGE_TITLES={schedule:"📅 Schedule",coach:"👁 Coach",admin:"⚙ Classes",swimmers:"📋 "+state.swimmersLabel,register:"📝 Register",manageusers:"⚙️ Control Centre",sales:"📊 Sales"};
-  const bar=el("div",{className:"topbar-inner",style:{background:"var(--surface)",borderBottom:"1px solid var(--border)",padding:"14px 28px",display:"flex",alignItems:"center",gap:"16px",flexWrap:"wrap",position:"sticky",top:0,zIndex:10}});
-  bar.appendChild(el("h2",{style:{fontSize:"14px",fontWeight:700,color:"var(--text)",margin:0}},PAGE_TITLES[state.view]||""));
+  const bar=el("div",{className:"topbar-inner",style:{background:"var(--surface)",borderBottom:"1px solid var(--border)",padding:"10px 14px",display:"flex",alignItems:"center",gap:"10px",flexWrap:"wrap",position:"sticky",top:0,zIndex:10}});
+
+  // User avatar + name (visible on mobile, hidden on desktop via sidebar)
+  const cu=state.currentUser;
+  const isGuest2=cu?.role==="guest";
+  const mobileUser=el("div",{className:"mobile-user-info",style:{display:"flex",alignItems:"center",gap:"6px",flexShrink:0}});
+  const avatarBg=cu?.role==="admin"?"#2e0a3a":cu?.role==="coach"?"#0c1a2e":"#171717";
+  const avatarBorder=cu?.role==="admin"?"#7e22ce":cu?.role==="coach"?"#0369a1":"#404040";
+  mobileUser.appendChild(el("div",{style:{width:"28px",height:"28px",borderRadius:"50%",background:avatarBg,border:`1.5px solid ${avatarBorder}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"13px",flexShrink:0}},isGuest2?"👁":cu?.role==="admin"?"⚙":"👤"));
+  const nameDiv=el("div",{style:{lineHeight:1.2}});
+  nameDiv.appendChild(el("div",{style:{fontSize:"11px",fontWeight:700,color:"var(--text)",maxWidth:"80px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},isGuest2?"Guest":cu?.username||""));
+  nameDiv.appendChild(el("div",{style:{fontSize:"9px",color:cu?.role==="admin"?"#e879f9":cu?.role==="coach"?"#38bdf8":"var(--text3)"}},isGuest2?"View only":cu?.role==="admin"?"Admin":"Coach"));
+  mobileUser.appendChild(nameDiv);
+  mobileUser.appendChild(el("button",{onClick:doLogout,title:"Sign Out",style:{padding:"4px 8px",borderRadius:"6px",border:"1px solid var(--border)",fontSize:"11px",background:"var(--bg2)",color:"var(--text3)",cursor:"pointer",marginLeft:"2px"}},"↩"));
+  bar.appendChild(mobileUser);
+
+  bar.appendChild(el("h2",{className:"topbar-title",style:{fontSize:"14px",fontWeight:700,color:"var(--text)",margin:0}},PAGE_TITLES[state.view]||""));
+
+  // Reminders bell — admin only, mobile-first (also shows on desktop)
+  if(state.currentUser?.role==="admin"){
+    const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);
+    const tomorrowDay=DAYS[tomorrow.getDay()===0?6:tomorrow.getDay()-1];
+    let count=0;
+    const unconfirmedTmr=adminCls().filter(c=>c.day===tomorrowDay).reduce((s,c)=>s+c.students.filter(st=>st.attendance==="pending").length,0);
+    if(unconfirmedTmr>0)count++;
+    if(state.leaveRequests.filter(r=>r.status==="pending").length>0)count++;
+    if(state.registrations.filter(r=>r.packages.some((p,i)=>p.type==="tryout"&&!r.packages.slice(i+1).some(q=>q.type!=="tryout"))).length>0)count++;
+    if(adminCls().filter(c=>!c.coachId).length>0)count++;
+    if(adminCls().reduce((s,c)=>s+(c.waitingList||[]).length,0)>0)count++;
+    if(state.swimmers.filter(s=>s.active!==false&&!s.assignedClassId&&state.registrations.some(r=>r.swimmerName===s.name&&r.active!==false)).length>0)count++;
+
+    if(count>0){
+      const bell=el("button",{onClick:()=>{state.showRemindersPanel=!state.showRemindersPanel;render();},style:{position:"relative",background:"none",border:"none",padding:"4px",cursor:"pointer",flexShrink:0,lineHeight:1}});
+      bell.appendChild(el("span",{style:{fontSize:"18px"}},"🔔"));
+      bell.appendChild(el("span",{style:{position:"absolute",top:"0",right:"0",background:"#ef4444",color:"#fff",borderRadius:"50%",width:"16px",height:"16px",fontSize:"9px",fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",lineHeight:1}},count));
+      bar.appendChild(bell);
+    }
+  }
+
   bar.appendChild(el("div",{style:{flex:1}}));
   // Share button — admin only
   if(state.currentUser?.role==="admin"){
@@ -1738,7 +1788,40 @@ function buildTopBar(){
   }
   const legend=el("div",{className:"topbar-legend",style:{display:"flex",gap:"8px",flexWrap:"wrap"}});
   Object.entries(LC).forEach(([lv,lc])=>{legend.appendChild(el("div",{style:{display:"flex",alignItems:"center",gap:"3px"}},el("span",{style:{width:"6px",height:"6px",borderRadius:"50%",background:lc.dot,display:"inline-block"}}),el("span",{style:{fontSize:"9px",color:lc.color}},lc.emoji+" "+lv+" ",el("span",{style:{color:"var(--text3)"}},"("+lc.al+")"))));});
-  bar.appendChild(legend);return bar;
+  bar.appendChild(legend);
+
+  // Reminders dropdown panel (shown when bell tapped)
+  if(state.showRemindersPanel&&state.currentUser?.role==="admin"){
+    const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);
+    const tomorrowDay=DAYS[tomorrow.getDay()===0?6:tomorrow.getDay()-1];
+    const reminders=[];
+    const unconfirmedTmr=adminCls().filter(c=>c.day===tomorrowDay).reduce((s,c)=>s+c.students.filter(st=>st.attendance==="pending").length,0);
+    if(unconfirmedTmr>0)reminders.push({icon:"⏰",text:unconfirmedTmr+" student"+(unconfirmedTmr>1?"s":"")+" unconfirmed for tomorrow",color:"#fbbf24",action:()=>{state.view="admin";state.showRemindersPanel=false;render();}});
+    const pendingLeave=state.leaveRequests.filter(r=>r.status==="pending").length;
+    if(pendingLeave>0)reminders.push({icon:"🏖",text:pendingLeave+" leave request"+(pendingLeave>1?"s":"")+" pending",color:"#fb923c",action:()=>{state.view="manageusers";state.manageTab="coaches";state.showRemindersPanel=false;render();}});
+    const pendingTryouts=state.registrations.filter(r=>r.packages.some((p,i)=>p.type==="tryout"&&!r.packages.slice(i+1).some(q=>q.type!=="tryout"))).length;
+    if(pendingTryouts>0)reminders.push({icon:"🟢",text:pendingTryouts+" tryout"+(pendingTryouts>1?"s":"")+" to convert",color:"#a3e635",action:()=>{state.view="sales";state.salesTab="tryout";state.showRemindersPanel=false;render();}});
+    const noCoachCls=adminCls().filter(c=>!c.coachId).length;
+    if(noCoachCls>0)reminders.push({icon:"👤",text:noCoachCls+" class"+(noCoachCls>1?"es":"")+" without a coach",color:"#f87171",action:()=>{state.view="admin";state.showRemindersPanel=false;render();}});
+    const waitingTotal=adminCls().reduce((s,c)=>s+(c.waitingList||[]).length,0);
+    if(waitingTotal>0)reminders.push({icon:"🔶",text:waitingTotal+" swimmer"+(waitingTotal>1?"s":"")+" on waiting list",color:"#fb923c",action:()=>{state.view="admin";state.showRemindersPanel=false;render();}});
+    const unassigned=state.swimmers.filter(s=>s.active!==false&&!s.assignedClassId&&state.registrations.some(r=>r.swimmerName===s.name&&r.active!==false)).length;
+    if(unassigned>0)reminders.push({icon:"📋",text:unassigned+" enrolled swimmer"+(unassigned>1?"s":"")+" unassigned",color:"#60a5fa",action:()=>{state.view="swimmers";state.showRemindersPanel=false;render();}});
+
+    const panel=el("div",{style:{position:"absolute",top:"100%",left:0,right:0,background:"var(--surface)",borderBottom:"1px solid var(--border2)",zIndex:20,padding:"8px"}});
+    reminders.forEach(r=>{
+      const item=el("div",{onClick:()=>{r.action();},style:{display:"flex",alignItems:"center",gap:"10px",padding:"10px 12px",borderRadius:"8px",marginBottom:"4px",background:"var(--bg2)",cursor:"pointer",border:"1px solid var(--border)"}});
+      item.appendChild(el("span",{style:{fontSize:"16px",flexShrink:0}},r.icon));
+      item.appendChild(el("span",{style:{fontSize:"12px",color:r.color,fontWeight:500,flex:1}},r.text));
+      item.appendChild(el("span",{style:{fontSize:"11px",color:"var(--text3)"}},"→"));
+      panel.appendChild(item);
+    });
+    bar.style.position="sticky";
+    bar.style.flexWrap="wrap";
+    bar.appendChild(el("div",{style:{width:"100%",position:"relative"}},panel));
+  }
+
+  return bar;
 }
 
 // ── Share Modal ────────────────────────────────────────────────
@@ -1874,8 +1957,9 @@ function openSharePanel(day,coachFilter){
 
   actionBar.appendChild(mkBtn("✕ Close","#334155","#fff",()=>overlay.remove()));
 
-  const imgBtn=mkBtn("📸 Save / Share Image","#1e40af","#fff",async()=>{
+  const imgBtn=mkBtn("📸 Save Image","#1e40af","#fff",async()=>{
     imgBtn.textContent="⏳ Generating…";imgBtn.disabled=true;
+    copyImgBtn.disabled=true;
     actionBar.style.display="none";
     try{
       const h2c=window.html2canvas||await new Promise((res,rej)=>{
@@ -1885,16 +1969,11 @@ function openSharePanel(day,coachFilter){
         document.head.appendChild(s);
       });
       const canvas=await h2c(captureDiv,{
-        scale:2,
-        backgroundColor:"#f1f5f9",
-        useCORS:true,
-        logging:false,
-        width:captureDiv.scrollWidth,
-        height:captureDiv.scrollHeight,
-        windowWidth:captureDiv.scrollWidth,
-        windowHeight:captureDiv.scrollHeight,
+        scale:2,backgroundColor:"#f1f5f9",useCORS:true,logging:false,
+        width:captureDiv.scrollWidth,height:captureDiv.scrollHeight,
+        windowWidth:captureDiv.scrollWidth,windowHeight:captureDiv.scrollHeight,
       });
-      actionBar.style.display="";imgBtn.textContent="📸 Save / Share Image";imgBtn.disabled=false;
+      actionBar.style.display="";imgBtn.textContent="📸 Save Image";imgBtn.disabled=false;copyImgBtn.disabled=false;
       const dataUrl=canvas.toDataURL("image/jpeg",0.95);
       const blob=await(await fetch(dataUrl)).blob();
       const file=new File([blob],"RBSC-schedule.jpg",{type:"image/jpeg"});
@@ -1906,11 +1985,47 @@ function openSharePanel(day,coachFilter){
         document.body.appendChild(a);a.click();document.body.removeChild(a);
       }
     }catch(e){
-      actionBar.style.display="";imgBtn.textContent="📸 Save / Share Image";imgBtn.disabled=false;
-      alert("Image generation failed. Try the Copy Text option instead.");
+      actionBar.style.display="";imgBtn.textContent="📸 Save Image";imgBtn.disabled=false;copyImgBtn.disabled=false;
+      alert("Image generation failed.");
     }
   });
   actionBar.appendChild(imgBtn);
+
+  const copyImgBtn=mkBtn("📋 Copy Image","#0f2744","#60a5fa",async()=>{
+    copyImgBtn.textContent="⏳ Copying…";copyImgBtn.disabled=true;
+    imgBtn.disabled=true;
+    actionBar.style.display="none";
+    try{
+      const h2c=window.html2canvas||await new Promise((res,rej)=>{
+        const s=document.createElement("script");
+        s.src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+        s.onload=()=>res(window.html2canvas);s.onerror=rej;
+        document.head.appendChild(s);
+      });
+      const canvas=await h2c(captureDiv,{
+        scale:2,backgroundColor:"#f1f5f9",useCORS:true,logging:false,
+        width:captureDiv.scrollWidth,height:captureDiv.scrollHeight,
+        windowWidth:captureDiv.scrollWidth,windowHeight:captureDiv.scrollHeight,
+      });
+      actionBar.style.display="";copyImgBtn.textContent="📋 Copy Image";copyImgBtn.disabled=false;imgBtn.disabled=false;
+      canvas.toBlob(async blob=>{
+        try{
+          await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
+          copyImgBtn.textContent="✓ Copied!";
+          setTimeout(()=>copyImgBtn.textContent="📋 Copy Image",2000);
+        }catch(e){
+          // Fallback: open image so user can right-click copy
+          const url=URL.createObjectURL(blob);
+          const w=window.open(url,"_blank");
+          if(!w)alert("Right-click the image and choose Copy Image");
+        }
+      },"image/png");
+    }catch(e){
+      actionBar.style.display="";copyImgBtn.textContent="📋 Copy Image";copyImgBtn.disabled=false;imgBtn.disabled=false;
+      alert("Could not copy image.");
+    }
+  });
+  actionBar.appendChild(copyImgBtn);
 
   const shareText=generateShareText(day,coachFilter);
   actionBar.appendChild(mkBtn("📋 Copy Text","#0f172a","#94a3b8",()=>{
@@ -3336,10 +3451,11 @@ function buildApp(){
     {v:"register",icon:"📝",label:"Register"},
   ]:[
     {v:"schedule",icon:"📅",label:"Schedule"},
-    {v:"admin",icon:"⚙",label:"Classes"},
-    {v:"swimmers",icon:"📋",label:"Swimmers"},
+    {v:"coach",icon:"👁",label:"Coach"},
+    {v:"admin",icon:"📋",label:"Classes"},
+    {v:"swimmers",icon:"🏊",label:"Swimmers"},
     {v:"sales",icon:"📊",label:"Sales"},
-    {v:"manageusers",icon:"⚙️",label:"Control"},
+    {v:"manageusers",icon:"⚙️",label:"More"},
   ];
   mobileNavItems.forEach(({v,icon,label})=>{
     const btn=el("button",{onClick:()=>{state.view=v;render();},className:state.view===v?"active":""});
