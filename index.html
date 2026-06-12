@@ -266,7 +266,7 @@ const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov",
 const MAX_STAPLE=4;
 const PKG={private:{label:"Private",icon:"👤",color:"#e879f9",bg:"#2e0a3a",border:"#7e22ce"},group:{label:"Group",icon:"👥",color:"#38bdf8",bg:"#0c1a2e",border:"#0369a1"},tryout:{label:"Tryout",icon:"🟢",color:"#a3e635",bg:"#0f2000",border:"#4d7c0f"}};
 const SESSION_STATUSES={attended:{label:"✅ Attended",color:"#4ade80",bg:"#052e16",border:"#166534",counted:true},noshow:{label:"❌ No-show",color:"#f87171",bg:"#450a0a",border:"#7f1d1d",counted:false},weather:{label:"🌧 Weather",color:"#38bdf8",bg:"#0c1a2e",border:"#0369a1",counted:false},noswim:{label:"🚫 Didn't swim",color:"#fbbf24",bg:"#1c1100",border:"#92400e",counted:false}};
-const PKG_TYPES_DEFAULT={private:{label:"Private",classes:8,price:7000,color:"#e879f9",bg:"#2e0a3a",border:"#7e22ce"},group:{label:"Group",classes:10,price:5000,color:"#38bdf8",bg:"#0c1a2e",border:"#0369a1"},dropin:{label:"Drop In",classes:1,price:1000,color:"#fbbf24",bg:"#1c1100",border:"#92400e"},tryout:{label:"Tryout",classes:1,price:0,color:"#a3e635",bg:"#0f2000",border:"#4d7c0f"}};
+const PKG_TYPES_DEFAULT={private:{label:"Private",classes:8,price:7000,color:"#e879f9",bg:"#2e0a3a",border:"#7e22ce"},group:{label:"Group",classes:8,price:5000,color:"#38bdf8",bg:"#0c1a2e",border:"#0369a1"},dropin:{label:"Drop In",classes:1,price:1000,color:"#fbbf24",bg:"#1c1100",border:"#92400e"},tryout:{label:"Tryout",classes:1,price:0,color:"#a3e635",bg:"#0f2000",border:"#4d7c0f"}};
 let PKG_TYPES=JSON.parse(JSON.stringify(PKG_TYPES_DEFAULT));
 
 // ── Helpers ────────────────────────────────────────────────────
@@ -585,17 +585,18 @@ const state={
     {id:20109,swimmerName:"Punchable Limpichotipong (Ling-un)",parentName:"Weeraya Limpichotipong (B)",contactNumber:"0828948899",classId:null,active:false,packages:[{id:20176,type:"tryout",totalClasses:8,sessions:[],active:false,startedAt:"",payment:1000,contactNumber:"0828948899"}]},
     {id:20110,swimmerName:"Ati",parentName:"Ithichai poolvaraluck (Win)",contactNumber:"0944262654",classId:null,active:false,packages:[{id:20177,type:"group",totalClasses:8,sessions:[],active:false,startedAt:"",payment:0,contactNumber:"0944262654"}]},
     {id:20111,swimmerName:"Pirmin Visetbhakdi",parentName:"Patcharapun Visetbhakdi (Pam S.)",contactNumber:"0634655919",classId:null,active:false,packages:[{id:20178,type:"group",totalClasses:8,sessions:[{id:21047,date:"2025-11-20",status:"attended",counted:true,note:""},{id:21048,date:"2025-11-28",status:"attended",counted:true,note:""},{id:21049,date:"2026-02-15",status:"attended",counted:true,note:""},{id:21050,date:"2026-02-26",status:"attended",counted:true,note:""},{id:21051,date:"2026-02-28",status:"attended",counted:true,note:""},{id:21052,date:"2026-03-04",status:"attended",counted:true,note:""},{id:21053,date:"2026-03-06",status:"attended",counted:true,note:""},{id:21054,date:"2026-03-14",status:"attended",counted:true,note:""}],active:false,startedAt:"2025-11-20",payment:0,contactNumber:"0634655919"}]}
-  ],regFilter:"All",regExpanded:{},regAddSession:{},showRegModal:false,regNew:{pkgType:"group"},regContinue:{},regShowHistory:{},regSearchQ:"",regViewTab:"active",regDateModal:null,dragRegId:null,dragOverClassId:null,
+  ],regFilter:"All",regExpanded:{},regAddSession:{},showRegModal:false,regNew:{pkgType:"group"},regContinue:{},regShowHistory:{},regSearchQ:"",regViewTab:"today",regDateModal:null,dragRegId:null,dragOverClassId:null,
   mMode:"manual",mSwSearch:"",mSwSel:null,mRegPkgType:"group",
   coachFilterDay:"All",coachCollapsed:{},coachWeekStart:isoDate(getMonday(new Date())),coachYear:new Date().getFullYear(),coachMonth:new Date().getMonth(),
   adminFilterDay:"All",adminDayCollapsed:{},copyConfirm:false,adminTab:"classes",poolClosures:{},poolClosureModal:null,poolClosureReason:"",closureCalYear:new Date().getFullYear(),closureCalMonth:new Date().getMonth(),closurePickDate:null,closurePickType:"full",closurePickReason:"",closurePickFrom:"08:00",closurePickTo:"12:00",
   manageTab:"users",showAddUser:false,showAddCoach:false,pkgTypeEdit:null,pkgTypeConfirm:null,pkgTypeNewName:"",pkgTypeNewClasses:"8",pkgTypeNewPrice:"0",pkgTypeNewErr:"",
-  pkgPrices:{private:3500,group:2800,dropin:600,tryout:0},salePayment:"",
+  pkgPrices:{private:7000,group:5000,dropin:1000,tryout:0},salePayment:"",
   convertModal:null,convertOpen:null,convertDraft:null,shareModal:null,
   saleSwSearch:"",saleSelIds:[],salePkgType:"group",saleDate:"",saleErr:"",
   salesYear:new Date().getFullYear(),salesMonth:new Date().getMonth(),salesTab:"transactions",dashMonth:null,showSaleForm:false,txMonth:"all",editPayment:null,editPkgType:null,
   coachTab:"classes",leaveRequests:[],lrFrom:"",lrTo:"",lrNote:"",lrErr:"",
   advanceBookings:[],abSwSearch:"",abSwSel:null,abDay:"",abTime:"",abDate:"",abErr:"",
+  regWeekStart:null,postSaleNoClassIds:null,reactivatePrompt:null,
   coaches:[
     {id:1,name:"Coach Pom",leaves:[],payType:"hourly",hourlyRate:500,monthlyBase:0,bonuses:[]},
   ],selectedCoach:"All",newCoachName:"",coachLeaveExpanded:{},coachLeaveForm:{},coachSalaryExpanded:{},
@@ -1077,6 +1078,138 @@ seedTimetableStudents();
 
 
 }());
+
+// ── Step 1: Migrate registrations[] into swimmer records ───────
+// After this runs, swimmer.currentCourse and swimmer.courseHistory
+// are the single source of truth. registrations[] is kept as
+// legacy read-only backup during transition.
+(function migrateRegistrationsToSwimmers(){
+  // Build a lookup: normalised name → swimmer
+  function normName(n){return(n||"").toLowerCase().trim();}
+
+  state.registrations.forEach(reg=>{
+    const pkgs=(reg.packages||[]);
+    if(!pkgs.length)return;
+
+    // Try to find matching swimmer by name
+    let sw=state.swimmers.find(s=>normName(s.name)===normName(reg.swimmerName));
+    // Fallback: match by contact number
+    if(!sw&&reg.contactNumber)
+      sw=state.swimmers.find(s=>s.contactNumber===reg.contactNumber&&normName(s.name).split(" ")[0]===normName(reg.swimmerName).split(" ")[0]);
+
+    if(!sw){
+      // Create a ghost swimmer record so no data is lost
+      const ghostId=Date.now()+Math.random();
+      sw={
+        id:ghostId,name:reg.swimmerName,parentName:reg.parentName||"",
+        dob:"",babyId:genBabyId(),memberId:"",contactNumber:reg.contactNumber||"",
+        pkg:(pkgs[pkgs.length-1]?.type)||"group",
+        assignedClassId:null,assignedLabel:null,active:reg.active!==false,
+        createdAt:"",
+        currentCourse:null,courseHistory:[]
+      };
+      state.swimmers.push(sw);
+    }
+
+    // Ensure fields exist
+    if(!sw.currentCourse)sw.currentCourse=null;
+    if(!sw.courseHistory)sw.courseHistory=[];
+
+    // Convert each package into a course object
+    // packages with active:true → currentCourse (last one wins)
+    // packages with active:false → courseHistory
+    pkgs.forEach(pkg=>{
+      const course={
+        type:pkg.type||"group",
+        startDate:pkg.startedAt||"",
+        totalClasses:pkg.totalClasses||8,
+        sessionsUsed:(pkg.sessions||[]).filter(s=>s.counted!==false&&s.status==="attended").length,
+        payment:pkg.payment||0,
+        history:(pkg.sessions||[]).map(s=>({date:s.date,status:s.status||"attended"})),
+        _legacyPkgId:pkg.id,
+        _regId:reg.id
+      };
+      if(pkg.active){
+        sw.currentCourse=course;
+      } else {
+        // Avoid duplicates
+        const alreadyIn=sw.courseHistory.some(c=>c._legacyPkgId===pkg.id);
+        if(!alreadyIn)sw.courseHistory.push(course);
+      }
+    });
+  });
+}());
+
+// ── New swimmer data-model helpers ─────────────────────────────
+// All new code should read/write these instead of registrations[]
+
+/** Get the swimmer's active course (currentCourse), or null */
+function swCurrentCourse(sw){return sw?.currentCourse||null;}
+
+/** Count attended sessions in currentCourse */
+function swSessionsUsed(sw){
+  const c=swCurrentCourse(sw);
+  if(!c)return 0;
+  return (c.history||[]).filter(h=>h.status==="attended").length;
+}
+
+/** Remaining classes in currentCourse */
+function swRemaining(sw){
+  const c=swCurrentCourse(sw);
+  if(!c)return 0;
+  return Math.max(0,(c.totalClasses||8)-swSessionsUsed(sw));
+}
+
+/** Is currentCourse complete (all sessions used)? */
+function swCourseComplete(sw){
+  const c=swCurrentCourse(sw);
+  if(!c)return false;
+  return swSessionsUsed(sw)>=c.totalClasses;
+}
+
+/** Add an attendance entry to swimmer's currentCourse — safe to call multiple times */
+function swAddAttendance(sw,date,status){
+  if(!sw.currentCourse)return;
+  // Never record the same date twice
+  if((sw.currentCourse.history||[]).some(h=>h.date===date))return;
+  const newHistory=[...(sw.currentCourse.history||[]),{date,status}];
+  // Always derive sessionsUsed from history — single source of truth
+  const newSessUsed=newHistory.filter(h=>h.status==="attended").length;
+  sw.currentCourse={
+    ...sw.currentCourse,
+    history:newHistory,
+    sessionsUsed:newSessUsed
+  };
+  // Auto-complete: archive to courseHistory when all sessions used
+  if(newSessUsed>=(sw.currentCourse.totalClasses||8)){
+    swCompleteCourse(sw);
+  }
+}
+
+/** Start a new course on a swimmer (converts tryout or starts fresh) */
+function swStartCourse(sw,type,startDate,payment){
+  // Archive currentCourse if exists
+  if(sw.currentCourse){
+    sw.courseHistory=[...(sw.courseHistory||[]),sw.currentCourse];
+  }
+  const pt=PKG_TYPES[type]||PKG_TYPES.group;
+  sw.currentCourse={
+    type,
+    startDate,
+    totalClasses:pt.classes||8,
+    sessionsUsed:0,
+    payment:payment||pt.price||0,
+    history:[]
+  };
+}
+
+/** Complete currentCourse → move to courseHistory */
+function swCompleteCourse(sw){
+  if(!sw.currentCourse)return;
+  sw.courseHistory=[...(sw.courseHistory||[]),sw.currentCourse];
+  sw.currentCourse=null;
+}
+
 function getCls(weekIso){return (state.weeklyClasses[weekIso]||[]).map(c=>({waitingList:[],...c}));}
 function setWkCls(weekIso,classes){state.weeklyClasses={...state.weeklyClasses,[weekIso]:classes};}
 // get/set helpers for the admin-selected week
@@ -1185,8 +1318,23 @@ function calcMonthlyProfit(year,month){
   const mPrefix=year+"-"+String(month+1).padStart(2,"0");
   const breakdown={private:0,group:0,dropin:0,tryout:0,other:0};
   let realIncome=0;
+  // Read from swimmer records (new model)
+  state.swimmers.forEach(sw=>{
+    const courses=[...(sw.courseHistory||[]),...(sw.currentCourse?[sw.currentCourse]:[])];
+    courses.filter(c=>(c.startDate||"").startsWith(mPrefix)&&c.payment).forEach(c=>{
+      const amt=c.payment||0;
+      realIncome+=amt;
+      if(breakdown[c.type]!==undefined)breakdown[c.type]+=amt;
+      else breakdown.other+=amt;
+    });
+  });
+  // Fallback: also read legacy registrations not yet migrated
   state.registrations.forEach(r=>{
     (r.packages||[]).filter(p=>(p.startedAt||"").startsWith(mPrefix)&&p.payment).forEach(p=>{
+      // Skip if already counted via swimmer record
+      const sw=state.swimmers.find(s=>s.name===r.swimmerName);
+      const alreadyCounted=sw&&[...(sw.courseHistory||[]),...(sw.currentCourse?[sw.currentCourse]:[])].some(c=>c._legacyPkgId===p.id);
+      if(alreadyCounted)return;
       const amt=p.payment||0;
       realIncome+=amt;
       if(breakdown[p.type]!==undefined)breakdown[p.type]+=amt;
@@ -1197,8 +1345,19 @@ function calcMonthlyProfit(year,month){
   return{realIncome,totalSalary,profit:realIncome-totalSalary,breakdown};
 }
 
-function attC(att){if(att==="confirmed")return{b:"#166534",bg:"#052e16",c:"#4ade80",label:"✓ Coming"};if(att==="cancelled")return{b:"#7f1d1d",bg:"#450a0a",c:"#f87171",label:"✗ Not Coming"};return{b:"#92400e",bg:"#1c1100",c:"#fbbf24",label:"○ Pending"};}
-function isClassCancelled(c){return c.students.length>0&&c.students.filter(s=>!s.transferTo).length>0&&c.students.filter(s=>!s.transferTo).every(s=>s.attendance==="cancelled");}
+function attC(att){
+  if(att==="confirmed") return{b:"#1d4ed8",bg:"#0f2a4a",c:"#60a5fa",label:"✅ Confirmed"};
+  if(att==="attended")  return{b:"#166534",bg:"#052e16",c:"#4ade80",label:"✓ Attended"};
+  if(att==="absent")    return{b:"#7f1d1d",bg:"#450a0a",c:"#f87171",label:"❌ Absent"};
+  if(att==="cancelled") return{b:"#7f1d1d",bg:"#450a0a",c:"#f87171",label:"✗ Cancelled"};
+  return{b:"#92400e",bg:"#1c1100",c:"#fbbf24",label:"⏳ Pending"};
+}
+function isClassCancelled(c){
+  if(!c.students.length)return false;
+  const active=c.students.filter(s=>!s.transferTo);
+  if(!active.length)return false;
+  return active.every(s=>s.attendance==="absent");
+}
 function toggleClassClosed(classId){
   Object.keys(state.weeklyClasses).forEach(w=>{
     state.weeklyClasses[w]=state.weeklyClasses[w].map(c=>c.id===classId?{...c,closed:!c.closed}:c);
@@ -1219,11 +1378,23 @@ function doLogin(){
 function doLogout(){state.currentUser=null;state.view="schedule";render();}
 
 // ── Mutations ──────────────────────────────────────────────────
-function cycleAtt(classId,sid){setAdminCls(adminCls().map(c=>c.id!==classId?c:{...c,students:c.students.map(s=>s.id!==sid?s:{...s,attendance:s.attendance==="pending"?"confirmed":s.attendance==="confirmed"?"cancelled":"pending"})}));render();}
+function cycleAtt(classId,sid){setAdminCls(adminCls().map(c=>c.id!==classId?c:{...c,students:c.students.map(s=>s.id!==sid?s:{...s,attendance:s.attendance==="pending"?"confirmed":"pending"})}));render();}
 function pinSt(classId,sid){setAdminCls(adminCls().map(c=>{if(c.id!==classId)return c;const n=c.students.filter(s=>s.staple).length;return{...c,students:c.students.map(s=>s.id!==sid?s:s.staple?{...s,staple:false}:n>=MAX_STAPLE?s:{...s,staple:true})};  }));render();}
 function remSt(classId,sid){
   const student=adminCls().find(c=>c.id===classId)?.students.find(s=>s.id===sid);
-  setAdminCls(adminCls().map(c=>c.id!==classId?c:{...c,students:c.students.filter(s=>s.id!==sid)}));
+  // Remove from ALL weeks that have this student in this class slot
+  const fromCls=adminCls().find(c=>c.id===classId);
+  if(fromCls){
+    Object.keys(state.weeklyClasses).forEach(weekIso=>{
+      const weekCls=state.weeklyClasses[weekIso];
+      const matchCls=weekCls.find(c=>c.day===fromCls.day&&c.time===fromCls.time);
+      if(matchCls){
+        state.weeklyClasses={...state.weeklyClasses,[weekIso]:weekCls.map(c=>c.id!==matchCls.id?c:{...c,students:c.students.filter(s=>s.id!==sid&&s.name!==student?.name)})};
+      }
+    });
+  } else {
+    setAdminCls(adminCls().map(c=>c.id!==classId?c:{...c,students:c.students.filter(s=>s.id!==sid)}));
+  }
   if(student){
     state.registrations=state.registrations.filter(r=>!(r.classId===classId&&r.swimmerName===student.name));
     state.swimmers=state.swimmers.map(s=>s.name===student.name&&s.assignedClassId===classId?{...s,assignedClassId:null,assignedLabel:null}:s);
@@ -1233,7 +1404,7 @@ function remSt(classId,sid){
 function addSt(classId,sw,pkgType){
   const cls=adminCls().find(c=>c.id===classId);
   if(!cls)return;
-  const activeStudents=cls.students.filter(s=>!s.transferTo&&s.attendance!=="cancelled").length;
+  const activeStudents=cls.students.filter(s=>!s.transferTo&&s.attendance!=="absent").length;
   const overCap=activeStudents>=cls.capacity;
   if(overCap){
     if(!(cls.waitingList||[]).some(w=>w.name===sw.name)){
@@ -1243,7 +1414,7 @@ function addSt(classId,sw,pkgType){
     }
     return;
   }
-  setAdminCls(adminCls().map(c=>c.id!==classId?c:{...c,students:[...c.students,{id:Date.now()+Math.random(),name:sw.name,dob:sw.dob||"",age:sw.age||"",parentName:sw.parentName||"",attendance:"pending",staple:false,pkg:pkgType||sw.pkg||"group",transferTo:null}]}));
+  setAdminCls(adminCls().map(c=>c.id!==classId?c:{...c,students:[...c.students,{id:sw.id||Date.now()+Math.random(),name:sw.name,dob:sw.dob||"",age:sw.age||"",parentName:sw.parentName||"",attendance:"pending",staple:false,pkg:pkgType||sw.pkg||"group",transferTo:null}]}));
 }
 function saveCap(classId){const v=parseInt(state.capEdit[classId]);if(!v||v<1)return;setAdminCls(adminCls().map(c=>c.id!==classId?c:{...c,capacity:v}));delete state.capEdit[classId];render();}
 function reqXfer(fromId,sid,toDay,toTime){
@@ -1251,10 +1422,14 @@ function reqXfer(fromId,sid,toDay,toTime){
   const t=cls.find(c=>c.day===toDay&&c.time===toTime);if(!t)return;
   const fromCls=cls.find(c=>c.id===fromId);
   const student=fromCls&&fromCls.students.find(s=>s.id===sid);if(!student)return;
-  let updated=cls.map(c=>c.id!==fromId?c:{...c,students:c.students.map(s=>s.id!==sid?s:{...s,attendance:"cancelled",transferTo:{classId:t.id,day:toDay,time:toTime}})});
+  let updated=cls.map(c=>c.id!==fromId?c:{...c,students:c.students.map(s=>s.id!==sid?s:{...s,attendance:"absent",transferTo:{classId:t.id,day:toDay,time:toTime}})});
   if(!t.students.some(s=>s.id===student.id))
     updated=updated.map(c=>c.id!==t.id?c:{...c,students:[...c.students,{...student,attendance:"pending",transferTo:null,staple:false,transferredFrom:{day:fromCls.day,time:fromCls.time}}]});
-  setAdminCls(updated);state.xferModal=null;render();
+  setAdminCls(updated);
+  // Update swimmer's assignedClassId to new class
+  const sw=state.swimmers.find(s=>s.id===sid||s.name===student.name);
+  if(sw){state.swimmers=state.swimmers.map(s=>s.id!==sw.id?s:{...s,assignedClassId:t.id,assignedLabel:toDay+" "+toTime});}
+  state.xferModal=null;render();
 }
 function clearXfer(classId,sid){setAdminCls(adminCls().map(c=>c.id!==classId?c:{...c,students:c.students.map(s=>s.id!==sid?s:{...s,attendance:"pending",transferTo:null})}));render();}
 function deleteClass(classId){const c=adminCls().find(x=>x.id===classId);if(!c)return;if(c.students.length>0&&!confirm("Delete class with "+c.students.length+" student(s)?"))return;setAdminCls(adminCls().filter(x=>x.id!==classId));state.adminOpen=null;render();}
@@ -1276,13 +1451,11 @@ function submitAdd(){
     if(!state.mName.trim()){state.mErr="Enter a name.";render();return;}
     addSt(t.id,{name:state.mName.trim(),dob:state.mDob||"",age:state.mDob?"":"—",parentName:state.mParentName||"",pkg:state.mPkg,babyId:genBabyId()},state.mRegPkgType);
   } else {
-    const mSelArr=state.mSwSel||[];
-    if(!mSelArr.length){state.mErr="Select at least one swimmer.";render();return;}
-    mSelArr.forEach(id=>{
-      const sw=state.swimmers.find(s=>s.id===id);if(!sw)return;
-      addSt(t.id,sw,state.mRegPkgType);
-      state.swimmers=state.swimmers.map(s=>s.id!==id?s:{...s,assignedClassId:t.id,assignedLabel:t.day+" "+t.time});
-    });
+    if(!state.mSwSel){state.mErr="Select a swimmer.";render();return;}
+    const sw=state.swimmers.find(s=>s.id===state.mSwSel);
+    if(!sw){state.mErr="Swimmer not found.";render();return;}
+    addSt(t.id,sw,state.mRegPkgType);
+    state.swimmers=state.swimmers.map(s=>s.id!==sw.id?s:{...s,assignedClassId:t.id,assignedLabel:t.day+" "+t.time});
   }
   state.showAdd=false;state.mName="";state.mDob="";state.mParentName="";state.mErr="";state.mSwSel=[];state.mSwSearch="";
 }
@@ -1304,7 +1477,7 @@ function handleCSV(file){
         obj.parentName=obj.parentname||obj["parent name"]||obj.parent||"";
         obj.memberId=obj.memberid||obj["member id"]||obj["member_id"]||obj["memberid"]||"";
         obj.pkg=(obj.package||obj.pkg||"").toLowerCase().includes("priv")?"private":"group";
-        obj.assignedClassId=null;obj.babyId=genBabyId();return obj;
+        obj.assignedClassId=null;obj.babyId=genBabyId();obj.currentCourse=null;obj.courseHistory=[];return obj;
       }).filter(r=>r.name&&r.name!=="Unknown");
       if(!parsed.length){state.csvErr="No valid rows.";render();return;}
       const ex=new Set(state.swimmers.map(s=>s.name.toLowerCase()));
@@ -1900,26 +2073,50 @@ function buildNewSaleModal(){
   const srchInp=el("input",{className:"iS",placeholder:"Search swimmers…",style:{marginBottom:"6px"}});
   const swList=el("div",{style:{maxHeight:"180px",overflowY:"auto",borderRadius:"7px",border:"1px solid var(--border)",marginBottom:"10px"}});
 
+  // Warning banner — updates when selection changes
+  const warningBanner=el("div",{style:{marginBottom:"10px"}});
+  const updateWarning=()=>{
+    warningBanner.innerHTML="";
+    const withCourse=(state.saleSelIds||[]).filter(id=>{const sw=state.swimmers.find(s=>s.id===id);return sw&&sw.currentCourse;});
+    if(withCourse.length){
+      const names=withCourse.map(id=>state.swimmers.find(s=>s.id===id)?.name).filter(Boolean);
+      warningBanner.appendChild(el("div",{style:{fontSize:"10px",color:"#fbbf24",background:"#1c1100",borderRadius:"6px",padding:"8px 10px",border:"1px solid #92400e"}},
+        "⚠ "+names.join(", ")+(names.length>1?" have":" has")+" an active course. Recording this sale will archive it and start a new one."));
+    }
+  };
+
   const renderSwList=(q="")=>{
     swList.innerHTML="";
     const hits=state.swimmers.filter(s=>s.active!==false&&(!q||s.name.toLowerCase().includes(q.toLowerCase())));
     if(!hits.length){swList.appendChild(el("div",{style:{padding:"12px",textAlign:"center",fontSize:"11px",color:"var(--text3)"}},"No swimmers found."));return;}
     hits.forEach(s=>{
       const ch=(state.saleSelIds||[]).includes(s.id);
-      const hasReg=state.registrations.some(r=>r.swimmerName===s.name&&r.active!==false);
+      const hasCourse=!!s.currentCourse;
+      const sessLeft=hasCourse?swRemaining(s):0;
       const sc=LC[a2l(s.dob||s.age)];
       const row=el("div",{style:{display:"flex",alignItems:"center",gap:"8px",padding:"7px 10px",borderBottom:"1px solid var(--border)",cursor:"pointer",background:ch?"#0f2a4a":"transparent"}});
       row.appendChild(el("div",{style:{width:"14px",height:"14px",borderRadius:"3px",border:"2px solid "+(ch?"#2563eb":"#1e3a5f"),background:ch?"#2563eb":"transparent",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"8px",color:"#fff"}},ch?"✓":""));
-      row.appendChild(el("div",{style:{flex:1}},
-        el("div",{style:{fontSize:"11px",color:"var(--text)",display:"flex",alignItems:"center",gap:"5px",flexWrap:"wrap"}},s.name,s.babyId?el("span",{style:{fontSize:"9px",color:"#c084fc",fontFamily:"monospace",background:"#1a0a2e",borderRadius:"3px",padding:"1px 5px",border:"1px solid #7c3aed"}},s.babyId):null),
-        el("div",{style:{fontSize:"9px",color:"var(--text3)"}},(s.parentName?s.parentName+" · ":"")+displayAge(s)+" · "+sc.emoji+" "+a2l(s.dob||s.age))));
-      if(hasReg)row.appendChild(el("span",{style:{fontSize:"9px",color:"#f59e0b",background:"#1c1100",borderRadius:"3px",padding:"1px 5px",border:"1px solid #92400e",flexShrink:0}},"Has course"));
+      const info=el("div",{style:{flex:1}});
+      info.appendChild(el("div",{style:{fontSize:"11px",color:"var(--text)",display:"flex",alignItems:"center",gap:"5px",flexWrap:"wrap"}},
+        s.name,
+        s.babyId?el("span",{style:{fontSize:"9px",color:"#c084fc",fontFamily:"monospace",background:"#1a0a2e",borderRadius:"3px",padding:"1px 5px",border:"1px solid #7c3aed"}},s.babyId):null));
+      info.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)"}},(s.parentName?s.parentName+" · ":"")+displayAge(s)+" · "+sc.emoji+" "+a2l(s.dob||s.age)));
+      row.appendChild(info);
+      if(hasCourse){
+        const p=PKG_TYPES[s.currentCourse.type]||PKG_TYPES.group;
+        const used=swSessionsUsed(s);
+        const total=s.currentCourse.totalClasses||8;
+        row.appendChild(el("div",{style:{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:"2px",flexShrink:0}},
+          el("span",{style:{fontSize:"9px",color:"#f59e0b",background:"#1c1100",borderRadius:"3px",padding:"1px 5px",border:"1px solid #92400e",whiteSpace:"nowrap"}},"⚠ "+p.label+" "+used+"/"+total),
+          el("span",{style:{fontSize:"8px",color:"#64748b"}},(sessLeft>0?sessLeft+" left":"Complete"))));
+      }
       row.addEventListener("mouseenter",()=>{if(!(state.saleSelIds||[]).includes(s.id))row.style.background="#0d1a2a";});
       row.addEventListener("mouseleave",()=>{if(!(state.saleSelIds||[]).includes(s.id))row.style.background="transparent";});
       row.addEventListener("click",()=>{
         const cur=state.saleSelIds||[];
         state.saleSelIds=cur.includes(s.id)?cur.filter(x=>x!==s.id):[...cur,s.id];
         renderSwList(q);
+        updateWarning();
         const cnt=state.saleSelIds.length;
         recordBtn.textContent=cnt>0?"💳 Record Sale for "+cnt+" swimmer"+(cnt>1?"s":""):"Select swimmers to record sale";
         recordBtn.disabled=cnt===0;
@@ -1930,6 +2127,7 @@ function buildNewSaleModal(){
     });
   };
   renderSwList();
+  updateWarning();
   srchInp.addEventListener("input",e=>renderSwList(e.target.value));
   box.appendChild(srchInp);
   box.appendChild(swList);
@@ -1938,8 +2136,24 @@ function buildNewSaleModal(){
   box.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",textTransform:"uppercase",marginBottom:"4px"}},"Package"));
   const pkgBtns=el("div",{style:{display:"flex",gap:"4px",flexWrap:"wrap",marginBottom:"12px"}});
   Object.entries(PKG_TYPES).forEach(([k,p])=>{
-    const active=(state.salePkgType||"group")===k;
-    pkgBtns.appendChild(el("button",{onClick:()=>{state.salePkgType=k;if(!state.salePayment)state.salePayment=String(state.pkgPrices[k]||0);render();},style:{flex:1,padding:"7px 4px",borderRadius:"7px",border:"1px solid",fontSize:"11px",fontWeight:600,cursor:"pointer",borderColor:active?p.border:"#1e3a5f",background:active?p.bg:"#0a1a2e",color:active?p.color:"var(--text3)"}},p.label));
+    const btn=el("button",{style:{flex:1,padding:"7px 4px",borderRadius:"7px",border:"1px solid",fontSize:"11px",fontWeight:600,cursor:"pointer",borderColor:(state.salePkgType||"group")===k?p.border:"#1e3a5f",background:(state.salePkgType||"group")===k?p.bg:"#0a1a2e",color:(state.salePkgType||"group")===k?p.color:"var(--text3)"}},p.label);
+    btn.addEventListener("click",()=>{
+      state.salePkgType=k;
+      // Update all button styles without re-render
+      pkgBtns.querySelectorAll("button").forEach((b,bi)=>{
+        const [bk,bp]=Object.entries(PKG_TYPES)[bi];
+        const isActive=bk===k;
+        b.style.borderColor=isActive?bp.border:"#1e3a5f";
+        b.style.background=isActive?bp.bg:"#0a1a2e";
+        b.style.color=isActive?bp.color:"var(--text3)";
+      });
+      // Always update payment to match selected package price
+      payInp.value=String(PKG_TYPES[k]?.price||0);
+      // Update record button text
+      const cnt=(state.saleSelIds||[]).length;
+      recordBtn.textContent=cnt>0?"💳 Record Sale for "+cnt+" swimmer"+(cnt>1?"s":""):"Select swimmers to record sale";
+    });
+    pkgBtns.appendChild(btn);
   });
   box.appendChild(pkgBtns);
 
@@ -1952,12 +2166,13 @@ function buildNewSaleModal(){
   dw.appendChild(dateInp);dr.appendChild(dw);
   const pw=el("div",{style:{flex:1,minWidth:"110px"}});
   pw.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",textTransform:"uppercase",marginBottom:"4px"}},"Payment (฿)"));
-  const payInp=el("input",{type:"number",className:"iS",placeholder:"0",value:state.salePayment||""});
+  const payInp=el("input",{type:"number",className:"iS",placeholder:"0",value:state.salePayment||(PKG_TYPES[state.salePkgType||"group"]?.price||"")});
   payInp.addEventListener("input",e=>state.salePayment=e.target.value);
   pw.appendChild(payInp);dr.appendChild(pw);
   box.appendChild(dr);
 
   if(state.saleErr)box.appendChild(el("div",{style:{fontSize:"11px",color:"#f87171",marginBottom:"10px",background:"#450a0a",borderRadius:"6px",padding:"6px 10px",border:"1px solid #7f1d1d"}},state.saleErr));
+  box.appendChild(warningBanner);
 
   // Buttons
   const recordBtn=el("button",{disabled:selCount===0,onClick:()=>{
@@ -1967,16 +2182,18 @@ function buildNewSaleModal(){
     const pkgType=state.salePkgType||"group";
     const pt=PKG_TYPES[pkgType];
     const saleDate=state.saleDate||todayStr();
-    const payment=parseFloat(state.salePayment)||0;
+    const payment=parseFloat(state.salePayment)||(pt?.price||0);
     ids.forEach(id=>{
       const sw=state.swimmers.find(s=>s.id===id);if(!sw)return;
-      const newPkg={id:Date.now()+Math.random(),type:pkgType,totalClasses:pt.classes,sessions:[],active:true,startedAt:saleDate,payment,contactNumber:sw.contactNumber||""};
-      const existingReg=state.registrations.find(r=>r.swimmerName===sw.name&&r.active!==false);
-      if(existingReg){state.registrations=state.registrations.map(r=>r.id!==existingReg.id?r:{...r,packages:[...r.packages,newPkg]});}
-      else{state.registrations=[...state.registrations,{id:Date.now()+Math.random()+1,swimmerName:sw.name,parentName:sw.parentName||"",contactNumber:sw.contactNumber||"",classId:null,active:true,packages:[newPkg]}];}
+      swStartCourse(sw,pkgType,saleDate,payment);
+      sw.pkg=pkgType;
     });
+    // Check if any sold-to swimmer has no class assigned
+    const noClass=ids.filter(id=>{const sw=state.swimmers.find(s=>s.id===id);return sw&&!sw.assignedClassId;});
     state.saleSelIds=[];state.saleErr="";state.salePayment="";state.showSaleForm=false;
     const d=new Date(saleDate+"T00:00:00");state.salesYear=d.getFullYear();state.salesMonth=d.getMonth();
+    state.salesTab="transactions";
+    if(noClass.length){state.postSaleNoClassIds=noClass;}
     render();
   },style:{width:"100%",padding:"10px 0",borderRadius:"8px",border:"none",fontSize:"12px",fontWeight:700,cursor:selCount>0?"pointer":"not-allowed",background:selCount>0?"#2563eb":"#1e3a5f",color:selCount>0?"#fff":"#475569",marginBottom:"8px"}},selCount>0?"💳 Record Sale for "+selCount+" swimmer"+(selCount>1?"s":""):"Select swimmers to record sale");
   box.appendChild(recordBtn);
@@ -1992,7 +2209,7 @@ function buildConvertModal(){
   const dismiss=()=>{state.convertModal=null;render();};
   const sw=state.swimmers.find(s=>s.id===cm.swId);
   // All available classes across all weeks — deduplicated by day+time
-  const allSlots=[...new Map(Object.values(state.weeklyClasses).flat().map(c=>([c.day+"|"+c.time,c]))).values()].sort((a,b)=>{const dO={Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};return dO[a.day]-dO[b.day]||a.time.localeCompare(b.time);});
+  const allSlots=[...new Map(Object.values(state.weeklyClasses).flat().filter(c=>!c.closed).map(c=>([c.day+"|"+c.time,c]))).values()].sort((a,b)=>{const dO={Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};return dO[a.day]-dO[b.day]||a.time.localeCompare(b.time);});
   // Also show current week classes
   const curCls=adminCls();
   const selStyle={background:"var(--bg2)",border:"1px solid var(--border)",borderRadius:"7px",padding:"8px 10px",color:"var(--text)",fontSize:"12px",outline:"none",cursor:"pointer",width:"100%"};
@@ -2026,7 +2243,7 @@ function buildConvertModal(){
             const dayCls=allSlots.filter(c=>c.day===day);
             if(!dayCls.length)return[];
             return dayCls.map(c=>{
-              const enrolled=c.students.filter(s=>!s.transferTo&&s.attendance!=="cancelled").length;
+              const enrolled=c.students.filter(s=>!s.transferTo&&s.attendance!=="absent").length;
               const full=enrolled>=c.capacity;
               const opt=el("option",{value:c.id,...(cm.classId===c.id?{selected:true}:{})},day+" · "+c.time+" ("+enrolled+"/"+c.capacity+")"+(full?" · FULL":""));
               if(full)opt.style.color="#f87171";
@@ -2049,6 +2266,11 @@ function buildConvertModal(){
             state.registrations=state.registrations.map(r=>r.id!==cm.regId?r:{...r,classId:cm.classId||r.classId,packages:[...r.packages,newPkg]});
           } else {
             state.registrations=[...state.registrations,{id:Date.now()+Math.random()+1,swimmerName:cm.swimmerName,parentName:cm.parentName||"",classId:cm.classId||null,active:true,packages:[newPkg]}];
+          }
+          // Write to swimmer.currentCourse (new model)
+          if(sw){
+            swStartCourse(sw,pkgType,saleDate,pt.price||0);
+            sw.pkg=pkgType;
           }
           // Add to class if one was selected
           if(cm.classId){
@@ -2146,9 +2368,13 @@ function buildAddModal(){
                 swList.length===0&&el("div",{style:{padding:"12px",textAlign:"center",fontSize:"11px",color:"var(--text3)"}},"No available swimmers."),
                 swList.map(s=>{const sc=LC[a2l(s.dob||s.age)];const ch=state.mSwSel===s.id;return el("div",{onClick:()=>{state.mSwSel=ch?null:s.id;render();},style:{display:"flex",alignItems:"center",gap:"8px",padding:"8px 10px",borderBottom:"1px solid var(--border)",cursor:"pointer",background:ch?"#0f2a4a":"transparent"}},el("div",{style:{width:"7px",height:"7px",borderRadius:"50%",border:`2px solid ${ch?"#2563eb":"#1e3a5f"}`,background:ch?"#2563eb":"transparent",flexShrink:0}}),el("div",{style:{flex:1}},el("div",{style:{fontSize:"11px",color:"var(--text)"}},s.name),el("div",{style:{fontSize:"9px",color:"var(--text3)"}},displayAge(s)+" · "+LC[a2l(s.dob||s.age)].emoji+" "+a2l(s.dob||s.age)+(s.assignedLabel?" · "+s.assignedLabel:""))),pkgBadge(s.pkg),xferBadge(s));})),
               selSw&&el("div",{style:{marginTop:"8px",background:"#0f2a4a",borderRadius:"7px",padding:"8px 10px",border:"1px solid #2563eb",fontSize:"11px",color:"#93c5fd"}},"✓ "+selSw.name+" selected"))),
-      el("div",{style:{marginBottom:"12px"}},el("label",{className:"lS"},"Package"),el("div",{style:{display:"flex",gap:"6px"}},...Object.entries(PKG_TYPES).map(([k,p])=>el("button",{onClick:()=>{state.mRegPkgType=k;render();},style:{flex:1,padding:"6px 2px",borderRadius:"6px",border:"1px solid",cursor:"pointer",fontSize:"10px",fontWeight:600,borderColor:state.mRegPkgType===k?p.border:"#1e3a5f",background:state.mRegPkgType===k?p.bg:"#0a1a2e",color:state.mRegPkgType===k?p.color:"var(--text3)"}},p.label+" ("+p.classes+"×)")))),
-      el("div",{style:{marginBottom:"12px"}},el("label",{className:"lS"},"Day"),el("select",{className:"iS",onChange:e=>{state.mDay=e.target.value;state.mTime=slFor(e.target.value)[0];render();}},...DAYS.map(d=>el("option",{value:d,...(state.mDay===d?{selected:true}:{})},d)))),
-      el("div",{style:{marginBottom:"16px"}},el("label",{className:"lS"},"Time"),el("select",{className:"iS",onChange:e=>state.mTime=e.target.value},...slFor(state.mDay).map(t=>{const c2=adminCls().find(x=>x.day===state.mDay&&x.time===t);return el("option",{value:t,...(state.mTime===t?{selected:true}:{})},t+" ("+(c2?c2.students.length:0)+"/"+(c2?c2.capacity:"?")+")");}))),
+      el("div",{style:{marginBottom:"12px"}},el("label",{className:"lS"},"Day"),el("select",{className:"iS",onChange:e=>{
+        state.mDay=e.target.value;
+        const times=adminCls().filter(c=>!c.closed&&c.day===e.target.value).map(c=>c.time).sort();
+        state.mTime=times[0]||"";
+        render();
+      }},...[...new Set(adminCls().filter(c=>!c.closed).map(c=>c.day))].sort((a,b)=>DAYS.indexOf(a)-DAYS.indexOf(b)).map(d=>el("option",{value:d,...(state.mDay===d?{selected:true}:{})},d)))),
+      el("div",{style:{marginBottom:"16px"}},el("label",{className:"lS"},"Time"),el("select",{className:"iS",onChange:e=>state.mTime=e.target.value},...adminCls().filter(c=>!c.closed&&c.day===state.mDay).sort((a,b)=>a.time.localeCompare(b.time)).map(c=>el("option",{value:c.time,...(state.mTime===c.time?{selected:true}:{})},c.time+" ("+c.students.length+"/"+c.capacity+")")))),
       state.mErr&&el("div",{style:{marginBottom:"12px",fontSize:"11px",color:"#f87171",background:"#450a0a",borderRadius:"6px",padding:"7px 11px",border:"1px solid #7f1d1d"}},state.mErr),
       el("div",{style:{display:"flex",gap:"8px"}},
         el("button",{onClick:submitAdd,style:{flex:1,padding:"10px 0",borderRadius:"8px",border:"none",fontSize:"13px",fontWeight:700,background:"#2563eb",color:"#fff"}},"Add Student"),
@@ -2159,16 +2385,56 @@ function buildXferModal(){
   const fromCls=adminCls().find(c=>c.id===state.xferModal.classId);
   const student=fromCls&&fromCls.students.find(s=>s.id===state.xferModal.studentId);
   if(!fromCls||!student)return null;
+
+  // Only show days/times that have actual open (non-closed) classes
+  const openClasses=adminCls().filter(c=>!c.closed&&c.id!==fromCls.id);
+  const openDays=[...new Set(openClasses.map(c=>c.day))].sort((a,b)=>DAYS.indexOf(a)-DAYS.indexOf(b));
+
+  // Ensure selected day/time are valid
+  if(!openDays.includes(state.xDay)&&openDays.length){state.xDay=openDays[0];}
+  const timesForDay=openClasses.filter(c=>c.day===state.xDay).map(c=>c.time).sort();
+  if(!timesForDay.includes(state.xTime)&&timesForDay.length){state.xTime=timesForDay[0];}
+
+  const targetCls=openClasses.find(c=>c.day===state.xDay&&c.time===state.xTime);
+  const isFull=targetCls&&targetCls.students.filter(s=>!s.transferTo).length>=targetCls.capacity;
+
   return el("div",{className:"modal-overlay",onClick:e=>{if(e.target===e.currentTarget){state.xferModal=null;render();}}},
     el("div",{className:"modal modal-sm"},
-      el("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}},el("h2",{style:{fontSize:"15px",color:"var(--text)",fontWeight:700}},"🔄 Transfer"),el("button",{onClick:()=>{state.xferModal=null;render();},style:{background:"#1e3a5f",border:"none",color:"var(--text2)",borderRadius:"6px",padding:"4px 10px",fontSize:"13px"}},"✕")),
-      el("div",{style:{background:"var(--bg2)",borderRadius:"8px",padding:"10px 12px",marginBottom:"14px",border:"1px solid var(--border)"}},el("div",{style:{fontSize:"13px",fontWeight:700,color:"var(--text)"}},student.name),el("div",{style:{fontSize:"10px",color:"var(--text3)"}},"From: "+fromCls.day+" · "+fromCls.time)),
-      el("div",{style:{marginBottom:"12px"}},el("label",{className:"lS"},"Move to — Day"),el("select",{className:"iS",onChange:e=>{state.xDay=e.target.value;state.xTime=slFor(e.target.value)[0];render();}},...DAYS.map(d=>el("option",{value:d,...(state.xDay===d?{selected:true}:{})},d)))),
-      el("div",{style:{marginBottom:"14px"}},el("label",{className:"lS"},"Move to — Time"),el("select",{className:"iS",onChange:e=>state.xTime=e.target.value},...slFor(state.xDay).map(t=>{const tc=adminCls().find(x=>x.day===state.xDay&&x.time===t);const same=tc&&tc.id===fromCls.id;const opt=el("option",{value:t},t+" ("+(tc?tc.students.length:0)+"/"+(tc?tc.capacity:"?")+") "+(same?"← current":""));if(same)opt.disabled=true;if(state.xTime===t)opt.selected=true;return opt;}))),
-      el("div",{style:{background:"#1c0a00",borderRadius:"6px",padding:"7px 10px",marginBottom:"12px",border:"1px solid #92400e",fontSize:"10px",color:"#fbbf24"}},"⚠ "+student.name+" will be marked cancelled in current class."),
-      el("div",{style:{display:"flex",gap:"8px"}},
-        el("button",{onClick:()=>reqXfer(fromCls.id,student.id,state.xDay,state.xTime),style:{flex:1,padding:"9px 0",borderRadius:"8px",border:"none",fontSize:"12px",fontWeight:700,background:"#d97706",color:"#fff"}},"Confirm"),
-        el("button",{onClick:()=>{state.xferModal=null;render();},style:{padding:"9px 14px",borderRadius:"8px",border:"1px solid var(--border)",fontSize:"12px",background:"var(--bg3)",color:"var(--text3)"}},"Cancel"))));
+      el("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}},
+        el("h2",{style:{fontSize:"15px",color:"var(--text)",fontWeight:700}},"🔄 Transfer"),
+        el("button",{onClick:()=>{state.xferModal=null;render();},style:{background:"#1e3a5f",border:"none",color:"var(--text2)",borderRadius:"6px",padding:"4px 10px",fontSize:"13px"}},"✕")),
+      el("div",{style:{background:"var(--bg2)",borderRadius:"8px",padding:"10px 12px",marginBottom:"14px",border:"1px solid var(--border)"}},
+        el("div",{style:{fontSize:"13px",fontWeight:700,color:"var(--text)"}},student.name),
+        el("div",{style:{fontSize:"10px",color:"var(--text3)"}},"From: "+fromCls.day+" · "+fromCls.time)),
+      openDays.length===0
+        ? el("div",{style:{padding:"16px",textAlign:"center",color:"var(--text3)",fontSize:"11px"}},"No other open classes available.")
+        : el("div",null,
+            el("div",{style:{marginBottom:"12px"}},
+              el("label",{className:"lS"},"Move to — Day"),
+              el("select",{className:"iS",onChange:e=>{
+                state.xDay=e.target.value;
+                const times=openClasses.filter(c=>c.day===e.target.value).map(c=>c.time).sort();
+                state.xTime=times[0]||"";
+                render();
+              }},
+              ...openDays.map(d=>el("option",{value:d,...(state.xDay===d?{selected:true}:{})},d)))),
+            el("div",{style:{marginBottom:"14px"}},
+              el("label",{className:"lS"},"Move to — Time"),
+              el("select",{className:"iS",onChange:e=>state.xTime=e.target.value},
+              ...timesForDay.map(t=>{
+                const tc=openClasses.find(c=>c.day===state.xDay&&c.time===t);
+                const enrolled=tc?tc.students.filter(s=>!s.transferTo).length:0;
+                const cap=tc?tc.capacity:"?";
+                const full=enrolled>=cap;
+                const opt=el("option",{value:t},t+" ("+enrolled+"/"+cap+")"+(full?" · FULL":""));
+                if(state.xTime===t)opt.selected=true;
+                return opt;
+              }))),
+            isFull?el("div",{style:{background:"#450a0a",borderRadius:"6px",padding:"7px 10px",marginBottom:"12px",border:"1px solid #7f1d1d",fontSize:"10px",color:"#f87171"}},"⚠ This class is full — student will be added over capacity."):
+              el("div",{style:{background:"#1c0a00",borderRadius:"6px",padding:"7px 10px",marginBottom:"12px",border:"1px solid #92400e",fontSize:"10px",color:"#fbbf24"}},"⚠ "+student.name+" will be marked cancelled in current class."),
+            el("div",{style:{display:"flex",gap:"8px"}},
+              el("button",{onClick:()=>reqXfer(fromCls.id,student.id,state.xDay,state.xTime),style:{flex:1,padding:"9px 0",borderRadius:"8px",border:"none",fontSize:"12px",fontWeight:700,background:"#d97706",color:"#fff"}},"Confirm"),
+              el("button",{onClick:()=>{state.xferModal=null;render();},style:{padding:"9px 14px",borderRadius:"8px",border:"1px solid var(--border)",fontSize:"12px",background:"var(--bg3)",color:"var(--text3)"}},"Cancel")))));
 }
 function buildAddClassModal(){
   if(!state.showAddClass)return null;
@@ -2216,7 +2482,7 @@ function buildAdminRow(c,searchQ=""){
   const waiting=c.students.filter(s=>!s.staple&&!s.transferTo);
   const xferring=c.students.filter(s=>s.transferTo);
   const incoming=adminCls().flatMap(o=>o.id===c.id?[]:o.students.filter(s=>s.transferTo&&s.transferTo.classId===c.id).map(s=>({...s,fromClass:o})));
-  const settled=staples.length===0||staples.every(s=>s.attendance==="confirmed"||s.attendance==="cancelled");
+  const settled=true; // attendance no longer gated here — controlled in Register
   const enrolledNames=new Set(c.students.map(s=>s.name.toLowerCase()));
   const weeklySwimmerNames=new Set(
     clsForWeek(state.adminWeekStart)
@@ -2237,13 +2503,18 @@ function buildAdminRow(c,searchQ=""){
   });
 
   function stuRow(s,isWait,rank){
-    const sc=LC[a2l(s.dob||s.age)],ac=attC(s.attendance),locked=isWait&&!settled;
+    const sc=LC[a2l(s.dob||s.age)];
+    const attSt=ATT_STYLE[s.attendance]||ATT_STYLE.pending;
     const isMatch=q&&(s.name.toLowerCase().includes(q)||s.parentName?.toLowerCase().includes(q));
     return el("div",{style:{display:"flex",alignItems:"center",gap:"6px",padding:"6px 0",borderBottom:"1px solid var(--border)",flexWrap:"wrap",background:isMatch?"rgba(59,130,246,0.08)":"transparent",borderRadius:isMatch?"4px":"0",paddingLeft:isMatch?"6px":"0"}},
       el("div",{style:{width:"22px",height:"22px",borderRadius:"50%",background:isMatch?sc.color:sc.bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"9px",fontWeight:700,color:isMatch?"#fff":sc.color,border:`1px solid ${isMatch?"#2563eb":sc.border}`,flexShrink:0,position:"relative"}},s.name.charAt(0),s.staple?el("span",{style:{position:"absolute",top:"-4px",right:"-4px",fontSize:"7px"}},"📌"):null),
-      el("div",{style:{flex:1,minWidth:"60px",display:"flex",alignItems:"center",flexWrap:"wrap",gap:"4px"}},isWait?el("span",{style:{fontSize:"9px",color:"var(--text3)",fontWeight:700}},"#"+rank):null,el("span",{style:{fontSize:"11px",color:isMatch?"#60a5fa":"var(--text)",fontWeight:isMatch?700:500}},s.name),pkgBadge(s.pkg),xferBadge(s)),
+      el("div",{style:{flex:1,minWidth:"60px",display:"flex",alignItems:"center",flexWrap:"wrap",gap:"4px"}},
+        isWait?el("span",{style:{fontSize:"9px",color:"var(--text3)",fontWeight:700}},"#"+rank):null,
+        el("span",{style:{fontSize:"11px",color:isMatch?"#60a5fa":"var(--text)",fontWeight:isMatch?700:500}},s.name),
+        pkgBadge(s.pkg),xferBadge(s)),
       el("span",{style:{fontSize:"9px",color:sc.color,background:sc.bg,borderRadius:"3px",padding:"1px 5px",border:`1px solid ${sc.border}`}},displayAge(s)),
-      el("button",{disabled:!!s.transferTo||locked,onClick:()=>{if(!s.transferTo&&!locked)cycleAtt(c.id,s.id);},style:{padding:"2px 7px",borderRadius:"20px",border:"1px solid",fontSize:"9px",fontWeight:600,cursor:locked?"not-allowed":"pointer",opacity:locked?0.4:1,borderColor:ac.b,background:ac.bg,color:ac.c}},ac.label),
+      // Read-only attendance status dot (set in Register, not here)
+      el("span",{title:"Set in Register",style:{fontSize:"9px",background:attSt.bg,color:attSt.color,border:"1px solid "+attSt.border,borderRadius:"4px",padding:"1px 6px",cursor:"default"}},attSt.icon),
       s.transferTo?el("button",{onClick:()=>clearXfer(c.id,s.id),style:{padding:"2px 6px",borderRadius:"20px",border:"1px solid #7f1d1d",fontSize:"9px",background:"#450a0a",color:"#f87171"}},"🔄 "+s.transferTo.day.slice(0,3)):
         el("button",{onClick:()=>{state.xferModal={classId:c.id,studentId:s.id};state.xDay=DAYS[0];state.xTime=slFor(DAYS[0])[0];render();},style:{padding:"2px 6px",borderRadius:"20px",border:"1px solid var(--border)",fontSize:"9px",background:"var(--bg3)",color:"var(--text3)"}},"🔄"),
       el("button",{onClick:()=>pinSt(c.id,s.id),style:{padding:"2px 6px",borderRadius:"6px",border:"1px solid",fontSize:"9px",fontWeight:600,borderColor:s.staple?"#92400e":"#1e3a5f",background:s.staple?"#1c1100":"#0a1a2e",color:s.staple?"#fbbf24":"#475569"}},s.staple?"📌 Regular":"Regular"),
@@ -2269,7 +2540,6 @@ function buildAdminRow(c,searchQ=""){
       el("span",{style:{fontSize:"10px",color:isEmpty?lc.color:"var(--text3)"}},c.students.length+"/"+c.capacity),
       (c.waitingList||[]).length>0?el("span",{style:{fontSize:"9px",background:"#1c0a00",color:"#fb923c",borderRadius:"4px",padding:"1px 6px",border:"1px solid #92400e"}},"🔶"+(c.waitingList||[]).length):null,
       staples.length>0?el("span",{style:{fontSize:"9px",background:"#1c1100",color:"#fbbf24",borderRadius:"4px",padding:"1px 6px",border:"1px solid #92400e"}},"📌"+staples.length):null,
-      settled&&staples.length>0?el("span",{style:{fontSize:"9px",background:"#031a0d",color:"#4ade80",borderRadius:"4px",padding:"1px 6px",border:"1px solid #166534"}},"✓"):null,
       el("button",{onClick:e=>{e.stopPropagation();toggleClassClosed(c.id);},title:isClosed?"Open this class slot":"Close this class slot",style:{padding:"2px 8px",borderRadius:"6px",border:"1px solid",fontSize:"9px",fontWeight:600,borderColor:isClosed?"#166534":"#334155",background:isClosed?"#052e16":"#0a1628",color:isClosed?"#4ade80":"#64748b",marginLeft:"4px"}},isClosed?"🔓 Open":"🔒 Close"),
       el("button",{onClick:e=>{e.stopPropagation();deleteClass(c.id);},style:{padding:"2px 7px",borderRadius:"6px",border:"1px solid #7f1d1d",fontSize:"9px",background:"#450a0a",color:"#f87171",marginLeft:"2px"}},"🗑"),
       el("span",{style:{fontSize:"10px",color:"var(--text3)"}},isOpen?"▲":"▼")));
@@ -2299,11 +2569,11 @@ function buildAdminRow(c,searchQ=""){
   body.appendChild(coachBar);
   if(incoming.length>0){const inc=el("div",{style:{padding:"8px 14px",borderBottom:"1px solid var(--border)",background:"#041a04"}});inc.appendChild(el("div",{style:{fontSize:"9px",color:"#34d399",fontWeight:700,textTransform:"uppercase",marginBottom:"4px"}},"🔄 Incoming ("+incoming.length+")"));incoming.forEach(s=>inc.appendChild(el("div",{style:{fontSize:"11px",color:"var(--text)",padding:"2px 0"}},s.name+" ",el("span",{style:{fontSize:"9px",color:"var(--text3)"}},"from "+s.fromClass.day+" "+s.fromClass.time))));body.appendChild(inc);}
   const stapleSec=el("div",{style:{padding:"8px 14px",borderBottom:"1px solid var(--border)"}});
-  stapleSec.appendChild(el("div",{style:{fontSize:"9px",color:"#fbbf24",fontWeight:700,textTransform:"uppercase",marginBottom:"6px"}},"📌 Regular ("+staples.length+"/"+MAX_STAPLE+")"+(settled&&staples.length>0?" · unlocked":"")));
+  stapleSec.appendChild(el("div",{style:{fontSize:"9px",color:"#fbbf24",fontWeight:700,textTransform:"uppercase",marginBottom:"6px"}},"📌 Regular ("+staples.length+"/"+MAX_STAPLE+")"));
   if(staples.length===0)stapleSec.appendChild(el("div",{style:{fontSize:"11px",color:"var(--text3)",fontStyle:"italic"}},"No regular swimmers. Pin below."));
   staples.forEach(s=>stapleSec.appendChild(stuRow(s,false,null)));body.appendChild(stapleSec);
   const waitSec=el("div",{style:{padding:"8px 14px",borderBottom:"1px solid var(--border)"}});
-  waitSec.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text2)",fontWeight:700,textTransform:"uppercase",marginBottom:"6px"}},"⏳ Waiting ("+waiting.length+")"+((!settled&&staples.length>0)?" · 🔒 confirm regulars first":"")));
+  waitSec.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text2)",fontWeight:700,textTransform:"uppercase",marginBottom:"6px"}},"Students ("+waiting.length+")"));
   if(waiting.length===0)waitSec.appendChild(el("div",{style:{fontSize:"11px",color:"var(--text3)",fontStyle:"italic"}},"Empty."));
   waiting.forEach((s,i)=>waitSec.appendChild(stuRow(s,true,i+1)));body.appendChild(waitSec);
   if(xferring.length>0){const xsec=el("div",{style:{padding:"8px 14px",borderBottom:"1px solid var(--border)"}});xsec.appendChild(el("div",{style:{fontSize:"9px",color:"#f87171",fontWeight:700,textTransform:"uppercase",marginBottom:"4px"}},"🔄 Transferring Out"));xferring.forEach(s=>xsec.appendChild(stuRow(s,false,null)));body.appendChild(xsec);}
@@ -2321,7 +2591,7 @@ function buildAdminRow(c,searchQ=""){
       wRow.appendChild(el("div",{style:{flex:1}},el("div",{style:{fontSize:"11px",color:"var(--text)",fontWeight:500}},w.name),el("div",{style:{fontSize:"9px",color:"var(--text3)"}},(w.parentName?w.parentName+" · ":"")+displayAge(w)+" · "+sc.emoji+" "+a2l(w.dob||w.age)+" · Requested "+w.requestedAt)));
       pkgBadge(w.pkg)&&wRow.appendChild(pkgBadge(w.pkg));
       // Move into class button (only if space available)
-      const hasSpace=(c.students.filter(s=>!s.transferTo&&s.attendance!=="cancelled").length)<c.capacity;
+      const hasSpace=(c.students.filter(s=>!s.transferTo&&s.attendance!=="absent").length)<c.capacity;
       if(hasSpace)wRow.appendChild(el("button",{onClick:()=>{
         setAdminCls(adminCls().map(x=>x.id!==c.id?x:{...x,waitingList:(x.waitingList||[]).filter(ww=>ww.id!==w.id),students:[...x.students,{id:Date.now()+Math.random(),name:w.name,dob:w.dob||"",age:w.age||"",parentName:w.parentName||"",attendance:"pending",staple:false,pkg:w.pkg||"group",transferTo:null}]}));render();
       },style:{padding:"3px 8px",borderRadius:"5px",border:"1px solid #166534",fontSize:"9px",background:"#052e16",color:"#4ade80",cursor:"pointer"}},"Move in"));
@@ -2394,14 +2664,16 @@ function buildAdminRow(c,searchQ=""){
           state.adminAdding=false;state.adminAddMode="all";state.adminSearch="";state.adminSel=[];render();
         },style:{width:"100%",maxWidth:"320px",padding:"8px 0",borderRadius:"7px",border:"none",cursor:selCount>0?"pointer":"not-allowed",fontSize:"12px",fontWeight:700,background:selCount>0?"#0369a1":"#1e3a5f",color:selCount>0?"#fff":"#475569"}},"🔄 "+(selCount>0?"Add "+selCount+" to class":"Select swimmers")));
       } else {
-        const pkgLbl=el("div",{style:{fontSize:"9px",color:"var(--text3)",textTransform:"uppercase",marginBottom:"5px"}});pkgLbl.textContent="Package";addSec.appendChild(pkgLbl);
-        const pkgRow=el("div",{style:{display:"flex",gap:"5px",marginBottom:"8px"}});
-        Object.entries(PKG_TYPES).forEach(([k,p])=>{const active=state.adminPkgType===k;pkgRow.appendChild(el("button",{onClick:()=>{state.adminPkgType=k;render();},style:{flex:1,padding:"5px 2px",borderRadius:"5px",border:"1px solid",fontSize:"9px",fontWeight:600,cursor:"pointer",borderColor:active?p.border:"#1e3a5f",background:active?p.bg:"#0a1a2e",color:active?p.color:"var(--text3)"}},p.label));});
-        addSec.appendChild(pkgRow);
         addSec.appendChild(el("button",{disabled:selCount===0,onClick:()=>{
           if(selCount===0)return;
-          state.adminConfirmAdd=true;render();
-        },style:{width:"100%",maxWidth:"320px",padding:"8px 0",borderRadius:"7px",border:"none",cursor:selCount>0?"pointer":"not-allowed",fontSize:"12px",fontWeight:700,background:selCount>0?"#2563eb":"#1e3a5f",color:selCount>0?"#fff":"#475569"}},selCount>0?"Add "+selCount+" swimmer"+(selCount>1?"s":"")+" · "+(PKG_TYPES[state.adminPkgType]?.label||""):"Select swimmers"));
+          state.overCapAlert=[];
+          (state.adminSel||[]).forEach(id=>{
+            const sw=state.swimmers.find(s=>s.id===id);if(!sw)return;
+            addSt(c.id,sw,sw.pkg||"group");
+            state.swimmers=state.swimmers.map(s=>s.id!==id?s:{...s,assignedClassId:c.id,assignedLabel:c.day+" "+c.time});
+          });
+          state.adminAdding=false;state.adminAddMode="all";state.adminSearch="";state.adminSel=[];render();
+        },style:{width:"100%",maxWidth:"320px",padding:"8px 0",borderRadius:"7px",border:"none",cursor:selCount>0?"pointer":"not-allowed",fontSize:"12px",fontWeight:700,background:selCount>0?"#2563eb":"#1e3a5f",color:selCount>0?"#fff":"#475569"}},selCount>0?"Add "+selCount+" swimmer"+(selCount>1?"s":"")+" to class":"Select swimmers"));
       }
     }
   }
@@ -3018,7 +3290,9 @@ function buildScheduleView(){
     const weekCls=clsForWeek(state.schedWeekStart).filter(c=>c.coachId===schedCoachId&&!c.closed);
     const totalStudents=weekCls.reduce((s,c)=>s+c.students.filter(st=>!st.transferTo).length,0);
     const confirmed=weekCls.reduce((s,c)=>s+c.students.filter(st=>st.attendance==="confirmed"&&!st.transferTo).length,0);
+    const attended=weekCls.reduce((s,c)=>s+c.students.filter(st=>st.attendance==="attended"&&!st.transferTo).length,0);
     const pending=weekCls.reduce((s,c)=>s+c.students.filter(st=>st.attendance==="pending"&&!st.transferTo).length,0);
+    const absent=weekCls.reduce((s,c)=>s+c.students.filter(st=>st.attendance==="absent"&&!st.transferTo).length,0);
     const weekDate=new Date(state.schedWeekStart+"T00:00:00");
     const weekEnd=addDays(weekDate,6);
     const weekLabel=weekDate.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})+" – "+weekEnd.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
@@ -3035,7 +3309,7 @@ function buildScheduleView(){
 
     // Stats
     const statsWrap=el("div",{style:{display:"flex",gap:"8px",flex:1,flexWrap:"wrap"}});
-    [{l:"Classes",v:weekCls.length,c:"#60a5fa"},{l:"Students",v:totalStudents,c:"#94a3b8"},{l:"Confirmed",v:confirmed,c:"#4ade80"},{l:"Pending",v:pending,c:"#f59e0b"}].forEach(s=>{
+    [{l:"Classes",v:weekCls.length,c:"#60a5fa"},{l:"Students",v:totalStudents,c:"#94a3b8"},{l:"✓ Attended",v:attended,c:"#4ade80"},{l:"✅ Confirmed",v:confirmed,c:"#60a5fa"},{l:"⏳ Pending",v:pending,c:"#fbbf24"},{l:"❌ Absent",v:absent,c:"#f87171"}].forEach(s=>{
       statsWrap.appendChild(el("div",{style:{background:"#061220",border:"1px solid #1e3a5f",borderRadius:"8px",padding:"8px 14px",textAlign:"center",minWidth:"60px",flex:1}},
         el("div",{style:{fontSize:"18px",fontWeight:700,color:s.c}},s.v),
         el("div",{style:{fontSize:"8px",color:"var(--text3)",textTransform:"uppercase",marginTop:"2px",letterSpacing:"0.5px"}},s.l)));
@@ -3190,7 +3464,9 @@ function buildScheduleView(){
       const lv=isEmpty?"Open":dlvl(c),lc=isEmpty?OPEN_CLASS:LC[lv];
       const confirmed=c.students.filter(s=>s.attendance==="confirmed"&&!s.transferTo).length;
       const pending=c.students.filter(s=>s.attendance==="pending"&&!s.transferTo).length;
-      const cancelled=c.students.filter(s=>s.attendance==="cancelled"||s.transferTo).length;
+      const attended=c.students.filter(s=>s.attendance==="attended"&&!s.transferTo).length;
+      const absent=c.students.filter(s=>s.attendance==="absent"&&!s.transferTo).length;
+      const cancelled=c.students.filter(s=>s.transferTo).length;
       const fillPct=c.capacity>0?Math.min(100,Math.round(c.students.length/c.capacity*100)):0;
       const isExp=state.currentUser?.role!=='guest'&&!!state.expanded[c.id];
       const classCancelled=isClassCancelled(c);
@@ -3206,15 +3482,21 @@ function buildScheduleView(){
       const fb=el("div",{style:{height:"3px",background:"var(--bg3)",borderRadius:"2px",overflow:"hidden",marginBottom:"5px"}});
       fb.appendChild(el("div",{style:{height:"100%",width:fillPct+"%",background:fillPct>=100?"#f87171":fillPct>75?"#fbbf24":"#4ade80",borderRadius:"2px"}}));
       cbody.appendChild(fb);
-      cbody.appendChild(el("div",{style:{display:"flex",gap:"6px",flexWrap:"wrap",alignItems:"center"}},isEmpty?el("span",{style:{fontSize:"8px",color:lc.color,fontStyle:"italic"}},"0/"+c.capacity+" · open"):el("span",{style:{fontSize:"8px",color:"var(--text3)"}},c.students.length+"/"+c.capacity),confirmed>0?el("span",{style:{fontSize:"8px",color:"#4ade80"}},"✓"+confirmed):null,pending>0?el("span",{style:{fontSize:"8px",color:"#fbbf24"}},"○"+pending):null,cancelled>0?el("span",{style:{fontSize:"8px",color:"#f87171"}},"✗"+cancelled):null));
+      cbody.appendChild(el("div",{style:{display:"flex",gap:"6px",flexWrap:"wrap",alignItems:"center"}},
+        isEmpty?el("span",{style:{fontSize:"8px",color:lc.color,fontStyle:"italic"}},"0/"+c.capacity+" · open"):el("span",{style:{fontSize:"8px",color:"var(--text3)"}},c.students.length+"/"+c.capacity),
+        attended>0?el("span",{style:{fontSize:"8px",color:"#4ade80"}},"✓"+attended):null,
+        confirmed>0?el("span",{style:{fontSize:"8px",color:"#60a5fa"}},"✅"+confirmed):null,
+        pending>0?el("span",{style:{fontSize:"8px",color:"#fbbf24"}},"⏳"+pending):null,
+        absent>0?el("span",{style:{fontSize:"8px",color:"#f87171"}},"❌"+absent):null,
+        cancelled>0?el("span",{style:{fontSize:"8px",color:"#f87171"}},"✗"+cancelled):null));
       card.appendChild(cbody);
       if(isExp){
         const sl=el("div",{style:{borderTop:`1px solid ${lc.border}`,background:"var(--bg2)",padding:"6px 8px",maxHeight:"200px",overflowY:"auto"}});
         if(c.students.length===0){sl.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",fontStyle:"italic",padding:"4px 0"}},"No students enrolled."));}
         else{
           const staples=c.students.filter(s=>s.staple&&!s.transferTo);const waiting=c.students.filter(s=>!s.staple&&!s.transferTo);
-          if(staples.length>0){sl.appendChild(el("div",{style:{fontSize:"8px",color:"#fbbf24",fontWeight:700,textTransform:"uppercase",marginBottom:"3px"}},"📌 Staple"));staples.forEach(s=>{const ac=attC(s.attendance);sl.appendChild(el("div",{style:{display:"flex",alignItems:"center",gap:"5px",padding:"2px 0",borderBottom:"1px solid var(--border)"}},el("div",{style:{width:"14px",height:"14px",borderRadius:"50%",background:LC[a2l(s.dob||s.age)].bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"7px",fontWeight:700,color:LC[a2l(s.dob||s.age)].color,flexShrink:0}},s.name.charAt(0)),el("span",{style:{fontSize:"9px",color:"var(--text)",flex:1}},s.name),xferBadge(s,false),el("span",{style:{fontSize:"8px",color:ac.c}},ac.label.split(" ")[0])));});}
-          if(waiting.length>0){sl.appendChild(el("div",{style:{fontSize:"8px",color:"var(--text2)",fontWeight:700,textTransform:"uppercase",margin:"5px 0 3px"}},"⏳ Waiting"));waiting.forEach((s,idx)=>{const ac=attC(s.attendance);sl.appendChild(el("div",{style:{display:"flex",alignItems:"center",gap:"5px",padding:"2px 0",borderBottom:"1px solid var(--border)"}},el("span",{style:{fontSize:"8px",color:"var(--text3)",width:"12px"}},"#"+(idx+1)),el("span",{style:{fontSize:"9px",color:"#cbd5e1",flex:1}},s.name),xferBadge(s,false),el("span",{style:{fontSize:"8px",color:ac.c}},ac.label.split(" ")[0])));});}
+          if(staples.length>0){sl.appendChild(el("div",{style:{fontSize:"8px",color:"#fbbf24",fontWeight:700,textTransform:"uppercase",marginBottom:"3px"}},"📌 Staple"));staples.forEach(s=>{const ac=attC(s.attendance);const attSt=ATT_STYLE[s.attendance]||ATT_STYLE.pending;sl.appendChild(el("div",{style:{display:"flex",alignItems:"center",gap:"5px",padding:"2px 0",borderBottom:"1px solid var(--border)"}},el("div",{style:{width:"14px",height:"14px",borderRadius:"50%",background:LC[a2l(s.dob||s.age)].bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"7px",fontWeight:700,color:LC[a2l(s.dob||s.age)].color,flexShrink:0}},s.name.charAt(0)),el("span",{style:{fontSize:"9px",color:"var(--text)",flex:1}},s.name),xferBadge(s,false),el("span",{style:{fontSize:"9px",background:attSt.bg,color:attSt.color,border:"1px solid "+attSt.border,borderRadius:"4px",padding:"1px 5px",fontWeight:600}},attSt.icon)));});}
+          if(waiting.length>0){sl.appendChild(el("div",{style:{fontSize:"8px",color:"var(--text2)",fontWeight:700,textTransform:"uppercase",margin:"5px 0 3px"}},"Regular"));waiting.forEach((s,idx)=>{const ac=attC(s.attendance);const attSt=ATT_STYLE[s.attendance]||ATT_STYLE.pending;sl.appendChild(el("div",{style:{display:"flex",alignItems:"center",gap:"5px",padding:"2px 0",borderBottom:"1px solid var(--border)"}},el("div",{style:{width:"14px",height:"14px",borderRadius:"50%",background:LC[a2l(s.dob||s.age)].bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"7px",fontWeight:700,color:LC[a2l(s.dob||s.age)].color,flexShrink:0}},s.name.charAt(0)),el("span",{style:{fontSize:"9px",color:"#cbd5e1",flex:1}},s.name),xferBadge(s,false),el("span",{style:{fontSize:"9px",background:attSt.bg,color:attSt.color,border:"1px solid "+attSt.border,borderRadius:"4px",padding:"1px 5px",fontWeight:600}},attSt.icon)));});}
         }
         card.appendChild(sl);
       }
@@ -3223,7 +3505,7 @@ function buildScheduleView(){
     grid.appendChild(col);
   });
   gridWrap.appendChild(grid);wrap.appendChild(gridWrap);
-  wrap.appendChild(el("div",{style:{marginTop:"8px",fontSize:"9px",color:"var(--text3)",textAlign:"center"}},"Click any class card to see students"));
+  wrap.appendChild(el("div",{style:{marginTop:"8px",fontSize:"9px",color:"var(--text3)",textAlign:"center"}},"Tap any class to see students · Mark attendance in 📝 Register"));
   return wrap;
 }
 
@@ -3530,7 +3812,7 @@ function buildCoachProfile(){
 function buildAdminView(){
   const wrap=el("div",null);
 
-  // Compute tryout counts for badge
+  // Compute tryout counts — from registrations[] AND swimmer records with pkg:tryout
   const pendingTryoutsMap={};
   const convertedTryoutsMap={};
   state.registrations.forEach(reg=>{
@@ -3544,7 +3826,17 @@ function buildAdminView(){
       else{if(!pendingTryoutsMap[key]||entry.date>pendingTryoutsMap[key].date)pendingTryoutsMap[key]=entry;}
     });
   });
-  const pendingTryouts=Object.values(pendingTryoutsMap);
+  // Also include active swimmers with pkg:tryout not already in the map
+  state.swimmers.filter(s=>s.active!==false&&s.pkg==="tryout").forEach(sw=>{
+    const key=sw.name.toLowerCase();
+    const converted=!!(sw.currentCourse&&sw.currentCourse.type!=="tryout")||(sw.courseHistory||[]).some(c=>c.type!=="tryout");
+    if(!pendingTryoutsMap[key]&&!convertedTryoutsMap[key]){
+      const entry={swimmerName:sw.name,parentName:sw.parentName||"",babyId:sw.babyId||"",date:sw.createdAt||"",swId:sw.id,regId:null,converted};
+      if(converted)convertedTryoutsMap[key]=entry;
+      else pendingTryoutsMap[key]=entry;
+    }
+  });
+  const pendingTryouts=Object.values(pendingTryoutsMap).filter(t=>!t.converted);
   const convertedTryouts=Object.values(convertedTryoutsMap);
 
   const tabs=[
@@ -3777,6 +4069,14 @@ function buildTryoutsTab(pendingTryouts,convertedTryouts){
           const newPkg={id:Date.now(),type:draft.pkgType,totalClasses:pt.classes,sessions:[],active:true,startedAt:draft.date,payment:draft.payment,contactNumber:""};
           if(t.regId){const reg=state.registrations.find(r=>r.id===t.regId);if(reg){(reg.packages||[]).forEach(p=>{if(p.type==="tryout")p.active=false;});reg.packages.push(newPkg);}}
           else{state.registrations.push({id:Date.now()+1,swimmerName:t.swimmerName,parentName:t.parentName||"",contactNumber:"",classId:null,active:true,packages:[newPkg]});}
+          // Write to swimmer.currentCourse
+          const sw=t.swId?state.swimmers.find(s=>s.id===t.swId):state.swimmers.find(s=>s.name===t.swimmerName);
+          if(sw){
+            swStartCourse(sw,draft.pkgType,draft.date,draft.payment);
+            sw.pkg=draft.pkgType;
+            // Prompt to assign class if not already in one
+            if(!sw.assignedClassId){state.postSaleNoClassIds=[sw.id];}
+          }
           state.convertOpen=null;state.convertDraft=null;render();
         },style:{padding:"10px",borderRadius:"8px",border:"none",fontSize:"13px",fontWeight:700,background:"#16a34a",color:"#fff",cursor:"pointer"}},"✓ Confirm Conversion"));
         panel.appendChild(el("div",{style:{fontSize:"9px",color:"#334155",textAlign:"center"}},(PKG_TYPES[draft.pkgType]?.label||"Group")+" · "+draft.date+" · ฿"+((draft.payment||0).toLocaleString())));
@@ -4163,8 +4463,15 @@ function buildSwimmersView(){
 
   // Search + filters
   const topRow=el("div",{style:{display:"flex",gap:"8px",marginBottom:"10px",flexWrap:"wrap",alignItems:"center"}});
-  const srch=el("input",{className:"iS",placeholder:"Search name, parent, Baby ID...",value:state.swSearch||"",style:{flex:1,minWidth:"150px",fontSize:"11px"}});
-  srch.addEventListener("input",e=>{state.swSearch=e.target.value;render();});
+  const srch=el("input",{className:"iS sw-search-input",placeholder:"Search name, parent, Baby ID...",value:state.swSearch||"",style:{flex:1,minWidth:"150px",fontSize:"11px"}});
+  srch.addEventListener("input",e=>{
+    state.swSearch=e.target.value;
+    const pos=e.target.selectionStart;
+    render();
+    // Restore focus and cursor position after re-render
+    const newInp=document.querySelector(".sw-search-input");
+    if(newInp){newInp.focus();try{newInp.setSelectionRange(pos,pos);}catch(e){}}
+  });
   topRow.appendChild(srch);
   if(!isCoach)topRow.appendChild(el("button",{onClick:()=>{state.showManualSwimmer=!state.showManualSwimmer;render();},style:{padding:"5px 12px",borderRadius:"7px",border:"1px solid #2563eb",fontSize:"10px",fontWeight:600,background:"#0f2a4a",color:"var(--accent2)",flexShrink:0}},state.showManualSwimmer?"✕":"➕ Add"));
   leftPanel.appendChild(topRow);
@@ -4229,7 +4536,7 @@ function buildSwimmersView(){
         const matchCls=Object.values(state.weeklyClasses).flat().find(c=>c.day===day&&c.time===time&&!c.closed);
         if(matchCls){assignedClassId=matchCls.id;assignedLabel=day+" "+time;}
       }
-      const newSw={id:newId,name:state.msName.trim(),parentName:state.msParent?.trim()||"",dob,age:"",pkg:state.msPkg||"group",memberId:state.msMemberId?.trim()||"",contactNumber:state.msContact?.trim()||"",babyId:genBabyId(),assignedClassId,assignedLabel,active:true,createdAt:isoDate(new Date())};
+      const newSw={id:newId,name:state.msName.trim(),parentName:state.msParent?.trim()||"",dob,age:"",pkg:state.msPkg||"group",memberId:state.msMemberId?.trim()||"",contactNumber:state.msContact?.trim()||"",babyId:genBabyId(),assignedClassId,assignedLabel,active:true,createdAt:isoDate(new Date()),currentCourse:null,courseHistory:[]};
       state.swimmers=[...state.swimmers,newSw];
       state.showManualSwimmer=false;state.msName="";state.msDobD="";state.msDobM="";state.msDobY="";state.msParent="";state.msMemberId="";state.msContact="";state.msClassSlot="";state.msErr="";render();
     },style:{width:"100%",padding:"8px",borderRadius:"7px",border:"none",fontSize:"12px",fontWeight:700,background:"#2563eb",color:"#fff",cursor:"pointer"}},"Add Swimmer"));
@@ -4255,14 +4562,14 @@ function buildSwimmersView(){
     if(newSwimmers.length){
       leftPanel.appendChild(el("div",{style:{fontSize:"10px",fontWeight:700,color:"#4ade80",marginTop:"4px",marginBottom:"6px",display:"flex",alignItems:"center",gap:"6px"}},
         "🆕 New this week",el("span",{style:{fontSize:"9px",color:"var(--text3)",fontWeight:400}},newSwimmers.length)));
-      const newGrid=el("div",{className:"sw-grid",style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(68px,1fr))",gap:"5px",marginBottom:"12px"}});
+      const newGrid=el("div",{className:"sw-grid",style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(110px,1fr))",maxWidth:"calc(5 * 122px + 4 * 5px)",gap:"5px",marginBottom:"12px"}});
       newSwimmers.forEach(s=>{
         const lc=LC[a2l(s.dob||s.age)]||LC["Baby"];
         const isSelected=state.selectedSwimmer?.id===s.id;
-        const card=el("div",{onClick:()=>{state.selectedSwimmer=isSelected?null:s;render();},style:{background:isSelected?"#0f2a4a":"#052e16",border:"1px solid",borderColor:isSelected?"#2563eb":"#166534",borderRadius:"8px",padding:"7px 5px",cursor:"pointer",textAlign:"center",borderTop:"2px solid #4ade80",transition:"all 0.15s",position:"relative"}});
+        const card=el("div",{onClick:()=>{state.selectedSwimmer=isSelected?null:s;render();},style:{background:isSelected?"#0f2a4a":"#052e16",border:"1px solid",borderColor:isSelected?"#2563eb":"#166534",borderRadius:"8px",padding:"10px 8px",cursor:"pointer",textAlign:"center",borderTop:"2px solid #4ade80",transition:"all 0.15s",position:"relative"}});
         if(!isCoach&&isSelected){const ib=el("button",{onClick:e=>{e.stopPropagation();state.swimmers=state.swimmers.map(sw2=>sw2.id!==s.id?sw2:{...sw2,active:false});if(state.selectedSwimmer?.id===s.id)state.selectedSwimmer=null;render();},style:{position:"absolute",top:"2px",right:"2px",width:"14px",height:"14px",borderRadius:"50%",border:"none",background:"#450a0a",color:"#f87171",fontSize:"8px",cursor:"pointer",lineHeight:"14px",textAlign:"center",padding:0,opacity:0.7}});ib.textContent="×";card.appendChild(ib);}
-        card.appendChild(el("div",{style:{width:"28px",height:"28px",borderRadius:"50%",background:lc.bg,border:"1.5px solid #4ade80",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"12px",fontWeight:700,color:"#4ade80",margin:"0 auto 4px"}},(s.name||"?").charAt(0).toUpperCase()));
-        card.appendChild(el("div",{style:{fontSize:"8px",fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:"1px"}},s.name.split(" ")[0]));
+        card.appendChild(el("div",{style:{width:"38px",height:"38px",borderRadius:"50%",background:lc.bg,border:"2px solid #4ade80",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"16px",fontWeight:700,color:"#4ade80",margin:"0 auto 5px"}},(s.name||"?").charAt(0).toUpperCase()));
+        card.appendChild(el("div",{style:{fontSize:"10px",fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:"1px"}},s.name.split(" ")[0]));
         if(s.babyId)card.appendChild(el("div",{style:{fontSize:"7px",color:"#4ade80",fontFamily:"monospace",overflow:"hidden",textOverflow:"ellipsis"}},(s.babyId||"").replace("BABY-","#")));
         newGrid.appendChild(card);
       });
@@ -4274,14 +4581,14 @@ function buildSwimmersView(){
     if(unassignedSwimmers.length){
       leftPanel.appendChild(el("div",{style:{fontSize:"10px",fontWeight:700,color:"#f59e0b",marginTop:"8px",marginBottom:"6px",display:"flex",alignItems:"center",gap:"6px"}},
         "⚠️ Unassigned",el("span",{style:{fontSize:"9px",color:"var(--text3)",fontWeight:400}},unassignedSwimmers.length)));
-      const uGrid=el("div",{className:"sw-grid",style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(68px,1fr))",gap:"5px",marginBottom:"12px"}});
+      const uGrid=el("div",{className:"sw-grid",style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(110px,1fr))",maxWidth:"calc(5 * 122px + 4 * 5px)",gap:"5px",marginBottom:"12px"}});
       unassignedSwimmers.forEach(s=>{
         const lc=LC[a2l(s.dob||s.age)]||LC["Baby"];
         const isSelected=state.selectedSwimmer?.id===s.id;
-        const card=el("div",{onClick:()=>{state.selectedSwimmer=isSelected?null:s;render();},style:{background:isSelected?"#0f2a4a":"#1c1100",border:"1px solid",borderColor:isSelected?"#2563eb":"#92400e",borderRadius:"8px",padding:"7px 5px",cursor:"pointer",textAlign:"center",borderTop:"2px solid #f59e0b",transition:"all 0.15s",position:"relative"}});
+        const card=el("div",{onClick:()=>{state.selectedSwimmer=isSelected?null:s;render();},style:{background:isSelected?"#0f2a4a":"#1c1100",border:"1px solid",borderColor:isSelected?"#2563eb":"#92400e",borderRadius:"8px",padding:"10px 8px",cursor:"pointer",textAlign:"center",borderTop:"2px solid #f59e0b",transition:"all 0.15s",position:"relative"}});
         if(!isCoach&&isSelected){const ib=el("button",{onClick:e=>{e.stopPropagation();state.swimmers=state.swimmers.map(sw2=>sw2.id!==s.id?sw2:{...sw2,active:false});if(state.selectedSwimmer?.id===s.id)state.selectedSwimmer=null;render();},style:{position:"absolute",top:"2px",right:"2px",width:"14px",height:"14px",borderRadius:"50%",border:"none",background:"#450a0a",color:"#f87171",fontSize:"8px",cursor:"pointer",lineHeight:"14px",textAlign:"center",padding:0,opacity:0.7}});ib.textContent="×";card.appendChild(ib);}
-        card.appendChild(el("div",{style:{width:"28px",height:"28px",borderRadius:"50%",background:lc.bg,border:"1.5px solid #f59e0b",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"12px",fontWeight:700,color:"#f59e0b",margin:"0 auto 4px"}},(s.name||"?").charAt(0).toUpperCase()));
-        card.appendChild(el("div",{style:{fontSize:"8px",fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:"1px"}},s.name.split(" ")[0]));
+        card.appendChild(el("div",{style:{width:"38px",height:"38px",borderRadius:"50%",background:lc.bg,border:"2px solid #f59e0b",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"16px",fontWeight:700,color:"#f59e0b",margin:"0 auto 5px"}},(s.name||"?").charAt(0).toUpperCase()));
+        card.appendChild(el("div",{style:{fontSize:"10px",fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:"1px"}},s.name.split(" ")[0]));
         if(s.babyId)card.appendChild(el("div",{style:{fontSize:"7px",color:"#f59e0b",fontFamily:"monospace",overflow:"hidden",textOverflow:"ellipsis"}},(s.babyId||"").replace("BABY-","#")));
         uGrid.appendChild(card);
       });
@@ -4306,17 +4613,17 @@ function buildSwimmersView(){
         lc.emoji+" "+lvl,
         el("span",{style:{fontSize:"9px",color:"var(--text3)",fontWeight:400}},swimmers.length)));
       // Grid
-      const grid=el("div",{className:"sw-grid",style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(68px,1fr))",gap:"5px",marginBottom:"4px"}});
+      const grid=el("div",{className:"sw-grid",style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(110px,1fr))",maxWidth:"calc(5 * 122px + 4 * 5px)",gap:"5px",marginBottom:"4px"}});
       swimmers.forEach(s=>{
         const isSelected=state.selectedSwimmer?.id===s.id;
-        const reg=state.registrations.find(r=>r.swimmerName===s.name);
-        const activePkg2=reg?(reg.packages||[]).slice().reverse().find(p=>p.active):null;
-        const sessCount=activePkg2?pkgCounted(activePkg2):0;
-        const totalCls=activePkg2?.totalClasses||0;
+        // Use new swimmer data model — currentCourse is source of truth
+        const course=swCurrentCourse(s);
+        const sessCount=course?swSessionsUsed(s):0;
+        const totalCls=course?.totalClasses||0;
         const card=el("div",{onClick:()=>{state.selectedSwimmer=isSelected?null:s;render();},style:{
           background:isSelected?"#0f2a4a":"var(--surface)",
           border:"1px solid",borderColor:isSelected?"#2563eb":"var(--border)",
-          borderRadius:"8px",padding:"7px 5px",cursor:"pointer",textAlign:"center",
+          borderRadius:"8px",padding:"10px 8px",cursor:"pointer",textAlign:"center",
           borderTop:"2px solid "+lc.color,transition:"all 0.15s",
           position:"relative"
         }});
@@ -4327,12 +4634,13 @@ function buildSwimmersView(){
           inactBtn.textContent="×";
           card.appendChild(inactBtn);
         }
-        card.appendChild(el("div",{style:{width:"28px",height:"28px",borderRadius:"50%",background:lc.bg,border:"1.5px solid "+lc.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"12px",fontWeight:700,color:lc.color,margin:"0 auto 4px"}},(s.name||"?").charAt(0).toUpperCase()));
-        card.appendChild(el("div",{style:{fontSize:"8px",fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:"1px"}},s.name.split(" ")[0]));
+        card.appendChild(el("div",{style:{width:"38px",height:"38px",borderRadius:"50%",background:lc.bg,border:"2px solid "+lc.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"16px",fontWeight:700,color:lc.color,margin:"0 auto 5px"}},(s.name||"?").charAt(0).toUpperCase()));
+        card.appendChild(el("div",{style:{fontSize:"10px",fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:"1px"}},s.name.split(" ")[0]));
+        if(s.parentName)card.appendChild(el("div",{style:{fontSize:"8px",color:"var(--text3)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:"2px"}},s.parentName.split(" ")[0]));
         if(s.babyId)card.appendChild(el("div",{style:{fontSize:"7px",color:"#7c3aed",fontFamily:"monospace",overflow:"hidden",textOverflow:"ellipsis"}},(s.babyId||"").replace("BABY-","#")));
-        if(activePkg2&&totalCls>0){
+        if(course&&totalCls>0){
           const dots=el("div",{style:{display:"flex",gap:"1px",justifyContent:"center",flexWrap:"wrap",marginTop:"3px"}});
-          for(let i=0;i<Math.min(totalCls,10);i++)dots.appendChild(el("div",{style:{width:"4px",height:"4px",borderRadius:"1px",background:i<sessCount?lc.color:"#1e3a5f"}}));
+          for(let i=0;i<Math.min(totalCls,10);i++)dots.appendChild(el("div",{style:{width:"6px",height:"6px",borderRadius:"2px",background:i<sessCount?lc.color:"#1e3a5f"}}));
           card.appendChild(dots);
         }
         grid.appendChild(card);
@@ -4372,44 +4680,42 @@ function buildSwimmerProfile(sw,isMobile){
   const sc=LC[a2l(sw.dob||sw.age)]||LC["Baby"];
   const editKey="swEdit_"+sw.id;
   const isEditing=!!state[editKey];
-  const reg=state.registrations.find(r=>r.swimmerName===sw.name);
-  const assignedCls=Object.values(state.weeklyClasses).flat().find(c=>c.students.some(s=>s.name===sw.name));
-  const wrap=el("div",{style:{padding:"10px 12px",display:"flex",flexDirection:"column",gap:"8px",height:"100%",boxSizing:"border-box"}});
+  const assignedCls=Object.values(state.weeklyClasses).flat().find(c=>c.students.some(s=>s.name===sw.name||s.id===sw.id));
+  const wrap=el("div",{style:{padding:"16px",display:"flex",flexDirection:"column",gap:"0",boxSizing:"border-box"}});
 
-  // ── Header: avatar + name + actions + close ──
-  const hdr=el("div",{style:{display:"flex",alignItems:"center",gap:"8px",flexShrink:0}});
-  if(isMobile)hdr.appendChild(el("button",{onClick:()=>{state.selectedSwimmer=null;render();},style:{background:"none",border:"none",color:"var(--text3)",fontSize:"18px",cursor:"pointer",padding:0,flexShrink:0}},"←"));
-  hdr.appendChild(el("div",{style:{width:"34px",height:"34px",borderRadius:"50%",background:sc.bg,border:"2px solid "+sc.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"14px",fontWeight:700,color:sc.color,flexShrink:0}},sw.name.charAt(0).toUpperCase()));
+  // ── Header ──
+  const hdr=el("div",{style:{display:"flex",alignItems:"center",gap:"12px",marginBottom:"16px"}});
+  if(isMobile)hdr.appendChild(el("button",{onClick:()=>{state.selectedSwimmer=null;render();},style:{background:"none",border:"none",color:"var(--text3)",fontSize:"20px",cursor:"pointer",padding:0,flexShrink:0}},"←"));
+  hdr.appendChild(el("div",{style:{width:"46px",height:"46px",borderRadius:"50%",background:sc.bg,border:"2px solid "+sc.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"20px",fontWeight:700,color:sc.color,flexShrink:0}},sw.name.charAt(0).toUpperCase()));
   const nb=el("div",{style:{flex:1,minWidth:0}});
-  nb.appendChild(el("div",{style:{fontSize:"15px",fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},
-    sw.name+(sw.babyId?" · "+sw.babyId.replace("BABY-","#"):"")));
-  nb.appendChild(el("div",{style:{fontSize:"10px",color:sc.color,marginTop:"2px"}},sc.emoji+" "+a2l(sw.dob||sw.age)));
+  nb.appendChild(el("div",{style:{fontSize:"16px",fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},sw.name));
+  nb.appendChild(el("div",{style:{fontSize:"11px",color:sc.color,marginTop:"2px"}},sc.emoji+" "+a2l(sw.dob||sw.age)+(sw.babyId?" · "+sw.babyId.replace("BABY-","#"):"")));
   hdr.appendChild(nb);
-  // Action buttons in header
+  const hdrBtns=el("div",{style:{display:"flex",gap:"4px",flexShrink:0}});
   if(!isCoach){
-    hdr.appendChild(el("button",{onClick:()=>{
-      if(!isEditing)state[editKey]={...sw,dobD:sw.dob?sw.dob.split("-")[2]:"",dobM:sw.dob?sw.dob.split("-")[1]:"",dobY:sw.dob?sw.dob.split("-")[0]:""};
-      else delete state[editKey];render();
-    },style:{padding:"4px 8px",borderRadius:"6px",border:"1px solid",fontSize:"9px",fontWeight:600,cursor:"pointer",flexShrink:0,borderColor:isEditing?"#166534":"#334155",background:isEditing?"#052e16":"#0a1628",color:isEditing?"#4ade80":"#64748b"}},(isEditing?"✓ Done":"✏️ Edit")));
-    hdr.appendChild(el("button",{onClick:()=>{state.swimmers=state.swimmers.map(s=>s.id!==sw.id?s:{...s,active:false});state.selectedSwimmer=null;render();},style:{padding:"4px 8px",borderRadius:"6px",border:"1px solid #7f1d1d",background:"#450a0a",color:"#f87171",fontSize:"9px",fontWeight:600,cursor:"pointer",flexShrink:0}},"🚫"));
+  hdrBtns.appendChild(el("button",{onClick:()=>{
+      if(!isEditing){state[editKey]={...sw,dobD:sw.dob?sw.dob.split("-")[2]:"",dobM:sw.dob?sw.dob.split("-")[1]:"",dobY:sw.dob?sw.dob.split("-")[0]:""};}
+      else{delete state[editKey];}
+      render();
+    },style:{padding:"5px 10px",borderRadius:"6px",border:"1px solid",fontSize:"10px",fontWeight:600,cursor:"pointer",borderColor:isEditing?"#166534":"#334155",background:isEditing?"#052e16":"#0a1628",color:isEditing?"#4ade80":"#64748b"}},(isEditing?"✓ Done":"✏️")));
+    hdrBtns.appendChild(el("button",{onClick:()=>{state.swimmers=state.swimmers.map(s=>s.id!==sw.id?s:{...s,active:false});state.selectedSwimmer=null;render();},style:{padding:"5px 8px",borderRadius:"6px",border:"1px solid #7f1d1d",background:"#450a0a",color:"#f87171",fontSize:"10px",cursor:"pointer"}},"🚫"));
   }
-  if(!isMobile)hdr.appendChild(el("button",{onClick:()=>{state.selectedSwimmer=null;render();},style:{background:"none",border:"1px solid #334155",color:"var(--text3)",fontSize:"10px",cursor:"pointer",padding:"4px 7px",borderRadius:"6px",flexShrink:0}},"✕"));
+  if(!isMobile)hdrBtns.appendChild(el("button",{onClick:()=>{state.selectedSwimmer=null;render();},style:{background:"none",border:"1px solid #334155",color:"var(--text3)",fontSize:"10px",cursor:"pointer",padding:"5px 8px",borderRadius:"6px"}},"✕"));
+  hdr.appendChild(hdrBtns);
   wrap.appendChild(hdr);
-  wrap.appendChild(el("div",{style:{height:"1px",background:"#1e3a5f",flexShrink:0}}));
 
-  // ── Edit form (shown when editing) ──
+  // ── Edit form ──
   if(isEditing&&!isCoach){
     const ed=state[editKey];
-    const ef=el("div",{style:{background:"var(--surface)",border:"1px solid #2563eb",borderRadius:"8px",padding:"10px",flexShrink:0}});
-    const r1=el("div",{style:{display:"flex",gap:"6px",marginBottom:"6px"}});
-    const ni=el("input",{className:"iS",value:ed.name||"",placeholder:"Name",style:{flex:1,fontSize:"11px",padding:"5px 8px"}});ni.addEventListener("input",e=>state[editKey]={...state[editKey],name:e.target.value});
-    const pi=el("input",{className:"iS",value:ed.parentName||"",placeholder:"Parent",style:{flex:1,fontSize:"11px",padding:"5px 8px"}});pi.addEventListener("input",e=>state[editKey]={...state[editKey],parentName:e.target.value});
-    r1.appendChild(ni);r1.appendChild(pi);ef.appendChild(r1);
-    const r2=el("div",{style:{display:"flex",gap:"6px",marginBottom:"6px"}});
-    const ci=el("input",{className:"iS",value:ed.contactNumber||"",placeholder:"Contact",style:{flex:1,fontSize:"11px",padding:"5px 8px"}});ci.addEventListener("input",e=>state[editKey]={...state[editKey],contactNumber:e.target.value});
-    const mi=el("input",{className:"iS",value:ed.memberId||"",placeholder:"Member ID",style:{flex:1,fontSize:"11px",padding:"5px 8px"}});mi.addEventListener("input",e=>state[editKey]={...state[editKey],memberId:e.target.value});
-    r2.appendChild(ci);r2.appendChild(mi);ef.appendChild(r2);
-    const cs=el("select",{className:"iS",style:{fontSize:"11px",padding:"5px 8px",marginBottom:"6px"}});
+    const ef=el("div",{style:{background:"#061220",border:"1px solid #2563eb",borderRadius:"10px",padding:"12px",marginBottom:"14px"}});
+    ef.appendChild(el("div",{style:{fontSize:"9px",color:"#60a5fa",textTransform:"uppercase",fontWeight:700,marginBottom:"8px"}},"✏️ Edit Profile"));
+    [[{p:"Name",k:"name",val:ed.name||""},{p:"Parent",k:"parentName",val:ed.parentName||""}],
+     [{p:"Contact",k:"contactNumber",val:ed.contactNumber||""},{p:"Member ID",k:"memberId",val:ed.memberId||""}]].forEach(row=>{
+      const r=el("div",{style:{display:"flex",gap:"6px",marginBottom:"6px"}});
+      row.forEach(({p,k,val})=>{const inp=el("input",{className:"iS",value:val,placeholder:p,style:{flex:1,fontSize:"11px",padding:"6px 8px"}});inp.addEventListener("input",e=>state[editKey]={...state[editKey],[k]:e.target.value});r.appendChild(inp);});
+      ef.appendChild(r);
+    });
+    const cs=el("select",{className:"iS",style:{fontSize:"11px",padding:"6px 8px",marginBottom:"8px",width:"100%"}});
     cs.appendChild(el("option",{value:""},"— No class —"));
     const dO={Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
     [...new Map(Object.values(state.weeklyClasses).flat().filter(c=>!c.closed).sort((a,b)=>(dO[a.day]??7)-(dO[b.day]??7)||(a.time||"").localeCompare(b.time||"")).map(c=>[c.day+"|"+c.time,c])).values()].forEach(c=>{
@@ -4427,356 +4733,387 @@ function buildSwimmerProfile(sw,isMobile){
       state.swimmers=state.swimmers.map(s=>s.id!==sw.id?s:{...s,...ed,dob,name:ed.name||s.name,assignedClassId:aId,assignedLabel:aLbl});
       state.selectedSwimmer={...sw,...ed,dob,assignedClassId:aId,assignedLabel:aLbl};
       delete state[editKey];render();
-    },style:{width:"100%",padding:"6px",borderRadius:"6px",border:"none",fontSize:"11px",fontWeight:700,background:"#2563eb",color:"#fff",cursor:"pointer"}},"Save Changes"));
+    },style:{width:"100%",padding:"8px",borderRadius:"7px",border:"none",fontSize:"12px",fontWeight:700,background:"#2563eb",color:"#fff",cursor:"pointer"}},"Save Changes"));
     wrap.appendChild(ef);
-    wrap.appendChild(el("div",{style:{height:"1px",background:"#1e3a5f",flexShrink:0}}));
   }
 
-  // ── Two columns: Personal Info | Class & Courses ──
-  const cols=el("div",{style:{display:"flex",gap:"10px",flex:1,minHeight:0}});
+  // ── Personal Info ──
+  const secLabel=(icon,txt)=>el("div",{style:{fontSize:"9px",color:"var(--text3)",textTransform:"uppercase",fontWeight:700,marginBottom:"8px",display:"flex",alignItems:"center",gap:"5px"}},icon+" "+txt);
 
-  // Left: Personal Info
-  const leftCol=el("div",{style:{flex:1,minWidth:0,display:"flex",flexDirection:"column",gap:"6px"}});
-  leftCol.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",textTransform:"uppercase",fontWeight:700,marginBottom:"6px"}},"👤 Personal"));
-  [{l:"Parent",v:sw.parentName||"—"},{l:"Contact",v:sw.contactNumber||"—"},{l:"DOB",v:sw.dob?new Date(sw.dob+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"—"},{l:"Age",v:sw.dob?dobToAgeStr(sw.dob):"—"},{l:"Member ID",v:sw.memberId||"—"}].forEach(({l,v})=>{
-    leftCol.appendChild(el("div",{style:{marginBottom:"10px"}},
-      el("div",{style:{fontSize:"8px",color:"var(--text3)",textTransform:"uppercase",marginBottom:"2px"}},l),
-      el("div",{style:{fontSize:"13px",color:"var(--text)",fontWeight:500,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},v)));
+  const infoCard=el("div",{style:{background:"#061220",border:"1px solid #1e3a5f",borderRadius:"10px",padding:"12px",marginBottom:"12px"}});
+  infoCard.appendChild(secLabel("👤","Personal"));
+  const infoGrid=el("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}});
+  [{l:"Parent",v:sw.parentName||"—"},{l:"Contact",v:sw.contactNumber||"—"},{l:"Date of Birth",v:sw.dob?new Date(sw.dob+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"—"},{l:"Age",v:sw.dob?dobToAgeStr(sw.dob):"—"},{l:"Member ID",v:sw.memberId||"—"},{l:"Level",v:sc.emoji+" "+a2l(sw.dob||sw.age)}].forEach(({l,v})=>{
+    infoGrid.appendChild(el("div",null,
+      el("div",{style:{fontSize:"8px",color:"var(--text3)",textTransform:"uppercase",marginBottom:"3px"}},l),
+      el("div",{style:{fontSize:"12px",color:"var(--text)",fontWeight:500,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},v)));
   });
-  cols.appendChild(leftCol);
+  infoCard.appendChild(infoGrid);
+  wrap.appendChild(infoCard);
 
-  // Vertical divider
-  cols.appendChild(el("div",{style:{width:"1px",background:"#1e3a5f",flexShrink:0}}));
-
-  // Right: Class & Courses
-  const rightCol=el("div",{style:{flex:1,minWidth:0,display:"flex",flexDirection:"column",gap:"5px"}});
-  rightCol.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",textTransform:"uppercase",fontWeight:700,marginBottom:"6px"}},"📅 Class & Courses"));
-  rightCol.appendChild(el("div",{style:{background:"#061220",border:"1px solid #1e3a5f",borderRadius:"8px",padding:"8px 12px",fontSize:"12px",color:assignedCls?"#60a5fa":"#334155",marginBottom:"8px"}},
+  // ── Class ──
+  const clsCard=el("div",{style:{background:"#061220",border:"1px solid #1e3a5f",borderRadius:"10px",padding:"12px",marginBottom:"12px"}});
+  clsCard.appendChild(secLabel("📅","Assigned Class"));
+  clsCard.appendChild(el("div",{style:{fontSize:"13px",fontWeight:600,color:assignedCls?"#60a5fa":"#334155"}},
     assignedCls?(assignedCls.day+" · "+assignedCls.time):"No class assigned"));
+  wrap.appendChild(clsCard);
 
-  if(reg&&(reg.packages||[]).length){
-    const courseKey="courseExpand_"+sw.id;
-    const expanded=!!state[courseKey];
-    const pkgs=(reg.packages||[]).slice().reverse();
-    const shown=expanded?pkgs:pkgs.slice(0,1);
-    shown.forEach(pkg=>{
-      const p=PKG_TYPES[pkg.type]||PKG_TYPES.group;
-      const sess=pkgCounted(pkg);const over=pkgOver(pkg);
-      const pct=pkg.totalClasses>0?Math.min(1,sess/pkg.totalClasses):0;
-      const pr=el("div",{style:{background:"#061220",border:"1px solid #1e3a5f",borderRadius:"6px",padding:"5px 8px"}});
-      const ph=el("div",{style:{display:"flex",alignItems:"center",gap:"4px",marginBottom:"3px",flexWrap:"wrap"}});
-      ph.appendChild(el("span",{style:{fontSize:"8px",background:p.bg,color:p.color,borderRadius:"3px",padding:"1px 5px",border:"1px solid "+p.border,fontWeight:700}},p.label));
-      if(pkg.startedAt)ph.appendChild(el("span",{style:{fontSize:"8px",color:"#475569"}},new Date(pkg.startedAt+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"2-digit"})));
-      ph.appendChild(el("span",{style:{fontSize:"9px",color:over>0?"#f59e0b":sess>=pkg.totalClasses?"#4ade80":"var(--text3)",marginLeft:"auto",fontWeight:700}},sess+"/"+pkg.totalClasses+(over>0?" +"+over:sess>=pkg.totalClasses?" ✓":"")));
-      pr.appendChild(ph);
-      const bar=el("div",{style:{height:"3px",background:"#1e3a5f",borderRadius:"2px",overflow:"hidden"}});
-      bar.appendChild(el("div",{style:{height:"100%",width:(pct*100)+"%",background:over>0?"#d97706":p.color,borderRadius:"2px"}}));
-      pr.appendChild(bar);
-      rightCol.appendChild(pr);
+  // ── Courses ──
+  const courseCard=el("div",{style:{background:"#061220",border:"1px solid #1e3a5f",borderRadius:"10px",padding:"12px",marginBottom:"12px"}});
+  courseCard.appendChild(secLabel("📋","Courses"));
+
+  const course=swCurrentCourse(sw);
+  const courseHistory=sw.courseHistory||[];
+  const courseKey="courseExpand_"+sw.id;
+  const histExpanded=!!state[courseKey];
+
+  function buildCourseDots(c,courseId){
+    const p=PKG_TYPES[c.type]||PKG_TYPES.group;
+    const attended=(c.history||[]).filter(h=>h.status==="attended").sort((a,b)=>a.date.localeCompare(b.date));
+    const total=c.totalClasses||8;
+    const sess=attended.length;
+    const over=Math.max(0,sess-total);
+    const pr=el("div",{style:{background:"#0a1628",border:"1px solid #1e3a5f",borderRadius:"8px",padding:"10px",marginBottom:"6px"}});
+    const ph=el("div",{style:{display:"flex",alignItems:"center",gap:"6px",marginBottom:"8px",flexWrap:"wrap"}});
+    ph.appendChild(el("span",{style:{fontSize:"9px",background:p.bg,color:p.color,borderRadius:"4px",padding:"2px 7px",border:"1px solid "+p.border,fontWeight:700}},p.label+(c===course?" · Active":"")));
+    if(c.startDate)ph.appendChild(el("span",{style:{fontSize:"9px",color:"#475569"}},new Date(c.startDate+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})));
+    ph.appendChild(el("span",{style:{fontSize:"10px",color:over>0?"#f59e0b":sess>=total?"#4ade80":"var(--text3)",marginLeft:"auto",fontWeight:700}},sess+"/"+total+(over>0?" +"+over:sess>=total?" ✓":"")));
+    if(c.payment)ph.appendChild(el("span",{style:{fontSize:"9px",color:"#65a30d"}},"฿"+c.payment.toLocaleString()));
+    pr.appendChild(ph);
+
+    // Date list container — toggled in-place
+    const dateList=el("div",{style:{marginTop:"8px",borderTop:"1px solid #1e3a5f",paddingTop:"8px",display:"none",gridTemplateColumns:"1fr 1fr",gap:"4px"}});
+    attended.forEach((h,idx)=>{
+      const d=new Date(h.date+"T00:00:00");
+      dateList.appendChild(el("div",{style:{display:"flex",alignItems:"center",gap:"5px"}},
+        el("span",{style:{fontSize:"8px",color:"#334155",minWidth:"14px"}},(idx+1)+"."),
+        el("span",{style:{fontSize:"10px",color:p.color,fontWeight:500}},d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}))));
     });
-    if(pkgs.length>1){
-      rightCol.appendChild(el("button",{onClick:()=>{state[courseKey]=!expanded;render();},style:{fontSize:"8px",color:"#60a5fa",background:"none",border:"none",cursor:"pointer",padding:"2px 0",textAlign:"left"}},expanded?"▲ Show less":"▼ All "+pkgs.length+" courses"));
+
+    const toggleLbl=el("span",{style:{fontSize:"9px",color:"#60a5fa",marginLeft:"6px",userSelect:"none"}},sess>0?"▼ see dates":"");
+    const dotsRow=el("div",{
+      style:{display:"flex",gap:"4px",flexWrap:"wrap",cursor:sess>0?"pointer":"default",alignItems:"center"},
+    });
+    for(let i=0;i<Math.max(total,sess);i++){
+      const filled=i<sess;const isOver=i>=total;
+      dotsRow.appendChild(el("div",{style:{width:"12px",height:"12px",borderRadius:"3px",background:filled?(isOver?"#d97706":p.color):"#1e3a5f",border:filled?(isOver?"1px solid #f59e0b":"1px solid "+p.border):"1px solid #334155",flexShrink:0}}));
     }
-  } else {
-    rightCol.appendChild(el("div",{style:{fontSize:"10px",color:"#334155"}},"No courses yet"));
+    if(sess>0){
+      dotsRow.appendChild(toggleLbl);
+      let open=false;
+      dotsRow.addEventListener("click",()=>{
+        open=!open;
+        dateList.style.display=open?"grid":"none";
+        toggleLbl.textContent=open?"▲ hide dates":"▼ see dates";
+      });
+    }
+    pr.appendChild(dotsRow);
+    pr.appendChild(dateList);
+    return pr;
   }
-  cols.appendChild(rightCol);
-  wrap.appendChild(cols);
+
+  if(course){
+    courseCard.appendChild(buildCourseDots(course,"cur_"+sw.id));
+  } else {
+    courseCard.appendChild(el("div",{style:{fontSize:"11px",color:"#334155"}},"No active course"));
+  }
+
+  if(courseHistory.length){
+    const histContainer=el("div",{style:{display:"none"}});
+    courseHistory.slice().reverse().forEach((c,ci)=>histContainer.appendChild(buildCourseDots(c,"hist_"+sw.id+"_"+ci)));
+    let histOpen=false;
+    const histBtn=el("button",{style:{fontSize:"9px",color:"#60a5fa",background:"none",border:"none",cursor:"pointer",padding:"4px 0",textAlign:"left"}},
+      "▼ Show "+courseHistory.length+" past course"+(courseHistory.length!==1?"s":""));
+    histBtn.addEventListener("click",()=>{
+      histOpen=!histOpen;
+      histContainer.style.display=histOpen?"block":"none";
+      histBtn.textContent=(histOpen?"▲ Hide":"▼ Show")+" "+courseHistory.length+" past course"+(courseHistory.length!==1?"s":"");
+    });
+    courseCard.appendChild(histBtn);
+    courseCard.appendChild(histContainer);
+  }
+  wrap.appendChild(courseCard);
 
   return wrap;
 }
 
+  // ── Header: avatar + name + actions + close ──
+  const hdr=el("div",{style:{display:"flex",alignItems:"center",gap:"8px",flexShrink:0}});
+
+// ── Register attendance helpers ─────────────────────────────────
+// Reads/writes directly on weeklyClasses[weekIso][class].students[].attendance
+// No separate store — same field Schedule and Manage Class read
+
+function getStudentAtt(weekIso,classId,studentId){
+  const cls=(state.weeklyClasses[weekIso]||[]).find(c=>c.id===classId);
+  if(!cls)return"pending";
+  const st=(cls.students||[]).find(s=>s.id===studentId);
+  return st?.attendance||"pending";
+}
+
+function setStudentAtt(weekIso,classId,studentId,newStatus){
+  const weeks=state.weeklyClasses[weekIso];
+  if(!weeks)return;
+
+  // ── Resolve everything BEFORE mutating state ──
+  const prev=getStudentAtt(weekIso,classId,studentId);
+  if(prev===newStatus)return; // no-op
+
+  const cls=weeks.find(c=>c.id===classId);
+  if(!cls)return;
+
+  // Actual calendar date for this class slot
+  const dayOff={Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6}[cls.day]||0;
+  const d=new Date(weekIso+"T00:00:00");d.setDate(d.getDate()+dayOff);
+  const actualDate=isoDate(d);
+
+  // Find swimmer by id first, fall back to name match from the class student record
+  const studentRecord=(cls.students||[]).find(s=>s.id===studentId);
+  const sw=state.swimmers.find(s=>s.id===studentId)||
+           (studentRecord?.name?state.swimmers.find(s=>s.name===studentRecord.name):null);
+
+  // ── Now mutate the class student attendance ──
+  state.weeklyClasses={
+    ...state.weeklyClasses,
+    [weekIso]:weeks.map(c=>c.id!==classId?c:{
+      ...c,students:c.students.map(s=>s.id!==studentId?s:{...s,attendance:newStatus})
+    })
+  };
+
+  // ── Sync to swimmer.currentCourse ──
+  if(sw){
+    if(newStatus==="attended"&&prev!=="attended"){
+      // Start a course if none exists
+      if(!sw.currentCourse){
+        swStartCourse(sw,sw.pkg||"group",actualDate,0);
+      }
+      // Guard: never add the same date twice
+      const alreadyRecorded=(sw.currentCourse.history||[]).some(h=>h.date===actualDate);
+      if(!alreadyRecorded){
+        swAddAttendance(sw,actualDate,"attended");
+      }
+    }
+    else if(prev==="attended"&&newStatus!=="attended"&&sw.currentCourse){
+      // Remove this date's session, re-derive sessionsUsed from history
+      const newHistory=(sw.currentCourse.history||[]).filter(h=>h.date!==actualDate);
+      sw.currentCourse={
+        ...sw.currentCourse,
+        history:newHistory,
+        sessionsUsed:newHistory.filter(h=>h.status==="attended").length
+      };
+    }
+  }
+}
+
+function cycleStudentAtt(weekIso,classId,studentId){
+  const cur=getStudentAtt(weekIso,classId,studentId);
+  // ⏳ pending → ✅ confirmed → ✓ attended → ❌ absent → ⏳ pending
+  const next={pending:"confirmed",confirmed:"attended",attended:"absent",absent:"pending"}[cur]||"confirmed";
+  setStudentAtt(weekIso,classId,studentId,next);
+  render();
+}
+
+const ATT_STYLE={
+  pending:  {icon:"⏳",label:"Pending",  color:"#fbbf24",bg:"#1c1100",border:"#92400e"},
+  confirmed:{icon:"✅",label:"Confirmed",color:"#60a5fa",bg:"#0f2a4a",border:"#1d4ed8"},
+  attended: {icon:"✓", label:"Attended", color:"#4ade80",bg:"#052e16",border:"#166534"},
+  absent:   {icon:"❌",label:"Absent",   color:"#f87171",bg:"#450a0a",border:"#7f1d1d"},
+};
+
 function buildRegisterView(){
   const wrap=el("div",null);
+  const today=todayStr();
+  const todayDate=new Date(today+"T00:00:00");
+  const todayDay=DAYS[todayDate.getDay()===0?6:todayDate.getDay()-1]; // Mon=0
+  const todayWeek=isoDate(getMonday(todayDate));
 
-  // Tabs
-  const regTab=state.regViewTab||"active";
+  // Tabs: Today / Week / History
+  const regTab=state.regViewTab||"today";
   const tabBar=el("div",{style:{display:"flex",gap:"4px",marginBottom:"14px",borderBottom:"2px solid #1e3a5f"}});
-  [{id:"active",label:"📋 Active"},{id:"completed",label:"✅ Completed"}].forEach(t=>{
+  [{id:"today",label:"📝 Today"},{id:"week",label:"📅 Week"}].forEach(t=>{
     const active=regTab===t.id;
     tabBar.appendChild(el("button",{onClick:()=>{state.regViewTab=t.id;render();},style:{padding:"7px 16px",borderRadius:"8px 8px 0 0",border:"1px solid",fontSize:"12px",fontWeight:700,cursor:"pointer",borderColor:active?"#2563eb":"#1e3a5f",background:active?"#0f2a4a":"#0a1628",color:active?"#60a5fa":"#64748b",borderBottom:active?"2px solid #0f2a4a":"none",marginBottom:active?"-2px":"0"}},t.label));
   });
   wrap.appendChild(tabBar);
 
-  // Search
-  const srch=el("input",{className:"iS",placeholder:"Search swimmer or parent...",value:state.regSearchQ||"",style:{marginBottom:"14px",fontSize:"11px"}});
-  srch.addEventListener("input",e=>{state.regSearchQ=e.target.value;render();});
-  wrap.appendChild(srch);
-  const q=(state.regSearchQ||"").toLowerCase().trim();
+  // ── TODAY / WEEK TABS: attendance checklist ──
+  // Determine which week to show
+  const weekIso=state.regWeekStart||todayWeek;
 
-  // ── COMPLETED TAB ──
-  if(regTab==="completed"){
-    const compRegs=state.registrations.filter(r=>r.active===false&&(r.packages||[]).some(p=>p.sessions&&p.sessions.length>0));
-    const compSwimmers={};
-    compRegs.forEach(reg=>{
-      const sw=state.swimmers.find(s=>s.name===reg.swimmerName)||state.swimmers.find(s=>s.parentName===reg.swimmerName)||state.swimmers.find(s=>s.parentName===reg.parentName);
-      const childName=sw?.name||reg.swimmerName;
-      const parent=sw?.parentName||reg.parentName||reg.swimmerName;
-      const key=sw?.babyId||reg.swimmerName.toLowerCase();
-      if(q&&!childName.toLowerCase().includes(q)&&!parent.toLowerCase().includes(q))return;
-      if(!compSwimmers[key]){compSwimmers[key]={name:childName,parent,babyId:sw?.babyId||"",contact:sw?.contactNumber||reg.contactNumber||"",sw,packages:[]};}
-      (reg.packages||[]).forEach(pkg=>{if(pkg.type!=="tryout")compSwimmers[key].packages.push(pkg);});
-    });
-    const compList=Object.values(compSwimmers).sort((a,b)=>a.name.localeCompare(b.name));
-    if(compList.length===0){
-      wrap.appendChild(el("div",{style:{textAlign:"center",padding:"40px",color:"var(--text3)",border:"1px dashed #1e3a5f",borderRadius:"10px"}},"No completed records found."));
-      return wrap;
-    }
-    wrap.appendChild(el("div",{style:{fontSize:"10px",color:"var(--text3)",marginBottom:"8px"}},compList.length+" completed swimmers"));
-    const tbl=el("div",{style:{background:"var(--surface)",border:"1px solid var(--border)",borderRadius:"12px",overflow:"hidden"}});
-    compList.forEach((sw,si)=>{
-      const isExpanded=!!state.regShowHistory["comp_"+sw.name];
-      const totalSessions=(sw.packages||[]).reduce((s,p)=>s+(p.sessions?.length||0),0);
-      const block=el("div",{style:{borderBottom:si<compList.length-1?"1px solid #0d1a2a":"none"}});
-      const hdr=el("div",{style:{display:"flex",alignItems:"center",gap:"8px",flexWrap:"wrap",padding:"10px 14px",background:si%2===0?"#0d1f33":"#0a1624",cursor:"pointer"},
-        onClick:()=>{state.regShowHistory={...state.regShowHistory,["comp_"+sw.name]:!isExpanded};render();}});
-      const nameBlock=el("div",{style:{flex:1,minWidth:"120px"}});
-      const compChildName=sw.name||"";
-      nameBlock.appendChild(el("div",{style:{fontSize:"11px",fontWeight:700,color:"#94a3b8",display:"flex",alignItems:"center",gap:"6px"}},
-        compChildName,
-        el("span",{style:{fontSize:"9px",background:"#052e16",color:"#4ade80",borderRadius:"3px",padding:"1px 6px",border:"1px solid #166534",fontWeight:600}},"✓ Done"),
-        sw.babyId?el("span",{style:{fontSize:"9px",color:"#c084fc",fontFamily:"monospace",background:"#1a0a2e",borderRadius:"3px",padding:"1px 5px",border:"1px solid #7c3aed"}},sw.babyId):null));
-      nameBlock.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",marginTop:"1px"}},sw.parent+(sw.contact?" · "+sw.contact:"")));
-      hdr.appendChild(nameBlock);
-      hdr.appendChild(el("span",{style:{fontSize:"9px",background:"#0f2a4a",color:"#60a5fa",borderRadius:"4px",padding:"2px 7px",border:"1px solid #1e3a5f"}},(sw.packages.length)+" course"+(sw.packages.length!==1?"s":"")));
-      hdr.appendChild(el("span",{style:{fontSize:"10px",color:"var(--text3)"}},(totalSessions)+" sessions"));
-      hdr.appendChild(el("span",{style:{fontSize:"10px",color:"#334155"}},isExpanded?"▲":"▼"));
-      block.appendChild(hdr);
-      if(isExpanded){
-        // Move to Active button
-        const compReg=state.registrations.find(r=>r.swimmerName===sw.name&&r.active===false);
-        const moveBar=el("div",{style:{padding:"6px 14px",background:"#061220",borderTop:"1px solid #0d1a2a",display:"flex",justifyContent:"flex-end"}});
-        moveBar.appendChild(el("button",{onClick:()=>{if(compReg){compReg.active=true;}render();},style:{padding:"3px 10px",borderRadius:"5px",border:"1px solid #166534",background:"#052e16",color:"#4ade80",fontSize:"9px",cursor:"pointer"}},"↩ Move to Active"));
-        block.appendChild(moveBar);
-        (sw.packages||[]).forEach((pkg,pi)=>{
-          const p=PKG_TYPES[pkg.type]||PKG_TYPES.group;
-          const sorted=(pkg.sessions||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));
-          const pkgRow=el("div",{style:{padding:"8px 14px 8px 28px",background:si%2===0?"#091929":"#07141f",borderTop:"1px solid #0d1a2a"}});
-          const pkgHdr=el("div",{style:{display:"flex",alignItems:"center",gap:"8px",flexWrap:"wrap",marginBottom:sorted.length?"6px":"0"}});
-          pkgHdr.appendChild(el("span",{style:{fontSize:"9px",color:"var(--text3)",fontWeight:600}},"#"+(pi+1)));
-          pkgHdr.appendChild(el("span",{style:{fontSize:"9px",background:p.bg,color:p.color,borderRadius:"4px",padding:"2px 7px",border:`1px solid ${p.border}`,fontWeight:700}},p.label));
-          if(pkg.startedAt)pkgHdr.appendChild(el("span",{style:{fontSize:"9px",color:"#475569"}},new Date(pkg.startedAt+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})));
-          pkgHdr.appendChild(el("span",{style:{fontSize:"10px",color:"#4ade80",fontWeight:700}},sorted.length+"/"+pkg.totalClasses+" ✓"));
-          pkgRow.appendChild(pkgHdr);
-          if(sorted.length){
-            const grid=el("div",{style:{display:"flex",gap:"4px",flexWrap:"wrap"}});
-            sorted.forEach((s,idx)=>{
-              const d=new Date(s.date+"T00:00:00");
-              grid.appendChild(el("div",{style:{background:"#061220",border:"1px solid #1e3a5f",borderRadius:"6px",padding:"4px 8px",fontSize:"9px",color:"#60a5fa",textAlign:"center",minWidth:"44px"}},
-                el("div",{style:{fontWeight:700,fontSize:"10px",color:"#93c5fd"}},idx+1),
-                el("div",null,d.toLocaleDateString("en-GB",{day:"numeric",month:"short"})),
-                el("div",{style:{color:"#475569",fontSize:"8px"}},d.toLocaleDateString("en-GB",{weekday:"short"}))));
-            });
-            pkgRow.appendChild(grid);
-          }
-          block.appendChild(pkgRow);
-        });
-      }
-      tbl.appendChild(block);
-    });
-    wrap.appendChild(tbl);
+  // Week navigator (week tab only)
+  if(regTab==="week"){
+    const nav=el("div",{style:{display:"flex",alignItems:"center",gap:"8px",marginBottom:"14px"}});
+    const wStart=new Date(weekIso+"T00:00:00");
+    const wEnd=addDays(wStart,6);
+    nav.appendChild(el("button",{onClick:()=>{state.regWeekStart=isoDate(addDays(new Date(weekIso+"T00:00:00"),-7));render();},style:{background:"var(--surface)",border:"1px solid var(--border)",borderRadius:"7px",padding:"5px 10px",color:"var(--text2)",fontSize:"14px",cursor:"pointer"}},"‹"));
+    nav.appendChild(el("span",{style:{fontSize:"12px",fontWeight:700,color:"var(--text)",flex:1,textAlign:"center"}},
+      wStart.toLocaleDateString("en-GB",{day:"numeric",month:"short"})+" – "+wEnd.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})));
+    nav.appendChild(el("button",{onClick:()=>{state.regWeekStart=isoDate(addDays(new Date(weekIso+"T00:00:00"),7));render();},style:{background:"var(--surface)",border:"1px solid var(--border)",borderRadius:"7px",padding:"5px 10px",color:"var(--text2)",fontSize:"14px",cursor:"pointer"}},"›"));
+    if(weekIso!==todayWeek)nav.appendChild(el("button",{onClick:()=>{state.regWeekStart=todayWeek;render();},style:{padding:"4px 9px",borderRadius:"6px",border:"none",fontSize:"10px",background:"#2563eb",color:"#fff",cursor:"pointer"}},"Today"));
+    wrap.appendChild(nav);
+  }
+
+  // Get all classes for this week
+  const weekClasses=getCls(weekIso);
+  if(!weekClasses.length){
+    wrap.appendChild(el("div",{style:{textAlign:"center",padding:"40px",color:"var(--text3)",border:"1px dashed #1e3a5f",borderRadius:"10px"}},"No classes scheduled this week."));
     return wrap;
   }
 
-  // ── ACTIVE TAB ──
-  const swimmerMap={};
-  state.registrations.forEach(reg=>{
-    if(reg.active===false)return;
-    // Find swimmer by name match or parent name match
-    const sw=state.swimmers.find(s=>s.name===reg.swimmerName)
-           ||state.swimmers.find(s=>s.parentName===reg.swimmerName)
-           ||state.swimmers.find(s=>s.parentName===reg.parentName);
-    // Key by Baby ID if available, else by swimmerName
-    const key=sw?.babyId||reg.swimmerName.toLowerCase();
-    const childName=sw?.name||reg.swimmerName;
-    const parent=sw?.parentName||reg.parentName||reg.swimmerName;
-    const babyId=sw?.babyId||"";
-    const contact=sw?.contactNumber||reg.contactNumber||"";
-
-    if(!swimmerMap[key]){
-      swimmerMap[key]={name:childName,parent,babyId,contact,sw,packages:[]};
-    }
-    (reg.packages||[]).forEach(pkg=>{
-      if(pkg.type==="tryout")return;
-      swimmerMap[key].packages.push(pkg);
-    });
-  });
-
-  // Sort each swimmer's packages by startedAt
-  Object.values(swimmerMap).forEach(s=>{
-    (s.packages||[]).sort((a,b)=>(a.startedAt||"").localeCompare(b.startedAt||""));
-  });
-
-  // Filter by search
-  const swimmers=Object.values(swimmerMap).filter(s=>{
-    if(!q)return true;
-    return s.name.toLowerCase().includes(q)||s.parent.toLowerCase().includes(q)||s.babyId.toLowerCase().includes(q);
-  });
-
-  // Group by assigned class slot, unassigned at end
-  const dayOrder={Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
-  const classGroups={};
-  const unassigned=[];
-  swimmers.forEach(sw=>{
-    const assignedCls=Object.values(state.weeklyClasses).flat().find(c=>c.students.some(s=>s.name===sw.name));
-    if(assignedCls){
-      const key=assignedCls.day+"|"+assignedCls.time;
-      if(!classGroups[key])classGroups[key]={label:assignedCls.day+" · "+assignedCls.time,day:assignedCls.day,time:assignedCls.time,swimmers:[]};
-      classGroups[key].swimmers.push(sw);
-    } else {
-      unassigned.push(sw);
-    }
-  });
-  const sortedGroups=Object.values(classGroups).sort((a,b)=>(dayOrder[a.day]??7)-(dayOrder[b.day]??7)||(a.time||"").localeCompare(b.time||""));
-  if(unassigned.length)sortedGroups.push({label:"📋 Unassigned",swimmers:unassigned});
-
-  if(!sortedGroups.length){
-    wrap.appendChild(el("div",{style:{textAlign:"center",padding:"40px",color:"var(--text3)",border:"1px dashed #1e3a5f",borderRadius:"10px"}},"No records found."));
-    return wrap;
+  // Build class date lookup: classId → actual ISO date string
+  function classDate(cls){
+    const dayOff={Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6}[cls.day]||0;
+    const d=new Date(weekIso+"T00:00:00");d.setDate(d.getDate()+dayOff);
+    return isoDate(d);
   }
 
-  wrap.appendChild(el("div",{style:{fontSize:"10px",color:"var(--text3)",marginBottom:"8px"}},swimmers.length+" swimmers"));
+  // Filter classes: today tab = today's day only
+  let visibleClasses=weekClasses.filter(c=>(c.students||[]).length>0);
+  if(regTab==="today") visibleClasses=visibleClasses.filter(c=>c.day===todayDay&&classDate(c)===today);
+
+  // Sort by day then time
+  const dayOrd={Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
+  visibleClasses.sort((a,b)=>(dayOrd[a.day]??7)-(dayOrd[b.day]??7)||(a.time||"").localeCompare(b.time||""));
+
+  if(!visibleClasses.length){
+    const msg=regTab==="today"?"No classes today. Switch to Week view to see all classes.":"No classes with students found.";
+    wrap.appendChild(el("div",{style:{textAlign:"center",padding:"40px",color:"var(--text3)",border:"1px dashed #1e3a5f",borderRadius:"10px"}},msg));
+    return wrap;
+  }
 
   const DAY_COLORS={Monday:"#fbbf24",Tuesday:"#f472b6",Wednesday:"#4ade80",Thursday:"#fb923c",Friday:"#60a5fa",Saturday:"#c084fc",Sunday:"#f87171"};
 
-  sortedGroups.forEach(group=>{
-    const dayColor=DAY_COLORS[group.day]||"#60a5fa";
-    wrap.appendChild(el("div",{style:{fontSize:"11px",fontWeight:700,color:dayColor,margin:"16px 0 6px",display:"flex",alignItems:"center",gap:"8px",borderLeft:"3px solid "+dayColor,paddingLeft:"8px"}},
-      el("span",null,"📅 "+group.label),
-      el("span",{style:{fontSize:"9px",color:"var(--text3)",fontWeight:400}},group.swimmers.length+" swimmer"+(group.swimmers.length!==1?"s":""))));
+  visibleClasses.forEach(cls=>{
+    const dateStr=classDate(cls);
+    const isToday2=dateStr===today;
+    const dayColor=DAY_COLORS[cls.day]||"#60a5fa";
+    const clsKey="reg_cls_"+cls.id;
+    const isOpen=state.regExpanded?.[clsKey]!==false; // default open for today, closed for others
+    // Auto-expand today's class, collapse others by default
+    if(state.regExpanded?.[clsKey]===undefined){
+      if(!state.regExpanded)state.regExpanded={};
+      state.regExpanded[clsKey]=isToday2;
+    }
+    const actuallyOpen=state.regExpanded[clsKey];
 
-    const tbl=el("div",{style:{background:"var(--surface)",border:"1px solid var(--border)",borderLeft:"2px solid "+dayColor,borderRadius:"0 12px 12px 0",overflow:"hidden",marginBottom:"8px"}});
+    const students=cls.students||[];
+    const attCounts={pending:0,confirmed:0,attended:0,absent:0};
+    students.forEach(s=>{attCounts[getStudentAtt(weekIso,cls.id,s.id)]++;});
 
-    group.swimmers.forEach((sw,si)=>{
-    const isExpanded=!!state.regShowHistory["sw_"+sw.name];
-    const totalSessions=(sw.packages||[]).reduce((s,p)=>s+(p.sessions?.length||0),0);
-    const totalClasses=(sw.packages||[]).reduce((s,p)=>s+p.totalClasses,0);
-
-    const block=el("div",{style:{borderBottom:si<swimmers.length-1?"1px solid #0d1a2a":"none"}});
-
-    // Swimmer header row
-    const hdr=el("div",{style:{display:"flex",alignItems:"center",gap:"8px",flexWrap:"wrap",padding:"10px 14px",background:si%2===0?"#0d1f33":"#0a1624",cursor:"pointer"},
-      onClick:()=>{state.regShowHistory={...state.regShowHistory,["sw_"+sw.name]:!isExpanded};render();}});
-
-    // Name + baby ID
-    const nameBlock=el("div",{style:{flex:1,minWidth:"120px"}});
-    nameBlock.appendChild(el("div",{style:{fontSize:"11px",fontWeight:700,color:"var(--text)",display:"flex",alignItems:"center",gap:"6px"}},
-      sw.name,
-      sw.babyId?el("span",{style:{fontSize:"9px",color:"#c084fc",fontFamily:"monospace",background:"#1a0a2e",borderRadius:"3px",padding:"1px 5px",border:"1px solid #7c3aed"}},sw.babyId):null));
-    nameBlock.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",marginTop:"1px"}},sw.parent+(sw.contact?" · "+sw.contact:"")));
-    hdr.appendChild(nameBlock);
-
-    // Package count badge
-    hdr.appendChild(el("span",{style:{fontSize:"9px",background:"#0f2a4a",color:"#60a5fa",borderRadius:"4px",padding:"2px 7px",border:"1px solid #1e3a5f",fontWeight:600,flexShrink:0}},sw.packages.length+" course"+(sw.packages.length!==1?"s":"")));
-
-    // Total sessions
-    hdr.appendChild(el("span",{style:{fontSize:"10px",fontWeight:700,color:"var(--text3)",flexShrink:0}},totalSessions+" sessions"));
-    hdr.appendChild(el("span",{style:{fontSize:"10px",color:"#334155"}},isExpanded?"▲":"▼"));
-    block.appendChild(hdr);
-
-    // Expanded — show each package as a row
-    if(isExpanded){
-      const editKey="edit_"+sw.name;
-      const isEditing=!!state.regShowHistory[editKey];
-      const reg=state.registrations.find(r=>r.swimmerName===sw.name);
-
-      // Info / edit bar
-      const infoBar=el("div",{style:{padding:"8px 14px",background:"#061220",borderTop:"1px solid #0d1a2a",display:"flex",gap:"8px",flexWrap:"wrap",alignItems:"center"}});
-      infoBar.appendChild(el("span",{style:{fontSize:"10px",color:"var(--text3)",flex:1}},"👤 "+sw.parent+(sw.contact?" · "+sw.contact:"")));
-      infoBar.appendChild(el("button",{onClick:()=>{state.regShowHistory={...state.regShowHistory,[editKey]:!isEditing};render();},style:{padding:"2px 8px",borderRadius:"5px",border:"1px solid",fontSize:"9px",cursor:"pointer",borderColor:isEditing?"#166534":"#334155",background:isEditing?"#052e16":"#0a1628",color:isEditing?"#4ade80":"#64748b"}},isEditing?"✓ Done":"✏️ Edit"));
-      block.appendChild(infoBar);
-
-      (sw.packages||[]).forEach((pkg,pi)=>{
-        const p=PKG_TYPES[pkg.type]||PKG_TYPES.group;
-        const sorted=(pkg.sessions||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));
-        const sessCount=sorted.length;
-        const over=Math.max(0,sessCount-pkg.totalClasses);
-        const pkgKey="pkg_"+pkg.id;
-        const pkgExpanded=!!state.regShowHistory[pkgKey];
-
-        const pkgRow=el("div",{style:{padding:"8px 14px 8px 28px",background:si%2===0?"#091929":"#07141f",borderTop:"1px solid #0d1a2a"}});
-        const pkgHdr=el("div",{style:{display:"flex",alignItems:"center",gap:"8px",flexWrap:"wrap",cursor:"pointer"},
-          onClick:()=>{state.regShowHistory={...state.regShowHistory,[pkgKey]:!pkgExpanded};render();}});
-
-        pkgHdr.appendChild(el("span",{style:{fontSize:"9px",color:"var(--text3)",fontWeight:600,minWidth:"20px"}},"#"+(pi+1)));
-
-        if(isEditing){
-          const typeBtn=el("select",{style:{fontSize:"9px",background:p.bg,color:p.color,border:"1px solid "+p.border,borderRadius:"4px",padding:"2px 4px",cursor:"pointer"},onClick:e=>e.stopPropagation()});
-          Object.entries(PKG_TYPES).filter(([k])=>k!=="tryout").forEach(([k,pt])=>{const opt=el("option",{value:k},pt.label);if(k===pkg.type)opt.selected=true;typeBtn.appendChild(opt);});
-          typeBtn.addEventListener("change",e=>{state.registrations=state.registrations.map(r=>({...r,packages:(r.packages||[]).map(p2=>p2.id!==pkg.id?p2:{...p2,type:e.target.value})}));render();});
-          pkgHdr.appendChild(typeBtn);
-        } else {
-          pkgHdr.appendChild(el("span",{style:{fontSize:"9px",background:p.bg,color:p.color,borderRadius:"4px",padding:"2px 7px",border:"1px solid "+p.border,fontWeight:700,flexShrink:0}},p.label));
-        }
-
-        if(pkg.startedAt)pkgHdr.appendChild(el("span",{style:{fontSize:"9px",color:"#475569"}},new Date(pkg.startedAt+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"2-digit"})));
-
-        const dotsWrap=el("div",{style:{display:"flex",gap:"2px",flexWrap:"wrap",flexShrink:0}});
-        for(let s=0;s<Math.max(sessCount,pkg.totalClasses);s++){const isOver=s>=pkg.totalClasses;const filled=s<sessCount;dotsWrap.appendChild(el("div",{style:{width:"9px",height:"9px",borderRadius:"2px",background:filled?(isOver?"#d97706":"#2563eb"):"#1e3a5f",border:filled?(isOver?"1px solid #f59e0b":"1px solid #3b82f6"):"1px solid #334155"}}));}
-        pkgHdr.appendChild(dotsWrap);
-        pkgHdr.appendChild(el("span",{style:{fontSize:"10px",fontWeight:700,flexShrink:0,color:over>0?"#f59e0b":sessCount>=pkg.totalClasses?"#4ade80":"var(--text3)"}},sessCount+"/"+pkg.totalClasses+(over>0?" +"+over:sessCount>=pkg.totalClasses?" ✓":"")));
-
-        if(isEditing){
-          const adjRow=el("div",{style:{display:"flex",gap:"3px",alignItems:"center",marginLeft:"auto"},onClick:e=>e.stopPropagation()});
-          adjRow.appendChild(el("button",{onClick:()=>{state.registrations=state.registrations.map(r=>({...r,packages:(r.packages||[]).map(p2=>p2.id!==pkg.id?p2:{...p2,totalClasses:Math.max(1,p2.totalClasses-1)})}));render();},style:{padding:"1px 6px",borderRadius:"4px",border:"1px solid #334155",background:"#0a1628",color:"#64748b",fontSize:"10px",cursor:"pointer"}},"-"));
-          adjRow.appendChild(el("span",{style:{fontSize:"9px",color:"var(--text3)",minWidth:"16px",textAlign:"center"}},pkg.totalClasses));
-          adjRow.appendChild(el("button",{onClick:()=>{state.registrations=state.registrations.map(r=>({...r,packages:(r.packages||[]).map(p2=>p2.id!==pkg.id?p2:{...p2,totalClasses:p2.totalClasses+1})}));render();},style:{padding:"1px 6px",borderRadius:"4px",border:"1px solid #334155",background:"#0a1628",color:"#64748b",fontSize:"10px",cursor:"pointer"}},"+"));
-          pkgHdr.appendChild(adjRow);
-          pkgHdr.appendChild(el("button",{onClick:e=>{e.stopPropagation();if(!confirm("Delete this course?"))return;state.registrations=state.registrations.map(r=>({...r,packages:(r.packages||[]).filter(p2=>p2.id!==pkg.id)}));render();},style:{padding:"1px 6px",borderRadius:"4px",border:"1px solid #7f1d1d",background:"#450a0a",color:"#f87171",fontSize:"9px",cursor:"pointer"}},"🗑"));
-        } else {
-          pkgHdr.appendChild(el("div",{style:{marginLeft:"auto"}}));
-        }
-
-        pkgHdr.appendChild(el("span",{style:{fontSize:"9px",color:"#334155"}},pkgExpanded?"▲":"▼"));
-        pkgRow.appendChild(pkgHdr);
-
-        if(pkgExpanded){
-          const grid=el("div",{style:{display:"flex",gap:"4px",flexWrap:"wrap",marginTop:"8px"}});
-          sorted.forEach((s,idx)=>{
-            const d=new Date(s.date+"T00:00:00");
-            const isExtra=idx>=pkg.totalClasses;
-            const tile=el("div",{style:{background:isExtra?"#1c1100":"#061220",border:isExtra?"1px solid #92400e":"1px solid #1e3a5f",borderRadius:"6px",padding:"4px 6px",fontSize:"9px",textAlign:"center",minWidth:"44px",position:"relative"}});
-            tile.appendChild(el("div",{style:{fontWeight:700,fontSize:"10px",color:isExtra?"#f59e0b":"#93c5fd"}},idx+1+(isExtra?" ✚":"")));
-            if(isEditing){
-              const dBtn=el("button",{onClick:e=>{e.stopPropagation();state.regDateModal={sessId:s.id,pkgId:pkg.id,date:s.date};render();},style:{display:"block",fontSize:"9px",background:"transparent",border:"none",color:isExtra?"#fbbf24":"#60a5fa",cursor:"pointer",padding:"2px 0",textDecoration:"underline dotted"}},d.toLocaleDateString("en-GB",{day:"numeric",month:"short"}));
-              tile.appendChild(dBtn);
-              const delBtn=document.createElement("button");
-              delBtn.textContent="×";
-              delBtn.style.cssText="position:absolute;top:-5px;right:-5px;width:14px;height:14px;border-radius:50%;border:none;background:#7f1d1d;color:#fca5a5;font-size:9px;cursor:pointer;line-height:14px;text-align:center;padding:0";
-              delBtn.addEventListener("click",e=>{e.stopPropagation();state.registrations=state.registrations.map(r=>({...r,packages:(r.packages||[]).map(p2=>p2.id!==pkg.id?p2:{...p2,sessions:(p2.sessions||[]).filter(ss=>ss.id!==s.id)})}));render();});
-              tile.appendChild(delBtn);
-            } else {
-              tile.appendChild(el("div",{style:{color:isExtra?"#fbbf24":"#60a5fa"}},d.toLocaleDateString("en-GB",{day:"numeric",month:"short"})));
-              tile.appendChild(el("div",{style:{color:"#475569",fontSize:"8px"}},d.toLocaleDateString("en-GB",{weekday:"short"})));
-            }
-            grid.appendChild(tile);
-          });
-          if(isEditing){
-            const addSessBtn=el("button",{onClick:e=>{e.stopPropagation();const ns={id:Date.now(),date:isoDate(new Date()),status:"attended",counted:true,note:""};state.registrations=state.registrations.map(r=>({...r,packages:(r.packages||[]).map(p2=>p2.id!==pkg.id?p2:{...p2,sessions:[...(p2.sessions||[]),ns]})}));render();},style:{width:"44px",minHeight:"52px",borderRadius:"6px",border:"1px dashed #2563eb",background:"#0a1628",color:"#60a5fa",fontSize:"18px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}},"+");
-            grid.appendChild(addSessBtn);
-          }
-          pkgRow.appendChild(grid);
-        }
-        block.appendChild(pkgRow);
-      });
-
-      // Edit mode footer
-      if(isEditing){
-        const editFooter=el("div",{style:{padding:"8px 14px",background:"#061220",borderTop:"1px solid #0d1a2a",display:"flex",gap:"6px",flexWrap:"wrap"}});
-        editFooter.appendChild(el("button",{onClick:()=>{if(!reg)return;const np={id:Date.now(),type:(reg.packages||[])[0]?.type||"group",totalClasses:8,sessions:[],active:true,startedAt:isoDate(new Date()),payment:0,contactNumber:reg.contactNumber||""};if(!reg.packages)reg.packages=[];reg.packages.forEach(p=>p.active=false);reg.packages.push(np);render();},style:{padding:"3px 10px",borderRadius:"5px",border:"1px solid #2563eb",background:"#0f2a4a",color:"#60a5fa",fontSize:"9px",cursor:"pointer"}},"➕ Add Course"));
-        editFooter.appendChild(el("button",{onClick:()=>{if(reg){reg.active=!reg.active;}render();},style:{padding:"3px 10px",borderRadius:"5px",border:"1px solid",fontSize:"9px",cursor:"pointer",borderColor:reg?.active===false?"#166534":"#7f1d1d",background:reg?.active===false?"#052e16":"#450a0a",color:reg?.active===false?"#4ade80":"#f87171"}},reg?.active===false?"↩ Move to Active":"→ Move to Complete"));
-        block.appendChild(editFooter);
+    // Section header
+    const secHdr=el("div",{
+      onClick:()=>{state.regExpanded[clsKey]=!actuallyOpen;render();},
+      style:{
+        display:"flex",alignItems:"center",gap:"8px",padding:"10px 14px",
+        background:isToday2?"#0f2a4a":"#0c1c2e",
+        border:"1px solid",borderColor:isToday2?"#2563eb":"var(--border)",
+        borderRadius:actuallyOpen?"10px 10px 0 0":"10px",
+        cursor:"pointer",marginBottom:actuallyOpen?"0":"8px",
+        borderLeft:"3px solid "+dayColor,
       }
+    });
+    const secTitle=el("div",{style:{flex:1}});
+    secTitle.appendChild(el("div",{style:{fontSize:"12px",fontWeight:700,color:isToday2?"#93c5fd":"var(--text)",display:"flex",alignItems:"center",gap:"6px"}},
+      el("span",{style:{color:dayColor}},cls.day),
+      " · ",cls.time,
+      isToday2?el("span",{style:{fontSize:"9px",background:"#2563eb",color:"#fff",borderRadius:"4px",padding:"1px 6px",fontWeight:700}},"TODAY"):null));
+    secTitle.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",marginTop:"2px"}},
+      new Date(dateStr+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})));
+    secHdr.appendChild(secTitle);
+
+    // Attendance mini-badges
+    const badges=el("div",{style:{display:"flex",gap:"4px",alignItems:"center",flexShrink:0}});
+    [["pending","⏳"],["confirmed","✅"],["attended","✓ "],["absent","❌"]].forEach(([status,icon])=>{
+      const count=attCounts[status];
+      if(!count)return;
+      const st=ATT_STYLE[status];
+      badges.appendChild(el("span",{style:{fontSize:"9px",background:st.bg,color:st.color,border:"1px solid "+st.border,borderRadius:"4px",padding:"1px 6px",fontWeight:700}},icon+count));
+    });
+    secHdr.appendChild(badges);
+    secHdr.appendChild(el("span",{style:{fontSize:"11px",color:"#334155",marginLeft:"4px",flexShrink:0}},actuallyOpen?"▲":"▼"));
+    wrap.appendChild(secHdr);
+
+    if(!actuallyOpen)return;
+
+    // Student list
+    const listWrap=el("div",{style:{background:"var(--surface)",border:"1px solid",borderColor:isToday2?"#2563eb":"var(--border)",borderTop:"none",borderRadius:"0 0 10px 10px",overflow:"hidden",marginBottom:"12px"}});
+
+    if(!students.length){
+      listWrap.appendChild(el("div",{style:{padding:"16px",textAlign:"center",color:"var(--text3)",fontSize:"11px"}},"No students in this class."));
     }
 
-    tbl.appendChild(block);
-    }); // end group.swimmers.forEach
+    students.forEach((student,si)=>{
+      const attStatus=getStudentAtt(weekIso,cls.id,student.id);
+      const att=ATT_STYLE[attStatus]||ATT_STYLE.pending;
+      const sw=state.swimmers.find(s=>s.id===student.id)||state.swimmers.find(s=>s.name===student.name);
+      const course=sw?swCurrentCourse(sw):null;
+      const sessUsed=sw?swSessionsUsed(sw):0;
+      const totalCls=course?.totalClasses||0;
 
-    wrap.appendChild(tbl);
-  }); // end sortedGroups.forEach
+      const row=el("div",{
+        style:{
+          display:"flex",alignItems:"center",gap:"10px",padding:"10px 14px",
+          background:si%2===0?"#0d1f33":"#0a1624",
+          borderBottom:si<students.length-1?"1px solid #0d1a2a":"none",
+          cursor:"pointer",userSelect:"none"
+        },
+        onClick:()=>cycleStudentAtt(weekIso,cls.id,student.id)
+      });
+
+      // Status badge (big tap target)
+      row.appendChild(el("div",{style:{
+        width:"36px",height:"36px",borderRadius:"8px",flexShrink:0,
+        background:att.bg,border:"2px solid "+att.border,
+        display:"flex",alignItems:"center",justifyContent:"center",
+        fontSize:"16px",fontWeight:700
+      }},att.icon));
+
+      // Name + parent
+      const info=el("div",{style:{flex:1,minWidth:0}});
+      info.appendChild(el("div",{style:{fontSize:"12px",fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},
+        student.name));
+      info.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},
+        student.parentName||"",
+        (()=>{const pkgKey=student.pkg&&PKG_TYPES[student.pkg]?student.pkg:sw?.currentCourse?.type||sw?.pkg||null;const pt=pkgKey?PKG_TYPES[pkgKey]:null;return pt?el("span",{style:{marginLeft:"6px",fontSize:"9px",color:pt.color}},pt.icon+" "+pt.label):null;})()));
+      row.appendChild(info);
+
+      // Course progress dots
+      if(course&&totalCls>0){
+        const dotsCol=el("div",{style:{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:"3px",flexShrink:0}});
+        const dots=el("div",{style:{display:"flex",gap:"2px",flexWrap:"wrap",justifyContent:"flex-end",maxWidth:"80px"}});
+        for(let i=0;i<Math.min(totalCls,10);i++){
+          dots.appendChild(el("div",{style:{
+            width:"7px",height:"7px",borderRadius:"2px",
+            background:i<sessUsed?(PKG_TYPES[course.type]||PKG_TYPES.group).color:"#1e3a5f"
+          }}));
+        }
+        dotsCol.appendChild(dots);
+        dotsCol.appendChild(el("div",{style:{fontSize:"8px",color:"var(--text3)"}},sessUsed+"/"+totalCls));
+        row.appendChild(dotsCol);
+      } else if(!course){
+        row.appendChild(el("span",{style:{fontSize:"9px",color:"#334155",flexShrink:0}},"No course"));
+      }
+
+      listWrap.appendChild(row);
+    });
+
+    // Footer: quick stats + mark all buttons
+    const footer=el("div",{style:{display:"flex",gap:"6px",padding:"8px 14px",background:"#061220",borderTop:"1px solid #0d1a2a",flexWrap:"wrap",alignItems:"center"}});
+    footer.appendChild(el("span",{style:{fontSize:"9px",color:"var(--text3)",flex:1}},students.length+" students"));
+    const mkBulkBtn=(label,color,bg,border,status)=>el("button",{
+      onClick:()=>{students.forEach(s=>{if(getStudentAtt(weekIso,cls.id,s.id)!==status)setStudentAtt(weekIso,cls.id,s.id,status);});render();},
+      style:{padding:"3px 8px",borderRadius:"5px",border:"1px solid "+border,background:bg,color,fontSize:"9px",fontWeight:700,cursor:"pointer"}
+    },label);
+    footer.appendChild(mkBulkBtn("All ✓ Attended","#4ade80","#052e16","#166534","attended"));
+    footer.appendChild(mkBulkBtn("All ⏳ Reset","#fbbf24","#1c1100","#92400e","pending"));
+    listWrap.appendChild(footer);
+
+    wrap.appendChild(listWrap);
+  });
 
   return wrap;
 }
+
 // ── Sales view ─────────────────────────────────────────────────
 function buildSalesView(){
   const wrap=el("div",null);
@@ -4813,30 +5150,65 @@ function buildSalesView(){
     mSel.addEventListener("change",e=>{state.txMonth=e.target.value;render();});
     filterRow.appendChild(el("label",{style:{fontSize:"10px",color:"var(--text3)",display:"flex",alignItems:"center",gap:"6px"}},"Month",mSel));
     filterRow.appendChild(el("div",{style:{flex:1}}));
+    filterRow.appendChild(el("button",{onClick:()=>{state.showSaleForm=true;state.saleSelIds=[];state.salePayment="";state.salePkgType="group";state.saleDate=todayStr();render();},style:{padding:"7px 14px",borderRadius:"7px",border:"none",fontSize:"11px",fontWeight:700,background:"#2563eb",color:"#fff",cursor:"pointer",flexShrink:0}},"💳 New Sale"));
     wrap.appendChild(filterRow);
 
-    // Build transaction rows from registrations
+    // Build transaction rows from swimmer records (new model)
     const txRows=[];
-    state.registrations.forEach(reg=>{
-      (reg.packages||[]).forEach(pkg=>{
-        if(pkg.type==="tryout")return;
-        if(!pkg.startedAt)return;
-        const pkgDate=new Date(pkg.startedAt+"T00:00:00");
+    state.swimmers.forEach(sw=>{
+      const courses=[...(sw.courseHistory||[]),...(sw.currentCourse?[sw.currentCourse]:[])];
+      courses.forEach((c,ci)=>{
+        if(c.type==="tryout")return;
+        if(!c.startDate)return;
+        const pkgDate=new Date(c.startDate+"T00:00:00");
         const pkgY=pkgDate.getFullYear();
         const pkgM=pkgDate.getMonth();
         if(state.txMonth&&state.txMonth!=="all"){
           const[ty,tm]=state.txMonth.split("-").map(Number);
           if(pkgY!==ty||pkgM!==tm)return;
         }
-        const sw=state.swimmers.find(s=>s.name===reg.swimmerName);
+        const isCurrent=sw.currentCourse===c;
         txRows.push({
-          regId:reg.id,pkgId:pkg.id,
+          swId:sw.id,
+          courseIdx:ci,
+          isCurrent,
+          swimmerName:sw.name,
+          parentName:sw.parentName||"",
+          babyId:sw.babyId||"",
+          pkgType:c.type,
+          date:c.startDate,
+          payment:c.payment,
+          sessionsUsed:isCurrent?swSessionsUsed(sw):(c.history||[]).filter(h=>h.status==="attended").length,
+          totalClasses:c.totalClasses||8,
+          dateObj:pkgDate,
+          _course:c,
+        });
+      });
+    });
+
+    // Fallback: legacy registrations not migrated to swimmer records
+    state.registrations.forEach(reg=>{
+      (reg.packages||[]).forEach(pkg=>{
+        if(pkg.type==="tryout")return;
+        if(!pkg.startedAt)return;
+        const sw=state.swimmers.find(s=>s.name===reg.swimmerName);
+        const alreadyCounted=sw&&[...(sw.courseHistory||[]),...(sw.currentCourse?[sw.currentCourse]:[])].some(c=>c._legacyPkgId===pkg.id);
+        if(alreadyCounted)return;
+        const pkgDate=new Date(pkg.startedAt+"T00:00:00");
+        if(state.txMonth&&state.txMonth!=="all"){
+          const[ty,tm]=state.txMonth.split("-").map(Number);
+          if(pkgDate.getFullYear()!==ty||pkgDate.getMonth()!==tm)return;
+        }
+        txRows.push({
+          swId:null,_legacyRegId:reg.id,_legacyPkgId:pkg.id,
           swimmerName:reg.swimmerName,
           parentName:reg.parentName||sw?.parentName||"",
           babyId:sw?.babyId||"",
           pkgType:pkg.type,
           date:pkg.startedAt,
           payment:pkg.payment,
+          sessionsUsed:pkg.sessions?.filter(s=>s.status==="attended").length||0,
+          totalClasses:pkg.totalClasses||8,
           dateObj:pkgDate,
         });
       });
@@ -4866,19 +5238,22 @@ function buildSalesView(){
       const p=PKG_TYPES[r.pkgType]||PKG_TYPES.group;
       const isPaid=r.payment!=null&&r.payment>0;
       const isUnpaid=!isPaid;
-      const editingPayment=state.editPayment===r.pkgId;
+      const editingPayment=state.editPayment===i;
+      const editingType=state.editPkgType===i;
       const row=el("div",{style:{padding:"10px 14px",borderBottom:i<txRows.length-1?"1px solid #0d1a2a":"none",background:i%2===0?"#0d1f33":"#0a1624",display:"flex",alignItems:"center",gap:"10px",flexWrap:"wrap"}});
 
       // Name block
       const nb=el("div",{style:{flex:1,minWidth:"120px"}});
       nb.appendChild(el("div",{style:{fontSize:"11px",fontWeight:700,color:"var(--text)",display:"flex",alignItems:"center",gap:"5px"}},
         r.swimmerName,
-        r.babyId?el("span",{style:{fontSize:"8px",color:"#c084fc",fontFamily:"monospace",background:"#1a0a2e",borderRadius:"3px",padding:"1px 4px",border:"1px solid #7c3aed"}},r.babyId.replace("BABY-","#")):null));
-      nb.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)"}},r.parentName));
+        r.babyId?el("span",{style:{fontSize:"8px",color:"#c084fc",fontFamily:"monospace",background:"#1a0a2e",borderRadius:"3px",padding:"1px 4px",border:"1px solid #7c3aed"}},r.babyId.replace("BABY-","#")):null,
+        r.isCurrent?el("span",{style:{fontSize:"8px",background:"#052e16",color:"#4ade80",borderRadius:"3px",padding:"1px 5px",border:"1px solid #166534"}},"Active"):null));
+      nb.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",display:"flex",gap:"6px",alignItems:"center"}},
+        r.parentName,
+        el("span",{style:{color:"#475569"}},r.sessionsUsed+"/"+r.totalClasses+" sessions")));
       row.appendChild(nb);
 
-      // Package type selector
-      const editingType=state.editPkgType===r.pkgId;
+      // Package type
       if(editingType){
         const typeSel=el("select",{className:"iS",style:{fontSize:"11px",padding:"3px 6px"}});
         Object.entries(PKG_TYPES).filter(([k])=>k!=="tryout").forEach(([k,pt])=>{
@@ -4889,14 +5264,21 @@ function buildSalesView(){
         typeSel.addEventListener("change",e=>{
           const newType=e.target.value;
           const newPrice=PKG_TYPES[newType]?.price||0;
-          state.registrations=state.registrations.map(reg=>({...reg,packages:(reg.packages||[]).map(pkg=>pkg.id!==r.pkgId?pkg:{...pkg,type:newType,payment:newPrice})}));
+          if(r.swId){
+            const sw=state.swimmers.find(s=>s.id===r.swId);
+            if(sw){
+              if(r.isCurrent&&sw.currentCourse){sw.currentCourse={...sw.currentCourse,type:newType,payment:newPrice};}
+              else if(sw.courseHistory[r.courseIdx]){sw.courseHistory[r.courseIdx]={...sw.courseHistory[r.courseIdx],type:newType,payment:newPrice};}
+            }
+          } else {
+            state.registrations=state.registrations.map(reg=>({...reg,packages:(reg.packages||[]).map(pkg=>pkg.id!==r._legacyPkgId?pkg:{...pkg,type:newType,payment:newPrice})}));
+          }
           state.editPkgType=null;render();
         });
         row.appendChild(typeSel);
         row.appendChild(el("button",{onClick:()=>{state.editPkgType=null;render();},style:{padding:"2px 6px",borderRadius:"4px",border:"1px solid #334155",background:"#0a1628",color:"#64748b",fontSize:"9px",cursor:"pointer"}},"✕"));
       } else {
-        const badge=el("span",{onClick:()=>{state.editPkgType=r.pkgId;render();},style:{fontSize:"9px",background:p.bg,color:p.color,borderRadius:"4px",padding:"2px 7px",border:"1px solid "+p.border,fontWeight:700,flexShrink:0,cursor:"pointer",textDecoration:"underline dotted"}},p.label+"  ✎");
-        row.appendChild(badge);
+        row.appendChild(el("span",{onClick:()=>{state.editPkgType=i;render();},style:{fontSize:"9px",background:p.bg,color:p.color,borderRadius:"4px",padding:"2px 7px",border:"1px solid "+p.border,fontWeight:700,flexShrink:0,cursor:"pointer",textDecoration:"underline dotted"}},p.label+" ✎"));
       }
 
       // Date
@@ -4907,15 +5289,23 @@ function buildSalesView(){
         const fixedPrice=PKG_TYPES[r.pkgType]?.price||0;
         row.appendChild(el("span",{style:{fontSize:"12px",color:"#fbbf24",fontWeight:700,flexShrink:0}},"฿"+fixedPrice.toLocaleString()));
         row.appendChild(el("button",{onClick:()=>{
-          state.registrations=state.registrations.map(reg=>({...reg,packages:(reg.packages||[]).map(pkg=>pkg.id!==r.pkgId?pkg:{...pkg,payment:fixedPrice})}));
+          if(r.swId){
+            const sw=state.swimmers.find(s=>s.id===r.swId);
+            if(sw){
+              if(r.isCurrent&&sw.currentCourse){sw.currentCourse={...sw.currentCourse,payment:fixedPrice};}
+              else if(sw.courseHistory[r.courseIdx]){sw.courseHistory[r.courseIdx]={...sw.courseHistory[r.courseIdx],payment:fixedPrice};}
+            }
+          } else {
+            state.registrations=state.registrations.map(reg=>({...reg,packages:(reg.packages||[]).map(pkg=>pkg.id!==r._legacyPkgId?pkg:{...pkg,payment:fixedPrice})}));
+          }
           state.editPayment=null;render();
         },style:{padding:"3px 10px",borderRadius:"5px",border:"none",background:"#16a34a",color:"#fff",fontSize:"9px",fontWeight:700,cursor:"pointer"}},"✓ Confirm"));
         row.appendChild(el("button",{onClick:()=>{state.editPayment=null;render();},style:{padding:"3px 7px",borderRadius:"5px",border:"1px solid #334155",background:"#0a1628",color:"#64748b",fontSize:"9px",cursor:"pointer"}},"✕"));
       } else if(isUnpaid){
-        row.appendChild(el("button",{onClick:()=>{state.editPayment=r.pkgId;render();},style:{padding:"3px 10px",borderRadius:"6px",border:"1px solid #92400e",background:"#1c1100",color:"#fbbf24",fontSize:"9px",fontWeight:700,cursor:"pointer",flexShrink:0}},"⚠️ Unpaid"));
+        row.appendChild(el("button",{onClick:()=>{state.editPayment=i;render();},style:{padding:"3px 10px",borderRadius:"6px",border:"1px solid #92400e",background:"#1c1100",color:"#fbbf24",fontSize:"9px",fontWeight:700,cursor:"pointer",flexShrink:0}},"⚠️ Unpaid"));
       } else {
         row.appendChild(el("span",{style:{fontSize:"12px",color:"#4ade80",fontWeight:700,flexShrink:0}},"฿"+r.payment.toLocaleString()));
-        row.appendChild(el("button",{onClick:()=>{state.editPayment=r.pkgId;render();},style:{padding:"2px 6px",borderRadius:"4px",border:"1px solid #334155",background:"#0a1628",color:"#475569",fontSize:"9px",cursor:"pointer"}},"✏️"));
+        row.appendChild(el("button",{onClick:()=>{state.editPayment=i;render();},style:{padding:"2px 6px",borderRadius:"4px",border:"1px solid #334155",background:"#0a1628",color:"#475569",fontSize:"9px",cursor:"pointer"}},"✏️"));
       }
 
       tbl.appendChild(row);
@@ -5102,24 +5492,127 @@ function buildInactiveContent(isCoach){
   const wrap=el("div",null);
   const inactive=state.swimmers.filter(s=>s.active===false);
   wrap.appendChild(el("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"14px",flexWrap:"wrap",gap:"8px"}},
-    el("div",null,el("h2",{style:{fontSize:"14px",color:"var(--text)",fontWeight:700,marginBottom:"3px"}},"🚫 Inactive Swimmers"),el("p",{style:{fontSize:"11px",color:"var(--text3)"}},inactive.length+" swimmer"+(inactive.length!==1?"s":"")+" inactive"))));
+    el("div",null,
+      el("h2",{style:{fontSize:"14px",color:"var(--text)",fontWeight:700,marginBottom:"3px"}},"🚫 Inactive Swimmers"),
+      el("p",{style:{fontSize:"11px",color:"var(--text3)"}},inactive.length+" swimmer"+(inactive.length!==1?"s":"")+" inactive"))));
   if(inactive.length===0){
-    wrap.appendChild(el("div",{style:{textAlign:"center",padding:"40px 16px",color:"var(--text3)",fontSize:"12px",border:"1px dashed #1e3a5f",borderRadius:"10px"}},el("div",{style:{fontSize:"28px",marginBottom:"8px"}},"✅"),"No inactive swimmers."));
+    wrap.appendChild(el("div",{style:{textAlign:"center",padding:"40px 16px",color:"var(--text3)",fontSize:"12px",border:"1px dashed #1e3a5f",borderRadius:"10px"}},
+      el("div",{style:{fontSize:"28px",marginBottom:"8px"}},"✅"),"No inactive swimmers."));
     return wrap;
   }
-  const list=el("div",{style:{background:"var(--surface)",border:"1px solid var(--border)",borderRadius:"var(--radius)",overflow:"hidden"}});
+
+  const list=el("div",{style:{display:"flex",flexDirection:"column",gap:"8px"}});
+
   inactive.forEach((s,i)=>{
     const sc=LC[a2l(s.dob||s.age)];
-    list.appendChild(el("div",{style:{display:"flex",alignItems:"center",gap:"8px",padding:"10px 14px",borderBottom:"1px solid var(--border)",background:i%2===0?"#0d1f33":"#0a1624",flexWrap:"wrap",opacity:"0.8"}},
-      el("div",{style:{width:"22px",height:"22px",borderRadius:"50%",background:"#171717",border:"1px solid #404040",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"9px",fontWeight:700,color:"var(--text3)"}},s.name.charAt(0)),
-        el("div",{style:{flex:1,minWidth:"80px"}},
-        el("div",{style:{display:"flex",alignItems:"center",gap:"6px",flexWrap:"wrap"}},
-          el("div",{style:{fontSize:"11px",color:"var(--text2)",fontWeight:500}},s.name),
-          s.babyId?el("span",{style:{fontSize:"9px",background:"#1a0a2e",color:"#c084fc",borderRadius:"4px",padding:"1px 6px",border:"1px solid #7c3aed",fontWeight:700,fontFamily:"monospace"}},s.babyId):null),
-        el("div",{style:{fontSize:"9px",color:"var(--text3)"}},(s.parentName?s.parentName+" · ":"")+displayAge(s)+" · "+sc.emoji+" "+a2l(s.dob||s.age)+(s.memberId?" · Member: "+s.memberId:""))),
-      (!isCoach?el("button",{onClick:()=>{state.swimmers=state.swimmers.map(x=>x.id!==s.id?x:{...x,active:true});render();},style:{padding:"4px 12px",borderRadius:"6px",border:"1px solid #166534",fontSize:"10px",fontWeight:600,background:"#052e16",color:"#4ade80",cursor:"pointer"}},"✓ Reactivate"):null),
-      (!isCoach?el("button",{onClick:()=>{if(!confirm("Permanently delete "+s.name+"?"))return;state.swimmers=state.swimmers.filter(x=>x.id!==s.id);render();},style:{padding:"4px 9px",borderRadius:"6px",border:"1px solid #7f1d1d",fontSize:"10px",background:"#450a0a",color:"#f87171",cursor:"pointer"}},"🗑 Delete"):null)));
+    const isExp=!!state["inactExp_"+s.id];
+
+    // Course history
+    const history=s.courseHistory||[];
+    const lastCourse=history.length?history[history.length-1]:s.currentCourse||null;
+    const totalSessions=history.reduce((sum,c)=>(sum+(c.history||[]).filter(h=>h.status==="attended").length),0)
+      +(s.currentCourse?(s.currentCourse.history||[]).filter(h=>h.status==="attended").length:0);
+    const totalCourses=history.length+(s.currentCourse?1:0);
+
+    // Attendance pattern from all history entries
+    const allAttendance=[...history,...(s.currentCourse?[s.currentCourse]:[])].flatMap(c=>c.history||[]);
+    // Days of week they typically came
+    const dayCounts={};
+    allAttendance.filter(h=>h.status==="attended").forEach(h=>{
+      if(!h.date)return;
+      const day=new Date(h.date+"T00:00:00").toLocaleDateString("en-GB",{weekday:"long"});
+      dayCounts[day]=(dayCounts[day]||0)+1;
+    });
+    const topDays=Object.entries(dayCounts).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([d,n])=>d+" ("+n+"x)");
+
+    const card=el("div",{style:{background:"var(--surface)",border:"1px solid var(--border)",borderRadius:"10px",overflow:"hidden",opacity:"0.85"}});
+
+    // Header row — always visible
+    const hdr=el("div",{
+      style:{display:"flex",alignItems:"center",gap:"10px",padding:"10px 14px",cursor:"pointer",background:i%2===0?"#0d1f33":"#0a1624"},
+      onClick:()=>{state["inactExp_"+s.id]=!isExp;render();}
+    });
+
+    // Avatar
+    hdr.appendChild(el("div",{style:{width:"28px",height:"28px",borderRadius:"50%",background:"#171717",border:"1px solid #404040",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"11px",fontWeight:700,color:"#475569",flexShrink:0}},s.name.charAt(0)));
+
+    // Name + meta
+    const meta=el("div",{style:{flex:1,minWidth:0}});
+    meta.appendChild(el("div",{style:{display:"flex",alignItems:"center",gap:"6px",flexWrap:"wrap"}},
+      el("span",{style:{fontSize:"11px",color:"var(--text2)",fontWeight:600}},s.name),
+      s.babyId?el("span",{style:{fontSize:"9px",background:"#1a0a2e",color:"#c084fc",borderRadius:"4px",padding:"1px 5px",border:"1px solid #7c3aed",fontFamily:"monospace"}},s.babyId):null));
+    meta.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",marginTop:"2px"}},
+      (s.parentName?s.parentName+" · ":"")+displayAge(s)+" · "+sc.emoji+" "+a2l(s.dob||s.age)));
+    hdr.appendChild(meta);
+
+    // Quick summary badges
+    const badges=el("div",{style:{display:"flex",gap:"4px",flexShrink:0,alignItems:"center",flexWrap:"wrap",justifyContent:"flex-end"}});
+    if(totalCourses>0){
+      badges.appendChild(el("span",{style:{fontSize:"9px",background:"#052e16",color:"#4ade80",borderRadius:"4px",padding:"2px 6px",border:"1px solid #166534"}},
+        totalSessions+" sessions"));
+    }
+    hdr.appendChild(badges);
+    if(!isCoach){
+      hdr.appendChild(el("button",{onClick:e=>{e.stopPropagation();state.swimmers=state.swimmers.map(x=>x.id!==s.id?x:{...x,active:true});state.reactivatePrompt=s.id;render();},style:{padding:"4px 10px",borderRadius:"6px",border:"1px solid #166534",fontSize:"10px",fontWeight:600,background:"#052e16",color:"#4ade80",cursor:"pointer",flexShrink:0}},"✓ Reactivate"));
+      hdr.appendChild(el("button",{onClick:e=>{e.stopPropagation();if(!confirm("Permanently delete "+s.name+"?"))return;state.swimmers=state.swimmers.filter(x=>x.id!==s.id);render();},style:{padding:"4px 8px",borderRadius:"6px",border:"1px solid #7f1d1d",fontSize:"10px",background:"#450a0a",color:"#f87171",cursor:"pointer",flexShrink:0}},"🗑"));
+    }
+    hdr.appendChild(el("span",{style:{fontSize:"10px",color:"#334155",marginLeft:"4px"}},isExp?"▲":"▼"));
+    card.appendChild(hdr);
+
+    // Expanded detail panel
+    if(isExp){
+      const detail=el("div",{style:{padding:"10px 14px",background:"#061220",borderTop:"1px solid #0d1a2a",display:"flex",flexDirection:"column",gap:"10px"}});
+
+      // Usually Came + Last Session
+      const allSessions=allAttendance.filter(h=>h.status==="attended"&&h.date).sort((a,b)=>b.date.localeCompare(a.date));
+      const lastSession=allSessions[0];
+      if(topDays.length||lastSession){
+        const row2=el("div",{style:{display:"flex",gap:"12px",flexWrap:"wrap"}});
+        if(topDays.length){
+          const daysBlock=el("div",{style:{flex:1,minWidth:"100px"}});
+          daysBlock.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",textTransform:"uppercase",fontWeight:700,marginBottom:"4px"}},"📆 Usually Came"));
+          topDays.forEach(d=>daysBlock.appendChild(el("div",{style:{fontSize:"10px",color:"#94a3b8"}},d)));
+          row2.appendChild(daysBlock);
+        }
+        if(lastSession){
+          const lastBlock=el("div",{style:{flex:1,minWidth:"100px"}});
+          lastBlock.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",textTransform:"uppercase",fontWeight:700,marginBottom:"4px"}},"🕐 Last Session"));
+          lastBlock.appendChild(el("div",{style:{fontSize:"10px",color:"#94a3b8"}},new Date(lastSession.date+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})));
+          row2.appendChild(lastBlock);
+        }
+        detail.appendChild(row2);
+      }
+
+      // Course history
+      if(totalCourses>0){
+        detail.appendChild(el("div",{style:{fontSize:"9px",color:"var(--text3)",textTransform:"uppercase",fontWeight:700,marginBottom:"4px"}},"📋 Course History"));
+        const allCourses=[...history,...(s.currentCourse?[s.currentCourse]:[])].slice().reverse();
+        allCourses.forEach(c=>{
+          const p=PKG_TYPES[c.type]||PKG_TYPES.group;
+          const sess=(c.history||[]).filter(h=>h.status==="attended").length;
+          const pct=c.totalClasses>0?Math.min(1,sess/c.totalClasses):0;
+          const crow=el("div",{style:{background:"#0a1628",borderRadius:"6px",padding:"6px 10px",marginBottom:"4px",border:"1px solid #1e3a5f"}});
+          const ch=el("div",{style:{display:"flex",alignItems:"center",gap:"6px",flexWrap:"wrap",marginBottom:"4px"}});
+          ch.appendChild(el("span",{style:{fontSize:"9px",background:p.bg,color:p.color,borderRadius:"4px",padding:"1px 6px",border:"1px solid "+p.border,fontWeight:700}},p.label));
+          if(c.startDate)ch.appendChild(el("span",{style:{fontSize:"9px",color:"#475569"}},new Date(c.startDate+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})));
+          ch.appendChild(el("span",{style:{fontSize:"10px",color:sess>=(c.totalClasses||8)?"#4ade80":"#94a3b8",fontWeight:700,marginLeft:"auto"}},sess+"/"+(c.totalClasses||8)+(sess>=(c.totalClasses||8)?" ✓":"")));
+          crow.appendChild(ch);
+          // Dot boxes (same style as Register)
+          const dots=el("div",{style:{display:"flex",gap:"2px",flexWrap:"wrap",marginTop:"3px"}});
+          for(let i=0;i<Math.min(c.totalClasses||8,10);i++){
+            dots.appendChild(el("div",{style:{width:"7px",height:"7px",borderRadius:"2px",background:i<sess?p.color:"#1e3a5f"}}));
+          }
+          crow.appendChild(dots);
+          detail.appendChild(crow);
+        });
+      }
+
+      card.appendChild(detail);
+    }
+
+    list.appendChild(card);
   });
+
   wrap.appendChild(list);
   return wrap;
 }
@@ -5158,6 +5651,38 @@ function buildApp(){
   const addCoachModal=buildAddCoachModal();if(addCoachModal)app.appendChild(addCoachModal);
   const addClassTypeModal=buildAddClassTypeModal();if(addClassTypeModal)app.appendChild(addClassTypeModal);
   const newSaleModal=buildNewSaleModal();if(newSaleModal)app.appendChild(newSaleModal);
+  // Post-sale: prompt to assign class if swimmers have none
+  if(state.postSaleNoClassIds?.length){
+    const names=state.postSaleNoClassIds.map(id=>state.swimmers.find(s=>s.id===id)?.name).filter(Boolean);
+    const dismiss=()=>{state.postSaleNoClassIds=null;render();};
+    const ov=el("div",{className:"modal-overlay",onClick:e=>{if(e.target===e.currentTarget)dismiss();}});
+    const box=el("div",{className:"modal modal-sm"});
+    box.appendChild(el("div",{style:{fontSize:"14px",fontWeight:700,color:"#4ade80",marginBottom:"6px"}},"✓ Sale recorded!"));
+    box.appendChild(el("div",{style:{fontSize:"11px",color:"#fbbf24",marginBottom:"14px"}},"⚠ "+names.join(", ")+(names.length>1?" are":" is")+" not assigned to a class yet."));
+    const btnRow=el("div",{style:{display:"flex",flexDirection:"column",gap:"8px"}});
+    btnRow.appendChild(el("button",{onClick:()=>{dismiss();state.view="admin";state.adminTab="classes";render();},style:{padding:"10px",borderRadius:"8px",border:"none",fontSize:"12px",fontWeight:700,background:"#2563eb",color:"#fff",cursor:"pointer"}},"📋 Assign to Class Now"));
+    btnRow.appendChild(el("button",{onClick:dismiss,style:{padding:"8px",borderRadius:"8px",border:"1px solid var(--border)",fontSize:"11px",background:"var(--bg3)",color:"var(--text3)",cursor:"pointer"}},"Later"));
+    box.appendChild(btnRow);
+    ov.appendChild(box);
+    app.appendChild(ov);
+  }
+  if(state.reactivatePrompt){
+    const rsw=state.swimmers.find(s=>s.id===state.reactivatePrompt);
+    if(rsw){
+      const dismiss=()=>{state.reactivatePrompt=null;render();};
+      const ov=el("div",{className:"modal-overlay",onClick:e=>{if(e.target===e.currentTarget)dismiss();}});
+      const box=el("div",{className:"modal modal-sm"});
+      box.appendChild(el("div",{style:{fontSize:"15px",fontWeight:700,color:"#4ade80",marginBottom:"8px"}},"✓ "+rsw.name+" reactivated!"));
+      box.appendChild(el("div",{style:{fontSize:"11px",color:"var(--text3)",marginBottom:"16px"}},"What would you like to do next?"));
+      const btnRow=el("div",{style:{display:"flex",flexDirection:"column",gap:"8px"}});
+      btnRow.appendChild(el("button",{onClick:()=>{dismiss();state.showSaleForm=true;state.saleSelIds=[rsw.id];state.salePkgType=rsw.pkg||"group";state.salePayment="";state.saleDate=todayStr();render();},style:{padding:"10px",borderRadius:"8px",border:"none",fontSize:"12px",fontWeight:700,background:"#2563eb",color:"#fff",cursor:"pointer"}},"💳 Record New Sale"));
+      btnRow.appendChild(el("button",{onClick:()=>{dismiss();state.view="admin";state.adminTab="classes";render();},style:{padding:"10px",borderRadius:"8px",border:"1px solid #2563eb",fontSize:"12px",fontWeight:600,background:"transparent",color:"#60a5fa",cursor:"pointer"}},"📋 Assign to Class"));
+      btnRow.appendChild(el("button",{onClick:dismiss,style:{padding:"8px",borderRadius:"8px",border:"1px solid var(--border)",fontSize:"11px",background:"var(--bg3)",color:"var(--text3)",cursor:"pointer"}},"Later"));
+      box.appendChild(btnRow);
+      ov.appendChild(box);
+      app.appendChild(ov);
+    }
+  }
   const deleteConfirmModal=buildDeleteConfirmModal();if(deleteConfirmModal)app.appendChild(deleteConfirmModal);
   const xferModal=buildXferModal();if(xferModal)app.appendChild(xferModal);
   const addClassModal=buildAddClassModal();if(addClassModal)app.appendChild(addClassModal);
